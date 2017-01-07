@@ -19,7 +19,7 @@ class Station {
     private $nb_max_v;
     private $statistique;
     
-    function __construct($id, $nom, $adresse, $nb_max_v, $statistique) {
+    function __construct($id, $nom, $adresse, $nb_max_v, Statistique $statistique) {
         $this->id = $id;
         $this->nom = $nom;
         $this->adresse = $adresse;
@@ -63,7 +63,7 @@ class Station {
         return $this->statistique;
     }
 
-    function setStatistique($statistique) {
+    function setStatistique(Statistique $statistique) {
         $this->statistique = $statistique;
     }
 

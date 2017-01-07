@@ -19,7 +19,7 @@ class Employe {
     private $station;
     private $compteE;
     
-    function __construct($id, $nom, $prenom, $station, $compteE) {
+    function __construct($id, $nom, $prenom, Station $station, CompteEmploye $compteE) {
         $this->id = $id;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -59,11 +59,11 @@ class Employe {
         $this->prenom = $prenom;
     }
 
-    function setStation($station) {
+    function setStation(Station $station) {
         $this->station = $station;
     }
 
-    function setCompteE($compteE) {
+    function setCompteE(CompteEmploye $compteE) {
         $this->compteE = $compteE;
     }
 

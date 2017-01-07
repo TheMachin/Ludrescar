@@ -27,7 +27,7 @@ class Vehicule {
     private $station;
     private $type;
     
-    function __construct($no_immat, $marque, $modele, $bn_place, $carburant, $puissance, $nb_km, $etat, $date_mise_serv, $duree_serv, $niv_carbu, $station, $type) {
+    function __construct($no_immat, $marque, $modele, $bn_place, $carburant, $puissance, $nb_km, $etat, $date_mise_serv, $duree_serv, $niv_carbu, Station $station, Type $type) {
         $this->no_immat = $no_immat;
         $this->marque = $marque;
         $this->modele = $modele;
@@ -135,7 +135,7 @@ class Vehicule {
         $this->niv_carbu = $niv_carbu;
     }
 
-    function setStation($station) {
+    function setStation(Station $station) {
         $this->station = $station;
     }
 
@@ -143,7 +143,7 @@ class Vehicule {
         return $this->type;
     }
 
-    function setType($type) {
+    function setType(Type $type) {
         $this->type = $type;
     }
 

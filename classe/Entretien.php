@@ -20,7 +20,7 @@ class Entretien {
     private $vehicule;
     private $technicien;
     
-    function __construct($id, $date_deb, $date_fin, $type_entretien, $vehicule, $technicien) {
+    function __construct($id, $date_deb, $date_fin, $type_entretien, Vehicule $vehicule, Technicien $technicien) {
         $this->id = $id;
         $this->date_deb = $date_deb;
         $this->date_fin = $date_fin;
@@ -69,11 +69,11 @@ class Entretien {
         $this->type_entretien = $type_entretien;
     }
 
-    function setVehicule($vehicule) {
+    function setVehicule(Vehicule $vehicule) {
         $this->vehicule = $vehicule;
     }
 
-    function setTechnicien($technicien) {
+    function setTechnicien(Technicien $technicien) {
         $this->technicien = $technicien;
     }
 
