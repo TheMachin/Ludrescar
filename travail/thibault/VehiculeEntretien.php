@@ -23,7 +23,7 @@ and open the template in the editor.
 
                                                 <div class="tab-content">
                                                         <div class="tab-content-inner active" data-content="signup">
-                                                                <form action="#">
+                                                            <form action="traitMiseEntretien.php" method="POST">
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
                                                                                     <label for="activities">Numéro immatriculation du véhicule : </label>
@@ -60,12 +60,12 @@ and open the template in the editor.
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
                                                                                         <label for="date-start">Type d'entretien</label>
-                                                                                        <input type="text" id="end" name="type" class="form-control">
+                                                                                        <input type="text" id="type" name="type" class="form-control">
                                                                                 </div>
                                                                         </div>
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
-                                                                                        <input type="submit" class="btn btn-primary btn-block" value="Valider entretien">
+                                                                                        <input type="submit" name="valid" class="btn btn-primary btn-block" value="Valider entretien">
                                                                                 </div>
                                                                         </div>
                                                                 </form>	

@@ -27,14 +27,13 @@ and open the template in the editor.
                                                                 <h3 class="cursive-font">Véhicule : Lada Niva</h3>
                                                                 <h3 class="cursive-font">Date et heure du début de location prévu le 05/01/2017 à 15h30</h3>
                                                                 <h3 class="cursive-font">Date du jour : 05/01/2017</h3>
-                                                                <form action="#">
+                                                                <form action="traitVehiculeDebut.php" method="POST">
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
                                                                                     <label for="activities">Etat du véhicule</label>
                                                                                     <select name="etat" id="activities" class="form-control">
                                                                                             <option value="c">Correcte</option>
                                                                                             <option value="be">En bon état</option>
-                                                                                            <option value="v">Volé</option>
                                                                                             <option value="hs">Hors service</option>
                                                                                     </select>
                                                                                     <br><br>
@@ -42,7 +41,6 @@ and open the template in the editor.
                                                                                         Liste des états du véhicule : <br>
                                                                                         <strong>Correcte :</strong> Le véhicule comporte des rayures ou des dégats léger au niveau de la carrosserie. <br>
                                                                                         <strong>En bon état :</strong> Le véhicule ne comporte pas de dégats. <br>
-                                                                                        <strong>Volé : </strong> Le véhicule a été volé durant la location. <br>
                                                                                         <strong>Hors service : </strong> Le véhicule comporte des dégats important et ne peut pas être roulé.
                                                                                     </label>
                                                                                     <br><br>
@@ -64,14 +62,14 @@ and open the template in the editor.
                                                                                 <div class="col-md-12">
                                                                                         <label for="date-start">Niveau du carburant</label>
                                                                                         <select name="niv" id="activities" class="form-control">
-                                                                                            <option value="c">Plein</option>
-                                                                                            <option value="be">Vide</option>
+                                                                                            <option value="p">Plein</option>
+                                                                                            <option value="v">Vide</option>
                                                                                         </select>
                                                                                 </div>
                                                                         </div>
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
-                                                                                        <input type="submit" class="btn btn-primary btn-block" value="Valider formulaire du début de location">
+                                                                                        <input type="submit" name="valid" class="btn btn-primary btn-block" value="Valider formulaire du début de location">
                                                                                 </div>
                                                                         </div>
                                                                 </form>	

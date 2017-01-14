@@ -27,7 +27,7 @@ and open the template in the editor.
                                                                 <h3 class="cursive-font">Véhicule : Lada Niva</h3>
                                                                 <h3 class="cursive-font">Date du rendu prévu 06/01/2017</h3>
                                                                 <h3 class="cursive-font">Date du jour : 05/01/2017</h3>
-                                                                <form action="#">
+                                                                <form action="traitVehiculeRendu.php" method="POST">
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
                                                                                     <label for="activities">Etat du véhicule</label>
@@ -71,7 +71,7 @@ and open the template in the editor.
                                                                         </div>
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
-                                                                                        <input type="submit" class="btn btn-primary btn-block" value="Valider formulaire de fin de location">
+                                                                                        <input type="submit" name="valid" class="btn btn-primary btn-block" value="Valider formulaire de fin de location">
                                                                                 </div>
                                                                         </div>
                                                                 </form>	
