@@ -82,7 +82,7 @@
       </div>
     </nav>
 
-    <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+    <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:1500px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="gtco-container">
         <div class="row">
@@ -162,13 +162,13 @@
                               <input type="text" id="dateMS" name="dateMS" class="form-control">
                             </div>
                           </div>
-						  <div class="row form-group">
+                          <div class="row form-group">
                             <div class="col-md-12">
                               <label for="dureeMS">Durée de mise en service en année :</label>
                               <input type="text" id="dureeMS" name="dureeMS" class="form-control">
                             </div>
                           </div>
-						  <div class="row form-group">
+                          <div class="row form-group">
                             <div class="col-md-12">
                               <label for="nivCarburant">Niveau du carburant :</label>
                               <input type="text" id="nivCarburant" name="nivCarburant" class="form-control">
