@@ -1,3 +1,9 @@
+<?php
+session_start();
+include('../../bdd/bdd.php');
+
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -54,7 +60,36 @@
 
 	</head>
 	<body>
-		
+	<?php
+//si on appuie sur le bouton submit
+if (isset($_POST['submit']))
+{
+	#htmlentities est la pour une securite et trim est la pour eviter les espaces dans le usrename
+	$email =htmlentities(trim($_POST['email']));
+	$password =htmlentities(trim($_POST['password']));
+	
+//echo "test";
+/*pour tester */
+
+//si ce que l'on rentre existe
+	if($email&&$password){
+	$password=md5($password);
+$requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 and cu.mdp=$2 and cu.id=u.compteutilisateur_id;";
+					$req= pg_prepare($bdd,'connexion',$requete);
+                                        $req= pg_execute($bdd,'connexion',array($email,$password));
+					$count= pg_num_rows($req);
+					if($count==1){
+							//creation de session
+						$_SESSION['co']=1;
+						$_SESSION['email']=$email;
+
+						header('Location:index.php');
+					}else echo"identifiant ou mot de passe incorect";
+
+
+	}else echo "Veuillez saisir tout les champs s'il vous plait !";
+}
+?>	
 	<div class="gtco-loader"></div>
 	
 	<div id="page">
@@ -97,7 +132,7 @@
 
 					<div class="row row-mt-15em">
 						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-							<span class="intro-text-small">ludresCar</span>
+							<span class="intro-text-small">LudresCar</span>
 							<h1 class="cursive-font">Quand la voiture rencontre la location.</h1>	
 						</div>
 						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
@@ -106,61 +141,33 @@
 									
 									<div class="tab-content">
 										<div class="tab-content-inner active" data-content="signup">
-											<h3 class="cursive-font">Réservation de voiture</h3>
-											<form action="#">
+											<h3 class="cursive-font">Connectez-vous !!</h3>
+											<!--action est le registre ou on est et apres la methode -->
+											<form action="index.php"method="post">
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="activities">type de véhicule</label>
-														<select name="#" id="activities" class="form-control">
-															<option value="">Monospace</option>
-															<option value="">SUV</option>
-															<option value="">4*4</option>
-															<option value="">Coupe</option>
-															<option value="">Cabriolet</option>
-															<option value="">Break</option>
-														</select>
+														<label for="#">Email</label>
+														<input type="text" name="email" placeholder="" class="form-control">
 													</div>
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="date-start">Date de début</label>
-														<input type="text" id="date" class="form-control">
+														<label for="date-end">Mot de passe</label>
+														<input type="password" name="password"placeholder="" class="form-control">
 													</div>
 												</div>
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="date-end">heure de debut</label>
-														<input type="text" id="time" class="form-control">
+														<input type="submit" name="submit" class="btn btn-primary btn-block" value="se Connecter">
 													</div>
 												</div>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="date-start">Date de retour</label>
-														<input type="text" id="date" class="form-control">
-													</div>
-												</div>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<label for="date-end">heure de retour</label>
-														<input type="text" id="time" class="form-control">
-													</div>
-												</div>
-												<div class="row form-group">
-													<div class="col-md-12">
-														<input type="submit" class="btn btn-primary btn-block" value="Réservez maintenant">
-													</div>
-												</div>
-											</form>	
+											</form>
 										</div>
-
-										
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-							
-					
+					</div>	
 				</div>
 			</div>
 		</div>
