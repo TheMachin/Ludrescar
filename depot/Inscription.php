@@ -112,32 +112,7 @@ if (isset($_POST['submit']))
 						$requete= pg_prepare($bdd,'insert user',$requete);
 						$requete= pg_execute($bdd,'insert user',array($lastid,$nom,$prenom,$datenaiss,$dateins,$numtel,$email,$adresse,0,$lastid));
 						
-						
-						// verification que l'email n'est pas vide puis un filtre qui valide l'email rentré
-						// le filtre regarde si l'adresse email est deja valide donc pas necessaire de else
-						if(!empty($email)&&filter_var($email, FILTER_VALIDATE_EMAIL))
-						{
-							
-							$destinataire=$email;
-							$sujet="bienvenue sur le site de LudresCar";
-							$message="Bienvenue sur le site limaga $email \n
-							email : $email;
-							Votre inscription vous permettra de bénéficer de plsusieurs avantages:
-							 Des avantages tarifaires sur les abonnements
-							 Des avantages tarifaires sur la location des véhicules
-							Le groupe de location de voiture LudresCar vous remercie de votre inscription et espère vous revoir très bientôt sur notre site internet.";
-							$entete="From: .fr \n Reply-To:$email";
-							//preciser les paramètres rentrés pour l'envoi de l 'email '
-							// premier  est l'adresse a qui on envoie l'email
-							// le second est le sujet de l'envoi du mail
-							// le troisieme et le dernier est tout simplement le corps de l'email que l'on envoie
-
-
-							mail($destinataire,$sujet, $message,$entete);
-							
-								die("inscription terminee !<a href='login.php'>connectez-vous</a>");
-						}
-                                                die("inscription terminee !<a href='login.php'>connectez-vous</a>");
+						die("inscription terminee !<a href='login.php'>connectez-vous</a>");
 					}else echo"les mots de passes ne sont pas identique";
 
 									}else echo "mot de passe trop court";
