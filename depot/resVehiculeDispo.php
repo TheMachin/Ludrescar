@@ -129,7 +129,7 @@ if (isset($_POST['submit']))
             <div class="row">
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
                 <h2 class="cursive-font primary-color">Voitures disponibles</h2>
-                <p>Voici les voitures disponibles pour la période du dateDébut au DateFin pour la station X.</p>
+                <p>Voici les voitures disponibles pour la période du <?php echo $_POST['dateDeb']; ?> au <?php echo $_POST['dateRet']; ?> pour la station <?php echo $_POST['station']; ?>.</p>
               </div>
             </div>
             <div class="row">
@@ -146,6 +146,7 @@ if (isset($_POST['submit']))
                   </div>
                 </a>
               </div>
+              
               <div class="col-lg-4 col-md-4 col-sm-6">
                 <a href="images/img_2.jpg" class="fh5co-card-item image-popup">
                   <figure>
@@ -158,6 +159,7 @@ if (isset($_POST['submit']))
                   </div>
                 </a>
               </div>
+
               <div class="col-lg-4 col-md-4 col-sm-6">
                 <a href="images/img_3.jpg" class="fh5co-card-item image-popup">
                   <figure>
