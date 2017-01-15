@@ -120,7 +120,7 @@ if (isset($_POST['submit']))
 							
 							$destinataire=$email;
 							$sujet="bienvenue sur le site de LudresCar";
-							$message="Bienvenue sur le site limaga $username \n
+							$message="Bienvenue sur le site limaga $email \n
 							email : $email;
 							Votre inscription vous permettra de bénéficer de plsusieurs avantages:
 							 Des avantages tarifaires sur les abonnements
