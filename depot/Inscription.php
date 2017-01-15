@@ -115,19 +115,18 @@ if (isset($_POST['submit']))
 						
 						// verification que l'email n'est pas vide puis un filtre qui valide l'email rentré
 						// le filtre regarde si l'adresse email est deja valide donc pas necessaire de else
-						/*if(!empty($email)&&filter_var($email, FILTER_VALIDATE_EMAIL))
+						if(!empty($email)&&filter_var($email, FILTER_VALIDATE_EMAIL))
 						{
 							
 							$destinataire=$email;
-							$sujet="bienvenue sur le site de limaga";
+							$sujet="bienvenue sur le site de LudresCar";
 							$message="Bienvenue sur le site limaga $username \n
 							email : $email;
 							Votre inscription vous permettra de bénéficer de plsusieurs avantages:
 							 Des avantages tarifaires sur les abonnements
-							 Des avantages tarifaires sur la location de matériel
-							 Des avantages tarifaires sur les articles de la boutique
-							Le groupe aquatique limaga vous remercie de votre inscription et espère vous revoir très bientôt dans notre centre.";
-							$entete="From: limaga_aquatique.fr \n Reply-To:$email";
+							 Des avantages tarifaires sur la location des véhicules
+							Le groupe de location de voiture LudresCar vous remercie de votre inscription et espère vous revoir très bientôt sur notre site internet.";
+							$entete="From: .fr \n Reply-To:$email";
 							//preciser les paramètres rentrés pour l'envoi de l 'email '
 							// premier  est l'adresse a qui on envoie l'email
 							// le second est le sujet de l'envoi du mail
@@ -137,7 +136,7 @@ if (isset($_POST['submit']))
 							mail($destinataire,$sujet, $message,$entete);
 							
 								die("inscription terminee !<a href='login.php'>connectez-vous</a>");
-						}*/
+						}
                                                 die("inscription terminee !<a href='login.php'>connectez-vous</a>");
 					}else echo"les mots de passes ne sont pas identique";
 
@@ -180,22 +179,9 @@ if (isset($_POST['submit']))
 					
 
 					<div class="row row-mt-15em">
-						<div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+						<div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
 							<span class="intro-text-small">LudresCar</span>
 							<h1 class="cursive-font">Quand la voiture rencontre la location.</h1>	
-						</div>
-						<div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-							<div class="form-wrap">
-								<div class="tab">
-									
-									<div class="tab-content">
-										<div class="tab-content-inner active" data-content="signup">
-											<h3 class="cursive-font">Connectez-vous !!</h3>
-											<!--action est le registre ou on est et apres la methode -->
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 					</div>	
 				</div>
@@ -208,52 +194,54 @@ if (isset($_POST['submit']))
 		<div class="gtco-container">
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h2 class="cursive-font">Vos commentaires</h2>
-					<p>N'hésitez pas à nous exprimer vos commentaires.</p>
+					<h2 class="cursive-font">Votre Inscription</h2>
+					<p>N'hésiter pas à vous inscrire.</p>
 				</div>
 			</div>
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2">
-
-	<form action="register.php"method="post">
-<input type="text" name="email"placeholder="ton email ! "> <br/>
-<input type="password" name="password"placeholder="ton mot de passe ! ">
-<br/>
-<input type="password" name="repeatpassword"placeholder="répète ton mot de passe ! ">
-<br/>
-
-<!--avec ce type et value c est la creation dun bouton-->
-<br/>
-<p> Nom et prénom </p>
-<input type="text"name="nom"placeholder="votre nom">
-<br/>
-<input type="text" name="prenom" placeholder="votre prenom">
-<br/>
-<p>votre date de naissance: </p>
-
-<input type="date"name="datenaiss"placeholder=" aaaa/mm/jj "min="1914-03-27" >
-<br/>
-<input type="text"name="adresse"placeholder="votre adresse">
-<br/>
-<input type="text"name="numtel"placeholder="votre numeros de telephone">
-
-<br/>
-<br/>
-<br/>
-
-<input type="submit" name="submit" value="s'inscrire">
-
-
-</form>
-					<form class="form-inline">
-						<div class="col-md-6 col-sm-6">
+					<form class="form-inline" action="Inscription.php"method="post">
+						<div class="col-md-12 col-sm-12">
 							<div class="form-group">
-								<label for="email" class="sr-only">Email</label>
-								<input type="email" class="form-control" id="email" placeholder="Votre Email">
+		    					 <input type="text" name="email" placeholder="Votre Email" class="form-control" >
+							</div>
+						</br>
+							<div class="form-group">
+								<input type="password" class="form-control" name="password"placeholder="Votre mot de passe">
+							</div>
+						</br>
+							<div class="form-group">
+								<input type="password" class="form-control"name="repeatpassword"placeholder="répétez ton mot de passe ! ">
+							</div>
+						</br>
+						</br>
+							<div class="form-group">
+								<input type="text" class="form-control" name="nom"placeholder="votre nom">
+							</div>
+						</br>
+							<div class="form-group">
+								<input type="text" class="form-control" name="prenom"placeholder="votre prénom">
+							</div>
+						</br>
+							<div class="form-group">
+								<input type="date" class="form-control" name="datenaiss"placeholder="date de naissance"min="1914-03-27" >
+								<br/>
+								<br/>
+							</div>
+								</br>
+							<div class="form-group">
+								<input type="text" class="form-control" name="adresse"placeholder="votre adresse">
+								<br/>
+							</div>
+
+								<div class="form-group">
+								<input type="text" class="form-control" name="numtel"placeholder="votre numeros de telephone">
+								<br/>
+								<br/>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6">
-							<button type="submit" class="btn btn-default btn-block">Envoyer</button>
+							<input class="btn btn-default btn-block" type="submit" name="submit" value="s'inscrire">
 						</div>
 					</form>
 				</div>

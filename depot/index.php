@@ -83,7 +83,7 @@ $requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 a
 						$_SESSION['co']=1;
 						$_SESSION['email']=$email;
 
-						header('Location:index.php');
+						header('Location:indexco.php');
 					}else echo"identifiant ou mot de passe incorect";
 
 
