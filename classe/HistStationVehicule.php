@@ -67,7 +67,11 @@ class HistStationVehicule {
         $this->vehicule = $vehicule;
     }
 
-
+    function insert($bdd){
+        $requete="INSERT INTO histstationvehicules(date,description,station_id,vehicule_immat) VALUES($1,$2,$3,$4)";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->date,$this->description,$this->station->getId(),$this->vehicule->getNo_immat()));
+    }
 
 }
 ?>

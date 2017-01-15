@@ -147,7 +147,16 @@ class Vehicule {
         $this->type = $type;
     }
 
-
+    function updateEtat($bdd){
+        $requete="UPDATE vehicules SET etat=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->etat,$this->no_immat));
+    }
     
+    function updateStation($bdd){
+        $requete="UPDATE vehicules SET station_id=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->station->getId(),$this->no_immat));
+    }
 }
 ?>
