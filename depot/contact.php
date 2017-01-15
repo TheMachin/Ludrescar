@@ -69,7 +69,7 @@
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
-						<li><a href="menu.html">Menu</a></li>
+						<li><a href="vehicule.php">Véhicules</a></li>
 						<li class="active"><a href="contact.php">Contact</a></li>
 						<li class="btn-cta"><a href="index.php"><span>Inscription</span></a></li>
 					</ul>	
