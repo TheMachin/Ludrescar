@@ -29,7 +29,18 @@ and open the template in the editor.
                     $station=$_POST['station'];
                     
 
-                        
+                    $requete="select count(no_immat) from stations s, vehicules v where s.id=$1 and s.id=v.station_id;";
+                    $result= pg_prepare($bdd,'countVehicule',$requete);
+                    $result = pg_execute($bdd, "countVehicule", array($station));
+                    $row = pg_fetch_row($result);
+                    
+                    $requete="select nb_max_v from stations where id=$1;";
+                    $result= pg_prepare($bdd,'max_station',$requete);
+                    $result = pg_execute($bdd, "max_station", array($station));
+                    $row2 = pg_fetch_row($result);
+                    
+                    if($row[0]+1<=$row2[0]){
+                    
                         $requete="select * from vehicules where no_immat=$1;";
                         $result= pg_prepare($bdd,'checkMail',$requete);
                         $result = pg_execute($bdd, "checkMail", array($immat));
@@ -42,6 +53,9 @@ and open the template in the editor.
                         }else{
                             echo "<h3>Le véhicule existe déjà</h3>";
                         }
+                    }else{
+                        echo "<h3>La station est complet et ne peut pas accueillir plus de véhicule</h3>";
+                    }
                 }else{
                     echo "<h3>Veuillez remplir le champs</h3>";
                 }
