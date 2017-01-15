@@ -53,8 +53,9 @@ if(isset($_POST['valid'])){
     
 }
 
-    function verifEtatVehicule($vehicule,$bdd){
-        $result= pg_prepare($bdd,"verifEtatVoiture",'SELECT ');
+    function getEtatVehicule(Vehicule $vehicule,$bdd){
+        $result= pg_prepare($bdd,"getEtatVoiture",'SELECT etat where no_immat=$1');
+        $result= pg_execute($bdd,'getEtatVoiture',array($vehicule->getNo_immat()));
     }
     
     function insertEntretien($entretien,$bdd){
