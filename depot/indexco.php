@@ -98,7 +98,7 @@ if (isset($_POST['submit']))
 
             <div class="row">
               <div class="col-sm-4 col-xs-12">
-                <div id="gtco-logo"><a href="index.html">LudresCar <em>.</em></a></div>
+                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
@@ -106,7 +106,7 @@ if (isset($_POST['submit']))
                   <li><a href="">Mes locations</a></li>
                   <li><a href="">Contact</a></li>
                   <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
-                  <li><a href="">Se déconnecter</a></li>
+                  <li><a href="deco.php">Se déconnecter</a></li>
                 </ul>
               </div>
             </div>
