@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('inc/config.php');
+include('../../bdd/bdd.php');
 
 ?>
 <!DOCTYPE html>
@@ -20,23 +20,23 @@ include('inc/config.php');
 if (isset($_POST['submit']))
 {
 	#htmlentities est la pour une securite et trim est la pour eviter les espaces dans le usrename
-	$username =htmlentities(trim($_POST['username']));
+	$email =htmlentities(trim($_POST['email']));
 	$password =htmlentities(trim($_POST['password']));
 	
 //echo "test";
 /*pour tester */
 
 //si ce que l'on rentre existe
-	if($username&&$password){
+	if($email&&$password){
 	$password=md5($password);
-$requete="select * from users where username='$username'and password='$password';";
-					$stmt=$bdd->prepare($requete);
-					$stmt->execute();
-					$row=$stmt->fetch(PDO::FETCH_OBJ);
-					if($row==1){
+$requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 and cu.mdp=$2 and cu.id=u.compteutilisateur_id;";
+					$req= pg_prepare($bdd,'connexion',$requete);
+                                        $req= pg_execute($bdd,'connexion',array($email,$password));
+					$count= pg_num_rows($req);
+					if($count==1){
 							//creation de session
 						$_SESSION['co']=1;
-						$_SESSION['username']=$username;
+						$_SESSION['email']=$email;
 
 
 
@@ -44,12 +44,12 @@ $requete="select * from users where username='$username'and password='$password'
 					}else echo"identifiant ou mot de passe incorect";
 
 
-	}else echo "Veuillez saisir tout les champs";
+	}else echo "Veuillez saisir tout les champs s'il vous plait !";
 }
 ?>
 <!--action est le registre ou on est et apres la methode -->
 <form action="login.php"method="post">
-<input type="text" name="username"placeholder="ton pseudo ! "> <br/>
+<input type="text" name="email"placeholder="ton email ! "> <br/>
 <input type="password" name="password"placeholder="ton mot de passe ! ">
 <br/>
 <!--avec ce type et value c est la creation dun bouton-->
