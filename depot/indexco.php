@@ -98,6 +98,12 @@ if (isset($_POST['submit']))
 
             <div class="row">
               <div class="col-sm-4 col-xs-12">
+                <p style="color: white;"> <?php if(isset($_SESSION['co']))
+                          {                 
+                            echo($_SESSION['mail']); 
+                          }
+                      ?>
+                </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
