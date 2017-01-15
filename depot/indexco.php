@@ -99,8 +99,8 @@ if (isset($_POST['submit']))
             <div class="row">
               <div class="col-sm-4 col-xs-12">
                 <p style="color: white;"> <?php if(isset($_SESSION['co']))
-                          {                 
-                            echo($_SESSION['mail']); 
+                          {   
+                            echo($_SESSION['email']); 
                           }
                       ?>
                 </p>
