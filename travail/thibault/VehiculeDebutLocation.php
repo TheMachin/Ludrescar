@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if(!empty($_SESSION['vehiculeDebutError'])){
+        echo $_SESSION['vehiculeDebutError'];
+        unset($_SESSION['vehiculeDebutError']);
+    }
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -26,6 +33,7 @@ and open the template in the editor.
                                                                 
                                                                 <h3 class="cursive-font">Véhicule : Lada Niva</h3>
                                                                 <h3 class="cursive-font">Date et heure du début de location prévu le 05/01/2017 à 15h30</h3>
+                                                                <h3 class="cursive-font">Date et heure du fin de location prévu le 06/01/2017 à 15h30</h3>
                                                                 <h3 class="cursive-font">Date du jour : 05/01/2017</h3>
                                                                 <form action="traitVehiculeDebut.php" method="POST">
                                                                         <div class="row form-group">

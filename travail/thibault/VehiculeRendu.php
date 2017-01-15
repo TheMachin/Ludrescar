@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if(!empty($_SESSION['vehiculeRenduError'])){
+        echo $_SESSION['vehiculeRenduError'];
+        unset($_SESSION['vehiculeRenduError']);
+    }
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.

@@ -52,3 +52,23 @@ if(isset($_POST['valid'])){
 }else{
     
 }
+
+    function verifEtatVehicule($vehicule){
+        
+    }
+    
+    function insertEntretien($entretien){
+        
+    }
+    
+    function updateVehicule($vehicule){
+        
+    }
+    
+    function getTechnicien($id){
+        
+    }
+    
+    function getVehicule($immat){
+        
+    }

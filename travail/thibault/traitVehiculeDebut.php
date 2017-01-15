@@ -1,17 +1,35 @@
 <?php
+session_start();
 include('../../classe/Formulaire.php');
+include('../../classe/Retour.php');
 include('../../classe/Location.php');
 include('../../classe/Vehicule.php');
+include('../../classe/Type.php');
+include('../../classe/Station.php');
+include('../../classe/Statistique.php');
+include('../../classe/Utilisateur.php');
+include('../../classe/CompteUtilisateur.php');
+include('../../classe/Societe.php');
+include('../../classe/Penalite.php');
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-$location=new Location($id, $date_deb, $date_fin_prev, $prix_duree, $prix_km, $montant_penalite, $prix_tot, $etatLocation, $heure_deb, $heure_fin, $vehicule, $utilisateur, $stationDep, $stationArr, $Formulaire, $retour, $societe, $penalite);
-$vehicule=new Vehicule($no_immat, $marque, $modele, $bn_place, $carburant, $puissance, $nb_km, $etat, $date_mise_serv, $duree_serv, $niv_carbu, $station, $type);
-$vehicule=$location->getVehicule();
-$form=new Formulaire($id, $etatVehicule, $km, $commentaire, $niv_carbu, "Début", $heure, $date);
+
+$form=new Formulaire("", "", "", "", "", "Début", "", "");
+$retour=new Retour(0, "", $form);
+$stats=new Statistique(0, 0, 0, 0, 0, 0, 0);
+$station=new Station(0, "", "", 0, $stats);
+$type=new Type(0, "", 0, 0);
+$vehicule=new Vehicule("", "", "", 0, "", "", 0, "", "", 1, "", $station, $type);
+$compteU=new CompteUtilisateur(0, "");
+$user=new Utilisateur(0, "", "", "", "", "", "", "", 0, $compteU);
+$societe=new Societe(0, "");
+$penalite=New Penalite(0, "retard", 0);
+$arrPenalite=new ArrayObject($penalite);
+$location=new Location(0, "", "2017-01-10", "", "", "", "", "","", "", $vehicule, $user, $station, $station, $form, $retour, $societe, $arrPenalite);
 
 $date=date("d/m/Y");
 $form->setDate($date);
@@ -22,29 +40,30 @@ if(isset($_POST['valid'])){
     if(!empty($_POST['etat'])){
         $etat=$_POST['etat'];
     }else{
-        
+        sendError("Erreur traitement formulaire : L'état du véhicule n'a pas été spécifié");
     }
     
     if(!empty($_POST['km'])){
         $km=$_POST['km'];
     }else{
-        
+        sendError("Erreur : Le kilométrage du véhicule n'a pas été spécifié");
     }
     
     if(!empty($_POST['comm'])){
         $comm=$_POST['comm'];
     }else{
-        
+        $comm="";
     }
     
     if(!empty($_POST['niv'])){
         $niv=$_POST['niv'];
     }else{
-        
+        sendError("Erreur traitement formulaire : Le niveau de carburant du véhicule n'a pas été spécifié");
     }
     
-    if($vehicule->getNb_km()<$km){
+    if($vehicule->getNb_km()>$km){
         //probleme
+        sendError("Erreur : Le kilométrage spécifié ne doit pas être inférieure à celui du véhicule");
     }else{
         $vehicule->setNb_km($km);
         $form->setKm($km);
@@ -53,6 +72,7 @@ if(isset($_POST['valid'])){
     if($etat==="hs"){
         $vehicule->setEtat("Hors service");
         $form->setEtatVehicule("Hors service");
+        $location->setEtatLocation("Annulé");
         //fin de location car véhicule impraticable
     }else{
         if($etat==="c"){
@@ -71,5 +91,27 @@ if(isset($_POST['valid'])){
     $location->setFormulaire($form);
     
 }else{
-    
+    sendError("Erreur : Le formulaire n'a pas été validé");
 }
+
+    function sendError($msgError){
+        $_SESSION['vehiculeDebutError']=$msgError;
+        header("location:".  $_SERVER['HTTP_REFERER']); 
+        exit(0);
+    }
+    
+    function getVehicule($id){
+        
+    }
+    
+    function insertFormulaire($form){
+        
+    }
+    
+    function updateLocation($loc){
+        
+    }
+    
+    function updateVehicule($vehicule){
+        
+    }
