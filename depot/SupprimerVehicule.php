@@ -1,3 +1,48 @@
+<?php
+
+include('../../bdd/bdd.php');
+include('../classe/Vehicule.php');
+session_start();
+
+if(!empty($_POST))
+{
+
+  $vehicule = new Vehicule($_POST['noImmat']);
+  $request = $vehicule->searchEtatVehicule($_POST['noImmat']);
+  $requestt = $request->fetch();
+  echo $requestt['no_immat'];
+
+  /*
+    $req = $pdo->prepare('INSERT INTO document(NOM_DOC, TYPE_DOC) VALUES(:NOM_DOC, :TYPE_DOC)');
+    $req->execute(array(
+        'NOM_DOC' => $_POST['ldm'],
+        'TYPE_DOC' => "Lettre de motivation"
+    ));
+    
+    $dos = $pdo->query('SELECT NO_DOSSIER
+    FROM dossier
+    WHERE NOM_CANDIDAT =\''. $candidat->getNom_candidat().'\'');
+    
+    $doc = $pdo->query('SELECT NO_DOC
+    FROM document
+    WHERE type_doc = "Lettre de motivation"
+    ORDER BY NO_DOC DESC LIMIT 0, 1');
+    
+    $doss = $dos->fetch();
+    $docc = $doc->fetch();
+    
+    $req2 = $pdo->prepare('INSERT INTO contient_document(NO_DOC, NO_DOSSIER) VALUES(:NO_DOC, :NO_DOSSIER)');
+    $req2->execute(array(
+        'NO_DOC' => $docc['NO_DOC'],
+        'NO_DOSSIER' => $doss['NO_DOSSIER']
+    ));
+    echo 'La nouvelle lettre de motivation a bien ete ajoutee';
+    
+    */
+}
+
+?>
+
 <!DOCTYPE HTML>
 <html>
 
