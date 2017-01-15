@@ -53,22 +53,22 @@ if(isset($_POST['valid'])){
     
 }
 
-    function verifEtatVehicule($vehicule){
+    function verifEtatVehicule($vehicule,$bdd){
+        $result= pg_prepare($bdd,"verifEtatVoiture",'SELECT ');
+    }
+    
+    function insertEntretien($entretien,$bdd){
         
     }
     
-    function insertEntretien($entretien){
+    function updateVehicule($vehicule,$bdd){
         
     }
     
-    function updateVehicule($vehicule){
+    function getTechnicien($id,$bdd){
         
     }
     
-    function getTechnicien($id){
-        
-    }
-    
-    function getVehicule($immat){
+    function getVehicule($immat,$bdd){
         
     }
