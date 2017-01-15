@@ -14,3 +14,4 @@ include('Employe.php');
 class Responsable extends Employe{
     //put your code here
 }
+?>

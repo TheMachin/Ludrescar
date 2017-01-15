@@ -1,7 +1,7 @@
 <?php
-include('../../classe/Station.php');
-include('../../classe/Location.php');
-include('../../classe/Vehicule.php');
+include('../classe/Station.php');
+include('../classe/Location.php');
+include('../classe/Vehicule.php');
 
 // requete : on selectionne tout les véhicule disponible de la station (qui ne sont pas reservé ou en location)
 // ensuite on affiche les véhicules dispo contenant un bouton pour reserver le véhicule
