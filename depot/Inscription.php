@@ -112,7 +112,7 @@ if (isset($_POST['submit']))
 						$requete= pg_prepare($bdd,'insert user',$requete);
 						$requete= pg_execute($bdd,'insert user',array($lastid,$nom,$prenom,$datenaiss,$dateins,$numtel,$email,$adresse,0,$lastid));
 						
-						die("inscription terminee !<a href='login.php'>connectez-vous</a>");
+						die("inscription terminee !<a href='indexco.php'>connectez-vous</a>");
 					}else echo"les mots de passes ne sont pas identique";
 
 									}else echo "mot de passe trop court";
