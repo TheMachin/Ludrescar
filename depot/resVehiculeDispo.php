@@ -90,6 +90,7 @@ if (isset($_POST['submit']))
         
     }else echo "Veuillez saisir tout les champs s'il vous plait !";
 }
+var_dump($_POST);
 ?>
       <div class="gtco-loader"></div>
 
@@ -102,7 +103,7 @@ if (isset($_POST['submit']))
 
             <div class="row">
               <div class="col-sm-4 col-xs-12">
-                <div id="gtco-logo"><a href="index.html">LudresCar <em>.</em></a></div>
+                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
@@ -117,9 +118,9 @@ if (isset($_POST['submit']))
           </div>
         </nav>
 
-  <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:85px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
-            <div class="overlay"></div>
-            
+        <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:85px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+
         </header>
 
 
@@ -129,7 +130,10 @@ if (isset($_POST['submit']))
             <div class="row">
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
                 <h2 class="cursive-font primary-color">Voitures disponibles</h2>
-                <p>Voici les voitures disponibles pour la période du <?php echo $_POST['dateDeb']; ?> au <?php echo $_POST['dateRet']; ?> pour la station <?php echo $_POST['station']; ?>.</p>
+                <p>Voici les voitures disponibles pour la période du
+                  <?php echo $_POST['dateDeb']; ?> au
+                    <?php echo $_POST['dateRet']; ?> pour la station
+                      <?php echo $_POST['station']; ?>.</p>
               </div>
             </div>
             <div class="row">
@@ -146,7 +150,7 @@ if (isset($_POST['submit']))
                   </div>
                 </a>
               </div>
-              
+
               <div class="col-lg-4 col-md-4 col-sm-6">
                 <a href="images/img_2.jpg" class="fh5co-card-item image-popup">
                   <figure>

@@ -98,11 +98,12 @@ if (isset($_POST['submit']))
 
             <div class="row">
               <div class="col-sm-4 col-xs-12">
-                <p style="color: white;"> <?php if(isset($_SESSION['co']))
-                          {   
-                            echo($_SESSION['email']); 
-                          }
-                      ?>
+                <p style="color: white;">
+                  <?php if(isset($_SESSION['co']))
+{
+    echo($_SESSION['email']);
+}
+?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
               </div>
@@ -119,79 +120,79 @@ if (isset($_POST['submit']))
           </div>
         </nav>
 
-  <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
-            <div class="overlay"></div>
-            <div class="gtco-container">
-                <div class="row">
-                    <div class="col-md-12 col-md-offset-0 text-left">
+        <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+          <div class="gtco-container">
+            <div class="row">
+              <div class="col-md-12 col-md-offset-0 text-left">
 
 
-                        <div class="row row-mt-15em">
-                            <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">ludresCar</span>
-                                <h1 class="cursive-font">Quand la voiture rencontre la location.</h1>
-                            </div>
-                            <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-                                <div class="form-wrap">
-                                    <div class="tab">
+                <div class="row row-mt-15em">
+                  <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                    <span class="intro-text-small">ludresCar</span>
+                    <h1 class="cursive-font">Quand la voiture rencontre la location.</h1>
+                  </div>
+                  <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+                    <div class="form-wrap">
+                      <div class="tab">
 
-                                        <div class="tab-content">
-                                            <div class="tab-content-inner active" data-content="signup">
-                                                <h3 class="cursive-font">Réservation de voiture</h3>
-                                                <form action="resVehiculeDispo.php" method="post">
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="activities">Station</label>
-                                                            <select name="#" id="activities" name="station" class="form-control">
-															<option value="">Ludres-Centre</option>
-															<option value="">Ludres-Gare</option>
-															<option value="">Ludres-Sud</option>
-														</select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="date-start">Date de début</label>
-                                                            <input type="text" id="date" name="dateDeb" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="date-end">Heure de début</label>
-                                                            <input type="text" id="time" name="hDeb" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="date-start">Date de retour</label>
-                                                            <input type="text" id="date" name="dateRet" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <label for="date-end">Heure de retour</label>
-                                                            <input type="text" id="time" name="hRet" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row form-group">
-                                                        <div class="col-md-12">
-                                                            <input type="submit" class="btn btn-primary btn-block" value="Véhicule(s) disponible(s)">
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
+                        <div class="tab-content">
+                          <div class="tab-content-inner active" data-content="signup">
+                            <h3 class="cursive-font">Réservation de voiture</h3>
+                            <form action="resVehiculeDispo.php" method="post">
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <label for="activities">Station</label>
+                                  <select id="activities" name="station" class="form-control">
+                                    <option value="Ludres-Centre">Ludres Centre</option>
+                                    <option value="Ludres-Gare">Ludres Gare</option>
+                                    <option value="Ludres-Sud">Ludres Sud</option>
+                                  </select>
                                 </div>
-                            </div>
+                              </div>
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <label for="date-start">Date de début</label>
+                                  <input type="text" id="date" name="dateDeb" class="form-control">
+                                </div>
+                              </div>
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <label for="date-end">Heure de début</label>
+                                  <input type="text" id="time" name="hDeb" class="form-control">
+                                </div>
+                              </div>
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <label for="date-start">Date de retour</label>
+                                  <input type="text" id="date" name="dateRet" class="form-control">
+                                </div>
+                              </div>
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <label for="date-end">Heure de retour</label>
+                                  <input type="text" id="time" name="hRet" class="form-control">
+                                </div>
+                              </div>
+                              <div class="row form-group">
+                                <div class="col-md-12">
+                                  <input type="submit" class="btn btn-primary btn-block" value="Véhicule(s) disponible(s)">
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+
+
                         </div>
-
-
+                      </div>
                     </div>
+                  </div>
                 </div>
+
+
+              </div>
             </div>
+          </div>
         </header>
 
 

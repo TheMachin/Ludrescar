@@ -67,7 +67,7 @@
 
         <div class="row">
           <div class="col-sm-4 col-xs-12">
-            <div id="gtco-logo"><a href="index.html">LudresCar <em>.</em></a></div>
+            <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
           </div>
           <div class="col-xs-8 text-right menu-1">
             <ul>
@@ -105,10 +105,10 @@
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="activities">Station</label>
-                              <select name="#" id="activities" name="station" class="form-control">
-                                <option value="">Ludres-Centre</option>
-                                <option value="">Ludres-Gare</option>
-                                <option value="">Ludres-Sud</option>
+                              <select id="activities" name="station" class="form-control">
+                                <option value="Ludres-Centre">Ludres Centre</option>
+                                <option value="Ludres-Gare">Ludres Gare</option>
+                                <option value="Ludres-Sud">Ludres Sud</option>
                               </select>
                             </div>
                           </div>
