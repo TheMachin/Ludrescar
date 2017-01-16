@@ -13,6 +13,7 @@ include('../../classe/CompteUtilisateur.php');
 include('../../classe/Societe.php');
 include('../../classe/Penalite.php');
 include('../../../bdd/bdd.php');
+include('../../classe/Statistique.php');
 include('../../classe/HistStationVehicule.php');
 ?>
   <!DOCTYPE HTML>
@@ -134,7 +135,7 @@ include('../../classe/HistStationVehicule.php');
             </div>
 
             <div class="row">
-<?php
+<!--<?php
         // put your code here
             $result = pg_query($bdd, "SELECT * FROM vehicules where etat='Transfert'");
             if (!$result) {
@@ -203,7 +204,7 @@ include('../../classe/HistStationVehicule.php');
             }else{
                 echo "<h3>Aucun véhicule n'est en cours de transfert</h3>";
             }
-            ?>
+            ?>-->
             </div>
           </div>
         </div>
@@ -216,84 +217,14 @@ include('../../classe/HistStationVehicule.php');
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
                 <h2 class="cursive-font">Vos commentaires</h2>
                
-              </div>
-            </div>
-            <div class="row animate-box">
-              <div class="col-md-8 col-md-offset-2">
-                <form class="form-inline">
-                  <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                        <?php
-        // put your code here
-            if(isset($_POST['validS'])){
-                
-                if(!empty($_POST['description'])){
-                    $description=$_POST['description'];
-                }else{
-                    $description='';
-                }
-                
-                //on récupère son numero
-                $immat=$_SESSION['immat'];
-                //la liste des véhicules
-                $tabVehicule= unserialize($_SESSION['tabVehicule']);
-                //on récupère le véhicule concerné
-                $vehicule=$tabVehicule[$immat];
-                //on récupère la station dans laquelle le véhicule se trouve
-                $stationInitiale= getStations($vehicule->getStation()->getId(), $bdd);
-                //id station de destination
-                $id=$_POST['station'];
-                $stationDestination=getStations($id,$bdd);
-                //on vérifie si la station de destination peut accueillir le véhicule
-                $bool= verifStation($stationDestination, $bdd);
-                if($bool){
-                    //on vérifie si le véhicule peut etre transféré
-                    $checkEtatV= verifEtatVehicule($immat, $bdd);
-                    if($checkEtatV==NULL){
-                        
-                        //transfert du véhicule
-                        
-                        $date=new DateTime('now');
-                        $hist=new HistStationVehicule(0, $date->format('Y-m-d') , $description, $stationInitiale, $vehicule);
-                        $hist->insert($bdd);
-                        $vehicule->setStation($stationDestination);
-                        $vehicule->setEtat("Transfert");
-                        $vehicule->updateEtat($bdd);
-                        $vehicule->updateStation($bdd);
-                        
-                        /*supprVehiculeStation($immat, $bdd);
-                        updateEtatVehicule($immat, $bdd, 'Transfert');*/
-                        echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
-                    }else{
-                        //pas de transfert et affichage notification 
-                        echo '<h3>'.$checkEtatV.'</h3>';
-                    }
-                }else{
-                    echo '<h3>La station est rempli (complet)</h3>';
-                }
-                
-            }
-        ?>
-        <div class="row">
-            <div class="col-md-12 col-md-offset-0 text-left">
-                <div class="row row-mt-15em">
-                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                        <span class="intro-text-small">ludresCar</span>
-                        <h1 class="cursive-font">Transfert du véhicule.</h1>  
-                    </div>
-                    <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-                        <div class="form-wrap">
-                            <div class="tab">
-                                <div class="tab-content">
-                                    <div class="tab-content-inner active" data-content="signup">
-                                        <form method="POST">
+                    <div class="gtco-widget">
+                    <div class="col-md-6 col-sm-6"> <form method="POST">
                                             <?php
                                                 if(!isset($_POST['valid'])){
                                             ?>
                                             <div class="row form-group">                                                                                
                                                 <div class="col-md-12">
-                                                    <label for="activities">Immatriculation : </label>
-                                                    <select name="immat" id="activities" class="form-control">
+                                                    <select name="immat" id="activities" placholder="Immatriculation" class="form-control">
                                                         <?php 
                                                         $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
                                                         if (!$result) {
@@ -313,7 +244,7 @@ include('../../classe/HistStationVehicule.php');
                                             </div>
                                             <div class="row form-group">
                                                     <div class="col-md-12">
-                                                            <input type="submit" name="valid" class="btn btn-primary btn-block" value="Choisir véhicule">
+                                                            <input type="submit" name="valid" class="btn btn-primary btn-block" value="Enregistrer">
                                                     </div>
                                             </div>
                                             <?php
@@ -328,8 +259,7 @@ include('../../classe/HistStationVehicule.php');
                                             ?>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-                                                    <label for="activities">Station</label>
-                                                    <select name="station" id="activities" class="form-control">
+                                                    <select name="station" id="activities" placeholder="Station" class="form-control">
                                                         <?php 
 
                                                         $result = pg_prepare($bdd,"" ,"SELECT s.id,s.nom, s.adresse FROM stations s, vehicules v where v.no_immat=$1 and v.station_id!=s.id");
@@ -347,36 +277,23 @@ include('../../classe/HistStationVehicule.php');
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label for="date-start">Description du transfert (pas obligatoire)</label>
-                                                    <input type="text" id="description" name="description" class="form-control">
+                                                    <input type="text" id="description" name="description" placeholder="Description du transfert (pas obligatoire)" class="form-control">
+                                                  </br>
+                                                </br>
                                                 </div>
                                             </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-                                                        <input type="submit" name="validS" class="btn btn-primary btn-block" value="Choisir station">
+                                                        <input type="submit" name="validS" class="btn btn-primary btn-block" value="Enregistrer">
                                                 </div>
                                             </div>
                                             <?php
                                                 }
                                             ?>
                                         </form> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-        </div>
-                      <label for="email" class="sr-only">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Votre Email">
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-6">
-                    <button type="submit" class="btn btn-default btn-block">Envoyer</button>
-                  </div>
-                </form>
+                     
+            
               </div>
             </div>
           </div>
