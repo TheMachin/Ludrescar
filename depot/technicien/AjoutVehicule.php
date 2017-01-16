@@ -1,15 +1,15 @@
 <?php
 
 session_start();
-include('../../bdd/bdd.php');
-include('../classe/Vehicule.php');
+include('../../../bdd/bdd.php');
+include('../../classe/Vehicule.php');
 
 $typeVehicule = listVehicule($bdd);
 $station = listStation($bdd);
 
 if(!empty($_POST)){
   ajoutVehicule($bdd, $_POST['noImmat'], $_POST['station'], $_POST['marque'], $_POST['modele'], $_POST['type'], $_POST['nbPlace'], $_POST['carburant'], $_POST['puissance'], $_POST['nbKm'], $_POST['dateMS'], $_POST['dureeMS'], $_POST['nivCarburant']);
-  echo "immat : " . $_POST['noImmat']. "<br/>";
+  /*echo "immat : " . $_POST['noImmat']. "<br/>";
   echo "station : " .$_POST['station']. "<br/>";
   echo "marque : " . $_POST['marque']. "<br/>";
   echo "modele : " . $_POST['modele']. "<br/>";
@@ -20,7 +20,7 @@ if(!empty($_POST)){
   echo "nbKm : " . $_POST['nbKm']. "<br/>";
   echo "dateMS : " . $_POST['dateMS']. "<br/>";
   echo "dureeMS : " . $_POST['dureeMS']. "<br/>";
-  echo "nivCarburant : " . $_POST['nivCarburant']. "<br/>";
+  echo "nivCarburant : " . $_POST['nivCarburant']. "<br/>";*/
 }
 
 ?>
@@ -290,6 +290,7 @@ function listStation($bdd){
 }
 
 function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant){
+  echo "Coucou ajout vehicule";
   $verifStation = verifStation($bdd, $station);
   if($verifStation == true){
     return "Station rempli";
@@ -307,6 +308,7 @@ function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPla
 }
 
 function verifStation($bdd, $station){
+  echo "Coucou veriStation";
   $nbPlaceStation = nbPlaceStation($bdd, $station);
   $nbVehiculeStation = nbVehiculeStation($bdd, $nbPlaceStation[1]);
   if($nbPlaceStation[0] == $nbVehiculeStation){
@@ -318,6 +320,7 @@ function verifStation($bdd, $station){
 }
 
 function nbPlaceStation($bdd, $station){
+    echo "Coucou nbPlaceStation";
     $request = "SELECT nb_max_v, id
     FROM stations
     WHERE nom = $1";
@@ -328,6 +331,7 @@ function nbPlaceStation($bdd, $station){
 }
 
 function nbVehiculeStation($bdd, $noStation){
+    echo "Coucou nbVehiculeStation";
     $request = "SELECT COUNT(*)
     FROM vehicules
     WHERE station_id = $1";
@@ -338,6 +342,7 @@ function nbVehiculeStation($bdd, $noStation){
 }
 
 function noType($bdd, $type){
+    echo "Coucou noType";
     $request = "SELECT id
     FROM types
     WHERE nom = $1";
