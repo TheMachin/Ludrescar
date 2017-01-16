@@ -177,9 +177,9 @@ if(!empty($_POST)){
                             <div class="col-md-12">
                               <label for="carburant">Carburant :</label>
                               <select name="carburant" id="carburant" name="carburant" class="form-control">
-                                <option value="gasoil">Gasoil</option>
-                                <option value="essence">Essence</option>
-                                <option value="electrique">Electrique</option>
+                                <option value="Gasoil">Gasoil</option>
+                                <option value="Essence">Essence</option>
+                                <option value="Electrique">Electrique</option>
                               </select>
                             </div>
                           </div>
@@ -211,11 +211,10 @@ if(!empty($_POST)){
                             <div class="col-md-12">
                               <label for="nivCarburant">Niveau du carburant :</label>
                                 <select name="nivCarburant" id="nivCarburant" name="nivCarburant" class="form-control">
-                                  <option value="plein">Plein</option>
-                                  <option value="TroisQuatre">3/4</option>
-                                  <option value="UnDeux">1/2</option>
-                                  <option value="UnQuatre">1/4</option>
-                                  <option value="vide">Vide</option>
+                                  <option value="Plein">Plein</option>
+                                  <option value="Elevé">Elevé</option>
+                                  <option value="Moitié">Moitié</option>
+                                  <option value="Faible">Faible</option>
                                 </select>
                             </div>
                           </div>

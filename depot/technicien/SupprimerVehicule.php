@@ -1,20 +1,24 @@
 <?php
 
-include('../../bdd/bdd.php');
-include('../classe/Vehicule.php');
+include('../../../bdd/bdd.php');
+include('../../classe/Vehicule.php');
 session_start();
 
 if(!empty($_POST))
 {
     
     $vehicule = verifEtatVehicule($_POST['noImmat'], $bdd);
-    echo $vehicule[0];
-
-    if(empty($_POST)){
-      supprVehicule($_POST['noImmat'], $bdd);
-      echo 'Le véhicule a été supprimé avec succès !';
+    
+    if($vehicule == false){
+        $location = verifLocation($_POST['noImmat'], $bdd);
+        if($location == false){
+          supprVehicule($_POST['noImmat'], $bdd);
+          echo 'Le véhicule a été supprimé avec succès !';
+        }else{
+          echo 'Le véhicule est en location.';
+        }
     } else{
-      echo 'Le véhicule est occupé.';
+        echo 'Le véhicule est occupé.';
     }
 }
 
@@ -82,36 +86,36 @@ if(!empty($_POST))
     <div id="page">
 
       <!-- <div class="page-inner"> -->
-     <nav class="gtco-nav" role="navigation">
-          <div class="gtco-container">
+      <nav class="gtco-nav" role="navigation">
+        <div class="gtco-container">
 
-            <div class="row">
-              <div class="col-sm-4 col-xs-12">
-                <p style="color: white;">
-                  <?php if(isset($_SESSION['co']))
+          <div class="row">
+            <div class="col-sm-4 col-xs-12">
+              <p style="color: white;">
+                <?php if(isset($_SESSION['co']))
 {
     echo($_SESSION['login']);
 }
 ?>
-                </p>
-                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
-              </div>
-              <div class="col-xs-8 text-right menu-1">
-                <ul>
-                  <li class="has-dropdown">
-                     <a href="#">Services</a>
-                     <ul class="dropdown">
-                <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
-                <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
-                <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
+              </p>
+              <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+            </div>
+            <div class="col-xs-8 text-right menu-1">
+              <ul>
+                <li class="has-dropdown">
+                  <a href="#">Services</a>
+                  <ul class="dropdown">
+                    <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
+                    <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
+                    <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
+                  </ul>
+                </li>
+                <li><a href="../deco.php">Se déconnecter</a></li>
               </ul>
-            </li>
-                  <li><a href="../deco.php">Se déconnecter</a></li>
-                </ul>
-              </div>
             </div>
           </div>
-        </nav>
+        </div>
+      </nav>
 
       <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
@@ -132,7 +136,7 @@ if(!empty($_POST))
                       <div class="tab-content">
                         <div class="tab-content-inner active" data-content="signup">
                           <h3 class="cursive-font">Information :</h3>
-                          <form action="#" method="GET">
+                          <form action="SupprimerVehicule.php" method="POST">
                             <div class="row form-group">
                               <div class="col-md-12">
                                 <label for="noImmat">Numéro d'immatriculation :</label>
@@ -198,7 +202,7 @@ if(!empty($_POST))
 
   </html>
 
-<?php
+  <?php
 
 function verifEtatVehicule($immat, $bdd){
     $request = "SELECT no_immat
@@ -217,6 +221,20 @@ function supprVehicule($immat, $bdd){
     WHERE no_immat=$1";
     $result = pg_prepare($bdd,'',$request);
     $result = pg_execute($bdd, "",array($immat));
+}
+
+function verifLocation($immat, $bdd)
+{
+  $request = "SELECT vehicule_immat
+  FROM locations
+  WHERE (etatlocation = 'Réservé'
+  OR etatlocation = 'En cours'
+  OR etatlocation = 'Retard')
+  AND vehicule_immat = $1";
+  $result = pg_prepare($bdd,'',$request);
+  $result = pg_execute($bdd, "",array($immat));
+  $row = pg_fetch_row($result);
+  return $row;
 }
 
 ?>
