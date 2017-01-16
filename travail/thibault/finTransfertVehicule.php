@@ -36,7 +36,7 @@ if(isset($_POST['valid'])){
     if(!empty($_POST['etat'])){
         $etat=$_POST['etat'];
         if($etat=="c"){
-            $etat="Correcte";
+            $etat="Correct";
         }else if($etat="be"){
             $etat="Bon état";
         }else if($etat="hs"){

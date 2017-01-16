@@ -40,14 +40,14 @@ and open the template in the editor.
                                                                                 <div class="col-md-12">
                                                                                     <label for="activities">Etat du véhicule</label>
                                                                                     <select name="etat" id="activities" class="form-control">
-                                                                                            <option value="c">Correcte</option>
+                                                                                            <option value="c">Correct</option>
                                                                                             <option value="be">Bon état</option>
                                                                                             <option value="hs">Hors service</option>
                                                                                     </select>
                                                                                     <br><br>
                                                                                     <label>
                                                                                         Liste des états du véhicule : <br>
-                                                                                        <strong>Correcte :</strong> Le véhicule comporte des rayures ou des dégats léger au niveau de la carrosserie. <br>
+                                                                                        <strong>Correct :</strong> Le véhicule comporte des rayures ou des dégats léger au niveau de la carrosserie. <br>
                                                                                         <strong>En bon état :</strong> Le véhicule ne comporte pas de dégats. <br>
                                                                                         <strong>Hors service : </strong> Le véhicule comporte des dégats important et ne peut pas être roulé.
                                                                                     </label>
@@ -71,7 +71,9 @@ and open the template in the editor.
                                                                                         <label for="date-start">Niveau du carburant</label>
                                                                                         <select name="niv" id="activities" class="form-control">
                                                                                             <option value="p">Plein</option>
-                                                                                            <option value="v">Vide</option>
+                                                                                            <option value="e">Elevé</option>
+                                                                                            <option value="m">Moitié</option>
+                                                                                            <option value="f">Faible</option>
                                                                                         </select>
                                                                                 </div>
                                                                         </div>

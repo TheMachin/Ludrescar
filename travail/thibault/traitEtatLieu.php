@@ -87,8 +87,8 @@ if(isset($_POST['valid'])){
         
     }else{
         if($etat==="c"){
-            $vehicule->setEtat("Correcte");
-            $form->setEtatVehicule("Correcte");
+            $vehicule->setEtat("Correct");
+            $form->setEtatVehicule("Correct");
         }else if($etat==="be"){
             $vehicule->setEtat("Bon état");
             $form->setEtatVehicule("Bon état");

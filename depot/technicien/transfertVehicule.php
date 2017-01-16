@@ -199,7 +199,7 @@ and open the template in the editor.
     
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (date_deb<=NOW() AND NOW()>=date_fin_prev) OR (NOW()>=date_deb)";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (etatlocation='Annulé' OR etatlocation='Terminé')";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);
