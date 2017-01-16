@@ -1,6 +1,6 @@
 <?php
+include('../../bdd/bdd.php');
 session_start();
-//include('../../bdd/bdd.php');
 ?>
 
   <!DOCTYPE HTML>
@@ -90,7 +90,7 @@ if (isset($_POST['submit']))
         
     }else echo "Veuillez saisir tout les champs s'il vous plait !";
 }
-var_dump($_POST);
+
 ?>
       <div class="gtco-loader"></div>
 
@@ -137,87 +137,53 @@ var_dump($_POST);
               </div>
             </div>
             <div class="row">
+              <?php
+// On récupére les champs
+if(isset($_POST['station']))      $station=$_POST['station'];
 
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_1.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2>Range rover</h2>
-                    <p><span class="price cursive-font">€80/jour</span></p>
-                  </div>
-                </a>
-              </div>
+if(isset($_POST['dateDeb']))      $dateDeb=$_POST['dateDeb'];
 
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_2.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_2.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2> Jaguar F-Type R</h2>
-                    <p><span class="price cursive-font">€200/jour</span></p>
-                  </div>
-                </a>
-              </div>
+if(isset($_POST['hDeb']))      $hDeb=$_POST['hDeb'];
 
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_3.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_3.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2>BMW x1</h2>
-                    <p><span class="price cursive-font">€40/jour*</span></p>
+if(isset($_POST['dateRet']))      $dateRet=$_POST['dateRet'];
 
-                  </div>
-                </a>
-              </div>
+if(isset($_POST['hRet']))      $hRet=$_POST['hRet'];
 
+// On vérifie si les champs sont vides
+if(empty($station) OR empty($dateDeb) OR empty($hDeb) OR empty($dateRet) OR empty($hRet))
+{
+    echo '<font color="red">Attention, les champs doivent être remplis !</font>';
+}
 
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_4.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_4.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2>renault Talisman</h2>
-                    <p><span class="price cursive-font">€45/jour</span></p>
-                  </div>
-                </a>
-              </div>
-
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_5.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_5.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2>Renault Zoé</h2>
-                    <p><span class="price cursive-font">€20/jour</span></p>
-                  </div>
-                </a>
-              </div>
-
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <a href="images/img_6.jpg" class="fh5co-card-item image-popup">
-                  <figure>
-                    <div class="overlay"><i class="ti-plus"></i></div>
-                    <img src="images/img_6.jpg" alt="Image" class="img-responsive">
-                  </figure>
-                  <div class="fh5co-text">
-                    <h2>2 cv</h2>
-                    <p><span class="price cursive-font">€2/jour*</span></p>
-                  </div>
-                </a>
-              </div>
-
+else
+{
+    $result = pg_query($bdd, "SELECT v.marque, v.modele, t.prix_jour
+    FROM vehicules v, types t, stations s
+    WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert'
+    GROUP BY t.prix_jour, v.modele, v.marque");
+    if (!$result) {
+        echo "Une erreur est survenue.\n";
+        exit;
+    }
+    while ($row = pg_fetch_row($result)){
+        ?>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
+                    <figure>
+                      <div class="overlay"><i class="ti-plus"></i></div>
+                      <img src="images/img_1.jpg" alt="Image" class="img-responsive">
+                    </figure>
+                    <div class="fh5co-text">
+                      <h2><?php echo $row[0];?> : <?php echo $row[1]; ?></h2>
+                      <p><span class="price cursive-font"><?php echo $row[2]; ?>€ prix/jour
+                      </span></p>
+                    </div>
+                  </a>
+                </div>
+                <?php
+    }
+}
+?>
             </div>
           </div>
         </div>
