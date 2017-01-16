@@ -13,6 +13,7 @@ include('../../classe/CompteUtilisateur.php');
 include('../../classe/Societe.php');
 include('../../classe/Penalite.php');
 include('../../../bdd/bdd.php');
+include('../../classe/Statistique.php');
 include('../../classe/HistStationVehicule.php');
 ?>
   <!DOCTYPE HTML>
