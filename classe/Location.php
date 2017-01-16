@@ -197,7 +197,11 @@ class Location {
         $this->penalite = $penalite;
     }
 
-
+    function updateForm($bdd){
+        $requete="UPDATE locations SET formulaire_id=$1 WHERE id=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->Formulaire->getId(),$this->id));
+    }
 
     
 }

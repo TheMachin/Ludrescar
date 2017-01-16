@@ -153,6 +153,12 @@ class Vehicule {
         $result = pg_execute($bdd, "", array($this->etat,$this->no_immat));
     }
     
+    function updateNiv($bdd){
+        $requete="UPDATE vehicules SET niv_carbu=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->niv_carbu,$this->no_immat));
+    }
+    
     function updateStation($bdd){
         $requete="UPDATE vehicules SET station_id=$1 WHERE no_immat=$2";
         $result= pg_prepare($bdd,'',$requete);

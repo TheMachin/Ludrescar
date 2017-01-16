@@ -97,6 +97,14 @@ class Formulaire {
         $this->date = $date;
     }
 
-
+    function insert($bdd){
+        $requete="INSERT INTO formulaires(etatVehicule,km,niv_carbu,type,heure,date) VALUES($1,$2,$3,$4,$5,$6)";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->etatVehicule,$this->km,$this->niv_carbu,$this->type,$this->heure,$this->date));
+        
+        $result = pg_query($bdd, "SELECT MAX(id) FROM formulaires");
+        $row = pg_fetch_row($result);
+        return $row[0];
+    }
 }
 ?>
