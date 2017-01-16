@@ -158,13 +158,5 @@ class Vehicule {
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($this->station->getId(),$this->no_immat));
     }
-    
-    function searchEtatVehicule($immat){
-        $dos = $pdo->query('SELECT no_immat
-        FROM vehicules
-        WHERE etat = "Transfert"
-        AND no_immat = \''. $this .'\'');
-        return $dos;
-    }
 }
 ?>
