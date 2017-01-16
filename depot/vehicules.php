@@ -84,6 +84,10 @@
         
         
 ?>
+<?php
+session_start();
+include('../bdd/bdd.php');
+?>
 	</head>
 	<body>
 		
