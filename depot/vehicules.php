@@ -50,7 +50,40 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+<?php
+        function getAllVehicule($tab,$bdd){
+            $array=array();
+            foreach($tab as $row){
+                $vehicule=new Vehicule($row['no_immat'], $row['marque'], $row['modele'], $row['nb_place'], $row['carburant'], $row['puissance'], $row['nb_km'], $row['etat'], $row['date_mise_serv'], $row['duree_serv'], $row['niv_carbu'], getStation($row['station_id'],$bdd), getTypes($row['type_id'],$bdd));
+                $array[]=$vehicule;
+            }
+            return $array;
+        }
+        
+        function getTypes($id,$bdd){
+            $requete="SELECT * FROM types where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            $type=NULL;
+            while ($row = pg_fetch_row($result)) {
+                $type=new Type($row[0], $row[1], $row[2], $row[3]);
+            }
+            return $type;
+        }
+        
+        function getStation($id,$bdd){
+            $requete="SELECT * FROM stations where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            while ($row = pg_fetch_row($result)) {
+                $station=new Station($row[0], $row[1], $row[2], $row[3], new Statistique($row[4], 0, 0, 0, 0, 0, 0));
+            }
+            return $station;
+        }
+        
+        
+        
+?>
 	</head>
 	<body>
 		
@@ -110,38 +143,69 @@
 				</div>
 			</div>
 			<div class="row">
-<?php 
-	/**
-	* Paramètre d'entrée une variable de type tableau
-	* Le nom des colonnes sont les clés de la variable
-	**/
-	function tableau($tab)
-	{ 
-?>
+        <?php
+        // put your code here
+            $result = pg_query($bdd, "SELECT * FROM vehicules");
+            if (!$result) {
+              echo "Une erreur est survenue.\n";
+              exit;
+            }
+
+            $tab = pg_fetch_all($result);
+            
+            $tab=getAllVehicule($tab,$bdd);
+            ?>
             <div class='container-fluid'>
                     <label>Nombre de lignes : <?php echo count($tab); ?></label>
-                    <table id='tableID' class="table table-bordered table-striped">
+                    <table id='tableID' class="table table-bordered table-striped" border='1'>
+                        <thead>
+                            <tr>
+                                <th>Immatriculation</th>
+                                <th>Marque</th>
+                                <th>Modèle</th>
+                                <th>nombre de place</th>
+                                <th>puissance</th>
+                                <th>kilométrage</th>
+                                <th>Etat</th>
+                                <th>Date mise en service</th>
+                                <th>Durée du service</th>
+                                <th>niveau de carburant</th>
+                                <th>Nom du type</th>
+                                <th>Prix kilométrique</th>
+                                <th>Prix jour</th>
+                                <th>Station</th>
+                                <th>Adresse de la station</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         <?php
-                        $entete=FALSE;
-                        $i=1;
                         foreach($tab as $row){
-                            echo "";
-                            if(!$entete){
-                                    echo "<thead><tr><th width='20%'>#</th><th width='20%'>".implode("</th><th width='20%'>",array_keys($row))."</th></tr></thead><tbody>";
-                                    $entete=TRUE;
-                            }else{
-                                    $i++;
-                            }
-                            echo "<tr><td width='20%'>".$i."</td><td width='20%'>".implode("</td><td width='20%'>",$row)."</td></tr>";
-                            echo "";
+                            //$vehicule=new Vehicule($no_immat, $marque, $modele, $bn_place, $carburant, $puissance, $nb_km, $etat, $date_mise_serv, $duree_serv, $niv_carbu, $station, $type)
+                            $vehicule =$row;
+                            ?>
+                            <tr>
+                                <th><?php echo $vehicule->getNo_immat() ?></th>
+                                <th><?php echo $vehicule->getMarque() ?></th>
+                                <th><?php echo $vehicule->getModele() ?></th>
+                                <th><?php echo $vehicule->getBn_place() ?></th>
+                                <th><?php echo $vehicule->getPuissance() ?></th>
+                                <th><?php echo $vehicule->getNb_km() ?></th>
+                                <th><?php echo $vehicule->getEtat() ?></th>
+                                <th><?php echo $vehicule->getDate_mise_serv() ?></th>
+                                <th><?php echo $vehicule->getDuree_serv() ?></th>
+                                <th><?php echo $vehicule->getNiv_carbu() ?></th>
+                                <th><?php echo $vehicule->getType()->getNom() ?></th>
+                                <th><?php echo $vehicule->getType()->getPrix_km() ?></th>
+                                <th><?php echo $vehicule->getType()->getPrix_jour() ?></th>
+                                <th><?php echo $vehicule->getStation()->getNom() ?></th>
+                                <th><?php echo $vehicule->getStation()->getAdresse() ?></th>
+                            </tr>
+                            <?php
                         }
-                        echo "</tbody>";
                         ?>
+                        </tbody>
                     </table>
             </div>
-<?php
-	}
-?>
 
 			</div>
 		</div>
