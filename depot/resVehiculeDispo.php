@@ -168,17 +168,28 @@ else
     while ($row = pg_fetch_row($result)){
         ?>
                 <div class="col-lg-4 col-md-4 col-sm-6">
-                  <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-                    <figure>
-                      <div class="overlay"><i class="ti-plus"></i></div>
-                      <img src="images/img_1.jpg" alt="Image" class="img-responsive">
-                    </figure>
-                    <div class="fh5co-text">
-                      <h2><?php echo $row[0];?> : <?php echo $row[1]; ?></h2>
-                      <p><span class="price cursive-font"><?php echo $row[2]; ?>€ prix/jour
-                      </span></p>
-                    </div>
-                  </a>
+                  <form action="confirmerReservation.php" method="post">
+                    <input type="hidden" name="station" value="<?php echo $_POST['station']?>">
+                    <input type="hidden" name="dateDeb" value="<?php echo $_POST['dateDeb']?>">
+                    <input type="hidden" name="hDeb" value="<?php echo $_POST['hDeb']?>">
+                    <input type="hidden" name="dateRet" value="<?php echo $_POST['dateRet']?>">
+                    <input type="hidden" name="hRet" value="<?php echo $_POST['hRet']?>">
+                    <input type="hidden" name="hDeb" value="<?php echo $_POST['hDeb']?>">
+                    <input type="hidden" name="marque" value="<?php echo $row[0]?>">
+                    <input type="hidden" name="modele" value="<?php echo $row[1]?>">
+                    <input type="hidden" name="prixJour" value="<?php echo $row[2]?>">
+                    <input type="submit" name="reserver" class="btn btn-primary btn-block" value="Réserver">
+                    <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
+                      <figure>
+                        <div class="overlay"><i class="ti-plus"></i></div>
+                        <img src="images/img_1.jpg" alt="Image" class="img-responsive">
+                      </figure>
+                      <div class="fh5co-text">
+                        <h2><?php echo $row[0];?> : <?php echo $row[1]; ?></h2>
+                        <p><span class="price cursive-font"><?php echo $row[2]; ?>€ prix/jour</span></p>
+                      </div>
+                    </a>
+                  </form>
                 </div>
                 <?php
     }
