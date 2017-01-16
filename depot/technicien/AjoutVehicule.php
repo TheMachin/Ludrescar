@@ -293,11 +293,60 @@ function listStation($bdd){
 }
 
 function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant){
-  verifStation($bdd);
+  $verifStation = verifStation($bdd, $station);
+  if($verifStation == true){
+    return "Station rempli";
+  }else{
+    $noType = noType($bdd, $type);
+    $request = "INSERT INTO vehicules(
+            no_immat, modele, nb_place, carburant, puissance, nb_km, etat, 
+            date_mise_serv, duree_serv, niv_carbu, type_id, station_id, marque)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, 
+            $8, $9, $10, $11, $12, $13);";
+    $result = pg_prepare($bdd,'',$request);
+    $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, "Bon état", $dateMS, $dureeMS, $nivCarburant, $noType[0], verifStation[0], $modele));
+    return "Le véhicule a bien été ajouté dans la station !";
+  }
+}
+
+function verifStation($bdd, $station){
+  $nbPlaceStation = nbPlaceStation($bdd, $station);
+  $nbVehiculeStation = nbVehiculeStation($bdd, $nbPlaceStation[1]);
+  if($nbPlaceStation[0] == $nbVehiculeStation){
+    return true;
+  }else{
+    return $nbPlaceStation[1];
+  }
 
 }
 
-function verifStation($bdd){
+function nbPlaceStation($bdd, $station){
+    $request = "SELECT nb_max_v, id
+    FROM stations
+    WHERE nom = $1";
+    $result = pg_prepare($bdd,'',$request);
+    $result = pg_execute($bdd, "",array($station));
+    $row = pg_fetch_row($result);
+    return $row;
+}
 
+function nbVehiculeStation($bdd, $noStation){
+    $request = "SELECT COUNT(*)
+    FROM vehicules
+    WHERE station_id = $1";
+    $result = pg_prepare($bdd,'',$request);
+    $result = pg_execute($bdd, "",array($noStation));
+    $row = pg_fetch_row($result);
+    return $row;
+}
+
+function noType($bdd, $type){
+    $request = "SELECT id
+    FROM types
+    WHERE nom = $1";
+    $result = pg_prepare($bdd,'',$request);
+    $result = pg_execute($bdd, "",array($type));
+    $row = pg_fetch_row($result);
+    return $row;
 }
 ?>
