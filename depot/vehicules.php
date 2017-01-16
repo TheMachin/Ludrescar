@@ -1,3 +1,17 @@
+<?php
+include('../classe/Formulaire.php');
+include('../classe/Retour.php');
+include('../classe/Location.php');
+include('../classe/Vehicule.php');
+include('../classe/Type.php');
+include('../classe/Station.php');
+include('../classe/Statistique.php');
+include('../classe/Utilisateur.php');
+include('../classe/CompteUtilisateur.php');
+include('../classe/Societe.php');
+include('../classe/Penalite.php');
+include('../bdd/bdd.php');
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
