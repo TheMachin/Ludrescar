@@ -86,24 +86,35 @@ if(!empty($_POST)){
 
     <!-- <div class="page-inner"> -->
     <nav class="gtco-nav" role="navigation">
-      <div class="gtco-container">
+          <div class="gtco-container">
 
-        <div class="row">
-          <div class="col-sm-4 col-xs-12">
-            <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+            <div class="row">
+              <div class="col-sm-4 col-xs-12">
+                <p style="color: white;">
+                  <?php if(isset($_SESSION['co']))
+{
+    echo($_SESSION['login']);
+}
+?>
+                </p>
+                <div id="gtco-logo"><a href="indexco.php">LudresCar <em>.</em></a></div>
+              </div>
+              <div class="col-xs-8 text-right menu-1">
+                <ul>
+                  <li class="has-dropdown">
+                     <a href="#">Services</a>
+                     <ul class="dropdown">
+                <li><a href="#">Supprimer un véhicule</a></li>
+                <li><a href="#">amener un véhicule à une autre station</a></li>
+                <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
+              </ul>
+            </li>
+                  <li><a href="../deco.php">Se déconnecter</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-8 text-right menu-1">
-            <ul>
-              <li><a href="">Véhicules</a></li>
-              <li><a href="">Mes locations</a></li>
-              <li><a href="">Contact</a></li>
-              <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
-              <li><a href="">Se déconnecter</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+        </nav>
 
     <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:1700px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
