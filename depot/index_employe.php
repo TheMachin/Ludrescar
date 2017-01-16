@@ -87,8 +87,8 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 						$_SESSION['co']=1;
 						$_SESSION['login']=$login;
 					if($count_t ==1){
-						header('Location:employe/index.php');
-					}else header('Location:responsable/index.php');
+						header('Location:employe/index_t.php');
+					}else header('Location:index_r.php');
 					}else echo"identifiant ou mot de passe incorect";
 
 

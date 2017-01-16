@@ -63,32 +63,25 @@ include('../../bdd/bdd.php');
 if (isset($_POST['submit']))
 {
 	#htmlentities est la pour une securite et trim est la pour eviter les espaces dans le usrename
-	$login =htmlentities(trim($_POST['login']));
+	$email =htmlentities(trim($_POST['email']));
 	$password =htmlentities(trim($_POST['password']));
 	
 //echo "test";
 /*pour tester */
 
 //si ce que l'on rentre existe
-	if($login&&$password){
-// requete pour tout le monde 
-$requete_tous="select * from Employe e, compteEmploye ce where e.nom=$1 and ce.mdp=$2 and ce.id=e.id;";
-					$req= pg_prepare($bdd,'connexion',$requete_tous);
-                                        $req= pg_execute($bdd,'connexion',array($login,$password));
+	if($email&&$password){
+	$password=md5($password);
+$requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 and cu.mdp=$2 and cu.id=u.compteutilisateur_id;";
+					$req= pg_prepare($bdd,'connexion',$requete);
+                                        $req= pg_execute($bdd,'connexion',array($email,$password));
 					$count= pg_num_rows($req);
-// est-ce un technicien
-$requete_technicien="select * from Technicien t where t.nom=$1";
-$req_t= pg_prepare($bdd,'connexion',$requete_tous);
-                                        $req_t= pg_execute($bdd,'connexion',array($login,$password));
-					$count_t= pg_num_rows($req_t);
-
 					if($count==1){
 							//creation de session
 						$_SESSION['co']=1;
-						$_SESSION['login']=$login;
-					if($count_t ==1){
-						header('Location:employe/index.php');
-					}else header('Location:responsable/index.php');
+						$_SESSION['email']=$email;
+
+						header('Location:indexco.php');
 					}else echo"identifiant ou mot de passe incorect";
 
 
@@ -112,6 +105,7 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 					<ul>
 						<li><a href="vehicules.php">Véhicules</a></li>
 						<li><a href="contact.php">Contact</a></li>
+						<li class="btn-cta"><a href="Inscription.php"><span>Inscription</span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -139,11 +133,11 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 										<div class="tab-content-inner active" data-content="signup">
 											<h3 class="cursive-font">Connectez-vous !!</h3>
 											<!--action est le registre ou on est et apres la methode -->
-											<form action="index_employee.php"method="post">
+											<form action="index.php"method="post">
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="#">Login</label>
-														<input type="text" name="Login" placeholder="" class="form-control">
+														<label for="#">Email</label>
+														<input type="text" name="email" placeholder="" class="form-control">
 													</div>
 												</div>
 												<div class="row form-group">
@@ -168,6 +162,155 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 			</div>
 		</div>
 	</header>
+
+	
+	
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2 class="cursive-font primary-color">Voitures populaires</h2>
+					<p>Voici les voitures les plus populaires de notre parc automobile.</p>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_1.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_1.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>Range rover</h2>
+							<p><span class="price cursive-font">€80/jour</span></p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_2.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_2.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2> Jaguar F-Type R</h2>
+							<p><span class="price cursive-font">€200/jour</span></p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_3.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_3.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>BMW x1</h2>
+							<p><span class="price cursive-font">€40/jour*</span></p>
+
+						</div>
+					</a>
+				</div>
+
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_4.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_4.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>renault Talisman</h2>
+							<p><span class="price cursive-font">€45/jour</span></p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_5.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_5.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>Renault Zoé</h2>
+							<p><span class="price cursive-font">€20/jour</span></p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_6.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_6.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>2 cv</h2>
+							<p><span class="price cursive-font">€2/jour*</span></p>
+						</div>
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+					<h2 class="cursive-font">Nos Services</h2>
+					<p>Nos services pour vous servir.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-6">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="ti-face-smile"></i>
+						</span>
+						<h3>La satisfaction client</h3>
+						<p>Votre satisfaction est notre principal objectif.</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="ti-thought"></i>
+						</span>
+						<h3>Nos offres sont créatives et adaptatives</h3>
+						<p>Nos offres peuvent etre adaptés.Nos tarifs sont adaptés chaque jour.</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="ti-truck"></i>
+						</span>
+						<h3>Vous êtes assurés</h3>
+						<p>A chaque location voyager avec sécurité grâce à notre assurance *.</p>
+					</div>
+				</div>
+				
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="gtco-cover gtco-cover-sm" style="background-image: url(images/img_bg_1.jpg)"  data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="gtco-container text-center">
+			<div class="display-t">
+				<div class="display-tc">
+					<h1>&ldquo; Ludrescar une agence compréhensive, compétente aux tarifs concurentiels !&rdquo;</h1>
+					<p>&mdash; John Doe</p>
+				</div>	
+			</div>
+		</div>
+	</div>
 
 	<div id="gtco-counter" class="gtco-section">
 		<div class="gtco-container">
