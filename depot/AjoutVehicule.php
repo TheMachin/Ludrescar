@@ -3,37 +3,26 @@
 session_start();
 include('../../bdd/bdd.php');
 include('../classe/Vehicule.php');
-/*
-if(!empty($_POST))
-{
-    $req = $pdo->prepare('INSERT INTO document(NOM_DOC, TYPE_DOC) VALUES(:NOM_DOC, :TYPE_DOC)');
-    $req->execute(array(
-        'NOM_DOC' => $_POST['ldm'],
-        'TYPE_DOC' => "Lettre de motivation"
-    ));
-    
-    $dos = $pdo->query('SELECT NO_DOSSIER
-    FROM dossier
-    WHERE NOM_CANDIDAT =\''. $candidat->getNom_candidat().'\'');
-    
-    $doc = $pdo->query('SELECT NO_DOC
-    FROM document
-    WHERE type_doc = "Lettre de motivation"
-    ORDER BY NO_DOC DESC LIMIT 0, 1');
-    
-    $doss = $dos->fetch();
-    $docc = $doc->fetch();
-    
-    $req2 = $pdo->prepare('INSERT INTO contient_document(NO_DOC, NO_DOSSIER) VALUES(:NO_DOC, :NO_DOSSIER)');
-    $req2->execute(array(
-        'NO_DOC' => $docc['NO_DOC'],
-        'NO_DOSSIER' => $doss['NO_DOSSIER']
-    ));
-    echo 'La nouvelle lettre de motivation a bien ete ajoutee';
-    
-    
+
+$typeVehicule = listVehicule($bdd);
+$station = listStation($bdd);
+
+if(!empty($_POST)){
+  ajoutVehicule($bdd, $_POST['noImmat'], $_POST['station'], $_POST['marque'], $_POST['modele'], $_POST['type'], $_POST['nbPlace'], $_POST['carburant'], $_POST['puissance'], $_POST['nbKm'], $_POST['dateMS'], $_POST['dureeMS'], $_POST['nivCarburant']);
+  echo "immat : " . $_POST['noImmat']. "<br/>";
+  echo "station : " .$_POST['station']. "<br/>";
+  echo "marque : " . $_POST['marque']. "<br/>";
+  echo "modele : " . $_POST['modele']. "<br/>";
+  echo "type : " . $_POST['type']. "<br/>";
+  echo "nbPlace : " . $_POST['nbPlace']. "<br/>";
+  echo "carburant : " . $_POST['carburant']. "<br/>";
+  echo "puissance : " . $_POST['puissance']. "<br/>";
+  echo "nbKm : " . $_POST['nbKm']. "<br/>";
+  echo "dateMS : " . $_POST['dateMS']. "<br/>";
+  echo "dureeMS : " . $_POST['dureeMS']. "<br/>";
+  echo "nivCarburant : " . $_POST['nivCarburant']. "<br/>";
 }
-*/
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -119,7 +108,7 @@ if(!empty($_POST))
       </div>
     </nav>
 
-    <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:1500px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+    <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:1700px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="gtco-container">
         <div class="row">
@@ -137,8 +126,8 @@ if(!empty($_POST))
 
                     <div class="tab-content">
                       <div class="tab-content-inner active" data-content="signup">
-                        <h3 class="cursive-font">Information :</h3>
-                        <form action="#" method="POST">
+                        <h3 class="cursive-font">Informations :</h3>
+                        <form action="AjoutVehicule.php" method="POST">
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="noImmat">Numéro d'immatriculation :</label>
@@ -147,20 +136,37 @@ if(!empty($_POST))
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
+                              <label for="station">Station :</label>
+                              <select name="station" id="station" name="station" class="form-control">
+                                <?php
+                                  while ($row = pg_fetch_row($station)) {
+                                    echo "<option value=\"$row[0]\">$row[0]</option>";
+                                  }
+                                ?>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-md-12">
                               <label for="marque">Marque :</label>
-                              <input type="text" id="noImmat " name="noImmat" class="form-control">
+                              <input type="text" id="marque " name="marque" class="form-control">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="modele">Modèle :</label>
-                              <select name="#" id="modele" name="modele" class="form-control">
-                                <option value="monoplace">Monoplace</option>
-                                <option value="suv">SUV</option>
-                                <option value="fourfour">4x4</option>
-                                <option value="coupe">Coupe</option>
-                                <option value="cabriolet">Cabriolet</option>
-                                <option value="break">Break</option>
+                              <input type="text" id="modele " name="modele" class="form-control">
+                            </div>
+                          </div>
+                          <div class="row form-group">
+                            <div class="col-md-12">
+                              <label for="type">Type :</label>
+                              <select name="type" id="type" name="type" class="form-control">
+                                <?php
+                                  while ($row = pg_fetch_row($typeVehicule)) {
+                                    echo "<option value=\"$row[0]\">$row[0]</option>";
+                                  }
+                                ?>
                               </select>
                             </div>
                           </div>
@@ -173,10 +179,9 @@ if(!empty($_POST))
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="carburant">Carburant :</label>
-                              <select name="#" id="carburant" name="carburant" class="form-control">
-                                <option value="diesel">Diesel</option>
-                                <option value="spNeufCinq">SP95</option>
-                                <option value="spNeufHuit">SP98</option>
+                              <select name="carburant" id="carburant" name="carburant" class="form-control">
+                                <option value="gasoil">Gasoil</option>
+                                <option value="essence">Essence</option>
                                 <option value="electrique">Electrique</option>
                               </select>
                             </div>
@@ -184,31 +189,31 @@ if(!empty($_POST))
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="puissance">Puissance :</label>
-                              <input type="text" id="puissance" name="puissance" class="form-control">
+                              <input type="number" id="puissance" name="puissance" class="form-control">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="nbKm">Kilométrage :</label>
-                              <input type="text" id="nbKm" name="nbKm" class="form-control">
+                              <input type="number" id="nbKm" name="nbKm" class="form-control">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="dateMS">Date de mise en service :</label>
-                              <input type="text" id="dateMS" name="dateMS" class="form-control">
+                              <input type="text" id="date" name="dateMS" class="form-control">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="dureeMS">Durée de mise en service en année :</label>
-                              <input type="text" id="dureeMS" name="dureeMS" class="form-control">
+                              <input type="number" id="dureeMS" name="dureeMS" class="form-control">
                             </div>
                           </div>
                           <div class="row form-group">
                             <div class="col-md-12">
                               <label for="nivCarburant">Niveau du carburant :</label>
-                                <select name="#" id="nivCarburant" name="nivCarburant" class="form-control">
+                                <select name="nivCarburant" id="nivCarburant" name="nivCarburant" class="form-control">
                                   <option value="plein">Plein</option>
                                   <option value="TroisQuatre">3/4</option>
                                   <option value="UnDeux">1/2</option>
@@ -220,7 +225,7 @@ if(!empty($_POST))
 
                           <div class="row form-group">
                             <div class="col-md-12">
-                              <input type="submit" class="btn btn-primary btn-block" value="Valider">
+                              <input type="submit" class="btn btn-primary btn-block" value="Ajouter">
                             </div>
                           </div>
                         </form>
@@ -276,3 +281,23 @@ if(!empty($_POST))
 </body>
 
 </html>
+
+<?php
+
+function listVehicule($bdd){
+    return pg_query($bdd, "SELECT nom FROM types");
+}
+
+function listStation($bdd){
+    return pg_query($bdd, "SELECT nom FROM stations");
+}
+
+function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant){
+  verifStation($bdd);
+
+}
+
+function verifStation($bdd){
+
+}
+?>
