@@ -1,3 +1,14 @@
+<?php
+include('../../bdd/bdd.php');
+include('../../classe/Technicien.php');
+include('../../classe/CompteEmploye.php');
+include('../../classe/Statistique.php');
+include('../../classe/Station.php');
+
+
+$technicien=new Technicien(33, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
+$station=$technicien->getStation();
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -24,26 +35,23 @@ and open the template in the editor.
                                                 <div class="tab-content">
                                                         <div class="tab-content-inner active" data-content="signup">
                                                             <form action="traitMiseEntretien.php" method="POST">
-                                                                        <div class="row form-group">
-                                                                                <div class="col-md-12">
-                                                                                    <label for="activities">Numéro immatriculation du véhicule : </label>
-                                                                                    <select name="immat" id="activities" class="form-control">
-                                                                                            <option value="681684">66816118</option>
-                                                                                            <option value="46848646">7878278</option>
-                                                                                            <option value="v">753777375</option>
-                                                                                            <option value="hs">757837537</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                        </div>
-                                                                        <div class="row form-group">
-                                                                                <div class="col-md-12">
-                                                                                    <label for="activities">Technicien : </label>
-                                                                                    <select name="t" id="activities" class="form-control">
-                                                                                            <option value="id">Kevin Araba</option>
-                                                                                            <option value="46848646">Kevin Araba</option>
-                                                                                            <option value="v">Kevin Araba</option>
-                                                                                    </select>
-                                                                                </div>
+                                                                        <div class="row form-group">                                                                                
+                                                                            <div class="col-md-12">
+                                                                                <label for="activities">Immatriculation : </label>
+                                                                                <select name="immat" id="activities" class="form-control">
+                                                                                    <?php 
+                                                                                    $result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat!='Transfert' AND s.id=$1");
+                                                                                    $result= pg_execute($bdd,'',array($station->getId()));
+                                                                                    if (!$result) {
+                                                                                      echo "Une erreur est survenue.\n";
+                                                                                      exit;
+                                                                                    }
+                                                                                    while ($row = pg_fetch_row($result)) {
+                                                                                        echo "<option value='".$row[0]."'> Immatriculation : ".$row[0]." Véhicule : ".$row[1]." ".$row[2]." état : ".$row[3]." Station : ".$row[4]."</option>";
+                                                                                    }
+                                                                                    ?>
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">

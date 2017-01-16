@@ -77,7 +77,11 @@ class Entretien {
         $this->technicien = $technicien;
     }
 
-
+    function insert($bdd){
+        $requete="INSERT INTO entretiens(date_deb,date_fin,type_entretien,technicien_id,vehicule_immat) VALUES($1,$2,$3,$4,$5)";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->date_deb,$this->date_fin,$this->type_entretien,$this->technicien->getId(),$this->vehicule->getNo_immat()));
+    }
     
 }
 ?>
