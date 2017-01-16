@@ -1,3 +1,18 @@
+<?php
+session_start();
+include('../../classe/Formulaire.php');
+include('../../classe/Retour.php');
+include('../../classe/Location.php');
+include('../../classe/Vehicule.php');
+include('../../classe/Type.php');
+include('../../classe/Station.php');
+include('../../classe/Statistique.php');
+include('../../classe/Utilisateur.php');
+include('../../classe/CompteUtilisateur.php');
+include('../../classe/Societe.php');
+include('../../classe/Penalite.php');
+include('../../bdd/bdd.php');
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -17,8 +32,60 @@ and open the template in the editor.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-if(!empty($_GET['immat'])){
-    $requete="SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.adresse vehicules v, stations s WHERE no_immat=$1 AND v.station_id=s.id";
+if(isset($_POST['valid'])){
+    if(!empty($_POST['etat'])){
+        $etat=$_POST['etat'];
+        if($etat=="c"){
+            $etat="Correcte";
+        }else if($etat="be"){
+            $etat="Bon état";
+        }else if($etat="hs"){
+            $etat="Hors service";
+        }else{
+            sendError("Erreur traitement formulaire : L'état du véhicule n'existe pas");
+        }
+    }else{
+        sendError("Erreur traitement formulaire : L'état du véhicule n'a pas été spécifié");
+    }
+    
+    if(!empty($_POST['km'])){
+        $km=$_POST['km'];
+    }else{
+        sendError("Erreur : Le kilométrage du véhicule n'a pas été spécifié");
+    }
+    
+    if(!empty($_POST['immat'])){
+        $immat=$_POST['immat'];
+    }else{
+        sendError("Erreur traitement du formulaire : Veuillez nous excuser.");
+    }
+    
+    if(!empty($_POST['niv'])){
+        $niv=$_POST['niv'];
+    }else{
+        sendError("Erreur traitement formulaire : Le niveau de carburant du véhicule n'a pas été spécifié");
+    }
+    
+    $kmAvant= getKmVehicule($immat, $bdd);
+    
+    if($kmAvant>$km){
+        //probleme
+        sendError("Erreur : Le kilométrage spécifié ne doit pas être inférieure à celui du véhicule");
+    }
+    
+    
+    $requete="UPDATE vehicules SET etat=$1, nb_km=$2,niv_carbu=$3 WHERE no_immat=$4";
+    $result= pg_prepare($bdd,'',$requete);
+    $result = pg_execute($bdd, "", array($etat,$km,$niv,$immat));
+    
+    ?>
+        <h3>Le véhicule est à nouveau disponible</h3>
+        
+    <?php
+    
+}else if(!empty($_GET['immat'])){
+    $immat=$_GET['immat'];
+    $requete="SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.adresse FROM vehicules v, stations s WHERE no_immat=$1 AND v.station_id=s.id";
     $result= pg_prepare($bdd,'',$requete);
     $result = pg_execute($bdd, "", array($immat));
 
@@ -47,7 +114,7 @@ if(!empty($_GET['immat'])){
                                                                                     <label for="activities">Etat du véhicule</label>
                                                                                     <select name="etat" id="activities" class="form-control">
                                                                                             <option value="c">Correcte</option>
-                                                                                            <option value="be">En bon état</option>
+                                                                                            <option value="be">Bon état</option>
                                                                                             <option value="hs">Hors service</option>
                                                                                     </select>
                                                                                     <br><br>
@@ -64,6 +131,7 @@ if(!empty($_GET['immat'])){
                                                                                 <div class="col-md-12">
                                                                                         <label for="date-start">Kilométrage du véhicule</label>
                                                                                         <input type="text" id="km" name="km" class="form-control">
+                                                                                        <input type="hidden" id="immat" name="immat" value='<?php echo $row[0]; ?>'>
                                                                                 </div>
                                                                         </div>
                                                                         <div class="row form-group">
@@ -94,11 +162,19 @@ if(!empty($_GET['immat'])){
     <?php
     
 }else{
-    
+    sendError("Pas de véhicule sélectionné");
 }
 
     function sendError($msgError){
-        $_SESSION['vehiculeDebutError']=$msgError;
+        $_SESSION['finTransfert']=$msgError;
         header("location:".  $_SERVER['HTTP_REFERER']); 
         exit(0);
+    }
+    
+    function getKmVehicule($immat,$bdd){
+        $requete="SELECT nb_km FROM vehicules where no_immat=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($immat));
+            $row = pg_fetch_row($result);
+            return $row[0];
     }

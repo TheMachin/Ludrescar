@@ -56,6 +56,17 @@ class Type {
     function setPrix_jour($prix_jour) {
         $this->prix_jour = $prix_jour;
     }
+    
+    function getTypeById($id,$bdd){
+            $requete="SELECT * FROM types where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            $type=NULL;
+            while ($row = pg_fetch_row($result)) {
+                $type=new Type($row[0], $row[1], $row[2], $row[3]);
+            }
+            return $type;
+        }
 
 
 

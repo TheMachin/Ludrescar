@@ -29,16 +29,21 @@ and open the template in the editor.
                     $description='';
                 }
                 
-                
+                //on récupère son numero
                 $immat=$_SESSION['immat'];
+                //la liste des véhicules
                 $tabVehicule= unserialize($_SESSION['tabVehicule']);
+                //on récupère le véhicule concerné
                 $vehicule=$tabVehicule[$immat];
+                //on récupère la station dans laquelle le véhicule se trouve
                 $stationInitiale= getStations($vehicule->getStation()->getId(), $bdd);
                 //id station de destination
                 $id=$_POST['station'];
                 $stationDestination=getStations($id,$bdd);
+                //on vérifie si la station de destination peut accueillir le véhicule
                 $bool= verifStation($stationDestination, $bdd);
                 if($bool){
+                    //on vérifie si le véhicule peut etre transféré
                     $checkEtatV= verifEtatVehicule($immat, $bdd);
                     if($checkEtatV==NULL){
                         
@@ -194,7 +199,7 @@ and open the template in the editor.
     
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_id=$1 AND (date_deb<=NOW() AND NOW()>=date_fin_prev) OR (NOW()>=date_deb)";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (date_deb<=NOW() AND NOW()>=date_fin_prev) OR (NOW()>=date_deb)";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);

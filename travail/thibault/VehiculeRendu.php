@@ -40,7 +40,7 @@ and open the template in the editor.
                                                                                     <label for="activities">Etat du véhicule</label>
                                                                                     <select name="etat" id="activities" class="form-control">
                                                                                             <option value="c">Correcte</option>
-                                                                                            <option value="be">En bon état</option>
+                                                                                            <option value="be">Bon état</option>
                                                                                             <option value="v">Volé</option>
                                                                                             <option value="hs">Hors service</option>
                                                                                     </select>
