@@ -8,19 +8,8 @@ $typeVehicule = listVehicule($bdd);
 $station = listStation($bdd);
 
 if(!empty($_POST)){
-  ajoutVehicule($bdd, $_POST['noImmat'], $_POST['station'], $_POST['marque'], $_POST['modele'], $_POST['type'], $_POST['nbPlace'], $_POST['carburant'], $_POST['puissance'], $_POST['nbKm'], $_POST['dateMS'], $_POST['dureeMS'], $_POST['nivCarburant']);
-  /*echo "immat : " . $_POST['noImmat']. "<br/>";
-  echo "station : " .$_POST['station']. "<br/>";
-  echo "marque : " . $_POST['marque']. "<br/>";
-  echo "modele : " . $_POST['modele']. "<br/>";
-  echo "type : " . $_POST['type']. "<br/>";
-  echo "nbPlace : " . $_POST['nbPlace']. "<br/>";
-  echo "carburant : " . $_POST['carburant']. "<br/>";
-  echo "puissance : " . $_POST['puissance']. "<br/>";
-  echo "nbKm : " . $_POST['nbKm']. "<br/>";
-  echo "dateMS : " . $_POST['dateMS']. "<br/>";
-  echo "dureeMS : " . $_POST['dureeMS']. "<br/>";
-  echo "nivCarburant : " . $_POST['nivCarburant']. "<br/>";*/
+  $ajoutVehicule = ajoutVehicule($bdd, $_POST['noImmat'], $_POST['station'], $_POST['marque'], $_POST['modele'], $_POST['type'], $_POST['nbPlace'], $_POST['carburant'], $_POST['puissance'], $_POST['nbKm'], $_POST['dateMS'], $_POST['dureeMS'], $_POST['nivCarburant']);
+  echo $ajoutVehicule;
 }
 
 ?>
@@ -301,10 +290,9 @@ function listStation($bdd){
 }
 
 function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant){
-  echo "Coucou ajout vehicule";
   $verifStation = verifStation($bdd, $station);
-  if($verifStation == true){
-    return "Station rempli";
+  if($verifStation == 0){
+    return "Le véhicule ne peut pas être ajouté car la station est rempli !";
   }else{
     $noType = noType($bdd, $type);
     $request = "INSERT INTO vehicules(
@@ -313,17 +301,16 @@ function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPla
     VALUES ($1, $2, $3, $4, $5, $6, 'Bon état',
             $7, $8, $9, $10, $11, $12);";
     $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant, $noType[0], $verifStation[0], $modele));
+    $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant, $noType[0], $verifStation, $modele));
     return "Le véhicule a bien été ajouté dans la station !";
   }
 }
 
 function verifStation($bdd, $station){
-  echo "Coucou veriStation";
   $nbPlaceStation = nbPlaceStation($bdd, $station);
   $nbVehiculeStation = nbVehiculeStation($bdd, $nbPlaceStation[1]);
-  if($nbPlaceStation[0] == $nbVehiculeStation){
-    return true;
+  if($nbPlaceStation[0] == $nbVehiculeStation[0]){
+    return 0;
   }else{
     return $nbPlaceStation[1];
   }
@@ -331,7 +318,6 @@ function verifStation($bdd, $station){
 }
 
 function nbPlaceStation($bdd, $station){
-    echo "Coucou nbPlaceStation";
     $request = "SELECT nb_max_v, id
     FROM stations
     WHERE nom = $1";
@@ -342,7 +328,6 @@ function nbPlaceStation($bdd, $station){
 }
 
 function nbVehiculeStation($bdd, $noStation){
-    echo "Coucou nbVehiculeStation";
     $request = "SELECT COUNT(*)
     FROM vehicules
     WHERE station_id = $1";
@@ -353,13 +338,13 @@ function nbVehiculeStation($bdd, $noStation){
 }
 
 function noType($bdd, $type){
-    echo "Coucou noType";
     $request = "SELECT id
     FROM types
     WHERE nom = $1";
     $result = pg_prepare($bdd,'',$request);
     $result = pg_execute($bdd, "",array($type));
     $row = pg_fetch_row($result);
+
     return $row;
 }
 ?>
