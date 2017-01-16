@@ -82,10 +82,10 @@ session_start();
                   <li class="has-dropdown">
                      <a href="#">Services</a>
                      <ul class="dropdown">
-                <li><a href="#">Ajouter un véhicule</a></li>
+                <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                 <li><a href="#">Supprimer un véhicule</a></li>
                 <li><a href="#">amener un véhicule à une autre station</a></li>
-                <li><a href="#">mettre un véhicule en entretien</a></li>
+                <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
               </ul>
             </li>
                   <li><a href="../deco.php">Se déconnecter</a></li>
