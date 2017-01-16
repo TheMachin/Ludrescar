@@ -134,7 +134,7 @@ include('../../classe/HistStationVehicule.php');
             </div>
 
             <div class="row">
-<!--<?php
+<?php
         // put your code here
             $result = pg_query($bdd, "SELECT * FROM vehicules where etat='Transfert'");
             if (!$result) {
@@ -203,7 +203,7 @@ include('../../classe/HistStationVehicule.php');
             }else{
                 echo "<h3>Aucun véhicule n'est en cours de transfert</h3>";
             }
-            ?>-->
+            ?>
             </div>
           </div>
         </div>
