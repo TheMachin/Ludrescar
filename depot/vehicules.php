@@ -50,44 +50,6 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-<?php
-        function getAllVehicule($tab,$bdd){
-            $array=array();
-            foreach($tab as $row){
-                $vehicule=new Vehicule($row['no_immat'], $row['marque'], $row['modele'], $row['nb_place'], $row['carburant'], $row['puissance'], $row['nb_km'], $row['etat'], $row['date_mise_serv'], $row['duree_serv'], $row['niv_carbu'], getStation($row['station_id'],$bdd), getTypes($row['type_id'],$bdd));
-                $array[]=$vehicule;
-            }
-            return $array;
-        }
-        
-        function getTypes($id,$bdd){
-            $requete="SELECT * FROM types where id=$1";
-            $result= pg_prepare($bdd,'',$requete);
-            $result = pg_execute($bdd, "", array($id));
-            $type=NULL;
-            while ($row = pg_fetch_row($result)) {
-                $type=new Type($row[0], $row[1], $row[2], $row[3]);
-            }
-            return $type;
-        }
-        
-        function getStation($id,$bdd){
-            $requete="SELECT * FROM stations where id=$1";
-            $result= pg_prepare($bdd,'',$requete);
-            $result = pg_execute($bdd, "", array($id));
-            while ($row = pg_fetch_row($result)) {
-                $station=new Station($row[0], $row[1], $row[2], $row[3], new Statistique($row[4], 0, 0, 0, 0, 0, 0));
-            }
-            return $station;
-        }
-        
-        
-        
-?>
-<?php
-session_start();
-include('../bdd/bdd.php');
-?>
 	</head>
 	<body>
 		
@@ -148,6 +110,37 @@ include('../bdd/bdd.php');
 			</div>
 			<div class="row">
         <?php
+
+include('../bdd/bdd.php');
+ function getAllVehicule($tab,$bdd){
+            $array=array();
+            foreach($tab as $row){
+                $vehicule=new Vehicule($row['no_immat'], $row['marque'], $row['modele'], $row['nb_place'], $row['carburant'], $row['puissance'], $row['nb_km'], $row['etat'], $row['date_mise_serv'], $row['duree_serv'], $row['niv_carbu'], getStation($row['station_id'],$bdd), getTypes($row['type_id'],$bdd));
+                $array[]=$vehicule;
+            }
+            return $array;
+        }
+        
+        function getTypes($id,$bdd){
+            $requete="SELECT * FROM types where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            $type=NULL;
+            while ($row = pg_fetch_row($result)) {
+                $type=new Type($row[0], $row[1], $row[2], $row[3]);
+            }
+            return $type;
+        }
+        
+        function getStation($id,$bdd){
+            $requete="SELECT * FROM stations where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            while ($row = pg_fetch_row($result)) {
+                $station=new Station($row[0], $row[1], $row[2], $row[3], new Statistique($row[4], 0, 0, 0, 0, 0, 0));
+            }
+            return $station;
+        }
         // put your code here
             $result = pg_query($bdd, "SELECT * FROM vehicules");
             if (!$result) {
