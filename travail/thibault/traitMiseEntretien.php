@@ -7,7 +7,7 @@ include('../../classe/CompteEmploye.php');
 include('../../classe/Statistique.php');
 include('../../classe/Station.php');
 include('../../classe/Type.php');
-
+session_start();
 
 $technicien=new Technicien(33, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
 $station=$technicien->getStation();
@@ -18,7 +18,7 @@ $station=$technicien->getStation();
  */
 
 if(isset($_POST['valid'])){
-    
+    unset($_POST['valid']);
     if(!empty($_POST['immat'])){
         $immat=$_POST['immat'];
     }else{
@@ -58,11 +58,27 @@ if(isset($_POST['valid'])){
         $entretien->setVehicule($vehicule);
         $entretien->insert($bdd);
         $vehicule->updateEtat($bdd);
+        
+        sendError("Le véhicule a bien été mis en entretien");
+        
     }else{
         sendError($etat);
     }
     
     //insérer entretien dans la bdd
+    
+}else if(isset($_POST['validFin'])){
+    unset($_POST['validFin']);
+    if(!empty($_POST['immat'])){
+        $immat=$_POST['immat'];
+    }else{
+        sendError("L'immatriculation du véhicule est introuvable");
+    }
+    
+    $vehicule=new Vehicule($immat, NULL, NULL, 0, NULL, 0, 0, "Bon état",NULL, 0, NULL, $station, new Type(0, NULL, 0, 0));
+    $vehicule->updateEtat($bdd);
+    
+    sendError("Le véhicule est disponible et son état est : Bon état");
     
 }else{
     sendError("Erreur du formulaire : Veuillez recommencer");
