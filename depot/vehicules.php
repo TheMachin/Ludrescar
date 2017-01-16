@@ -69,17 +69,9 @@
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
-						<li class="active"><a href="menu.html">Menu</a></li>
-						<li class="has-dropdown">
-							<a href="services.html">Services</a>
-							<ul class="dropdown">
-								<li><a href="#">Food Catering</a></li>
-								<li><a href="#">Wedding Celebration</a></li>
-								<li><a href="#">Birthday's Celebration</a></li>
-							</ul>
-						</li>
-						<li><a href="contact.html">Contact</a></li>
-						<li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
+						<li class="active"><a href="vehicules.php">Véhicules</a></li>
+						<li><a href="contact.php">Contact</a></li>
+						<li class="btn-cta"><a href="index.php"><span>Inscription</span></a></li>
 					</ul>	
 				</div>
 			</div>
@@ -96,8 +88,7 @@
 
 					<div class="row row-mt-15em">
 						<div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
-							<span class="intro-text-small">Hand-crafted by <a href="http://gettemplates.co" target="_blank">GetTemplates.co</a></span>
-							<h1 class="cursive-font">Taste all our menu!</h1>	
+							<h1 class="cursive-font">Nos véhicules!</h1>	
 						</div>
 						
 					</div>
@@ -114,108 +105,44 @@
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h2 class="cursive-font primary-color">Popular Dishes</h2>
-					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+					<h2 class="cursive-font primary-color">La liste des véhicules</h2>
+					<p>Voici la liste des véhicules que l'on peut vous proposé.</p>
 				</div>
 			</div>
 			<div class="row">
+<?php 
+	/**
+	* Paramètre d'entrée une variable de type tableau
+	* Le nom des colonnes sont les clés de la variable
+	**/
+	function tableau($tab)
+	{ 
+?>
+            <div class='container-fluid'>
+                    <label>Nombre de lignes : <?php echo count($tab); ?></label>
+                    <table id='tableID' class="table table-bordered table-striped">
+                        <?php
+                        $entete=FALSE;
+                        $i=1;
+                        foreach($tab as $row){
+                            echo "";
+                            if(!$entete){
+                                    echo "<thead><tr><th width='20%'>#</th><th width='20%'>".implode("</th><th width='20%'>",array_keys($row))."</th></tr></thead><tbody>";
+                                    $entete=TRUE;
+                            }else{
+                                    $i++;
+                            }
+                            echo "<tr><td width='20%'>".$i."</td><td width='20%'>".implode("</td><td width='20%'>",$row)."</td></tr>";
+                            echo "";
+                        }
+                        echo "</tbody>";
+                        ?>
+                    </table>
+            </div>
+<?php
+	}
+?>
 
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_1.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Fresh Mushrooms</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$19.15</span></p>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_2.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_2.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Cheese and Garlic Toast</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$20.99</span></p>
-						</div>
-					</a>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_3.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_3.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Grilled Chiken Salad</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$8.99</span></p>
-
-						</div>
-					</a>
-				</div>
-
-
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_4.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_4.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Organic Egg</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$12.99</span></p>
-						</div>
-					</a>
-				</div>
-
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_5.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_5.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Tomato Soup with Chicken</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$23.10</span></p>
-						</div>
-					</a>
-				</div>
-
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<a href="images/img_6.jpg" class="fh5co-card-item image-popup">
-						<figure>
-							<div class="overlay"><i class="ti-plus"></i></div>
-							<img src="images/img_6.jpg" alt="Image" class="img-responsive">
-						</figure>
-						<div class="fh5co-text">
-							<h2>Salad with Crispy Chicken</h2>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
-							<p><span class="price cursive-font">$5.59</span></p>
-						</div>
-					</a>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<div class="gtco-cover gtco-cover-sm" style="background-image: url(images/img_bg_1.jpg)"  data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="gtco-container text-center">
-			<div class="display-t">
-				<div class="display-tc">
-					<h1>&ldquo; Their high quality of service makes me back over and over again!&rdquo;</h1>
-					<p>&mdash; John Doe, CEO of XYZ Co.</p>
-				</div>	
 			</div>
 		</div>
 	</div>
@@ -224,8 +151,7 @@
 		<div class="gtco-container">
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h2 class="cursive-font">Subscribe</h2>
-					<p>Be the first to know about the new templates.</p>
+					<h2 class="cursive-font">Pour nous contacter</h2>
 				</div>
 			</div>
 			<div class="row animate-box">
@@ -234,11 +160,11 @@
 						<div class="col-md-6 col-sm-6">
 							<div class="form-group">
 								<label for="email" class="sr-only">Email</label>
-								<input type="email" class="form-control" id="email" placeholder="Your Email">
+								<input type="email" class="form-control" id="email" placeholder="Votre Email">
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6">
-							<button type="submit" class="btn btn-default btn-block">Subscribe</button>
+							<button type="submit" class="btn btn-default btn-block">Envoyer</button>
 						</div>
 					</form>
 				</div>
@@ -256,15 +182,14 @@
 				
 				<div class="col-md-12 text-center">
 					<div class="gtco-widget">
-						<h3>Get In Touch</h3>
+						<h3>Nous contacter</h3>
 						<ul class="gtco-quick-contact">
 							<li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
-							<li><a href="#"><i class="icon-mail2"></i> info@GetTemplates.co</a></li>
-							<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> info@ludrescar.fr</a></li>
 						</ul>
 					</div>
 					<div class="gtco-widget">
-						<h3>Get Social</h3>
+						<h3>Réseaux sociaux</h3>
 						<ul class="gtco-social-icons">
 							<li><a href="#"><i class="icon-twitter"></i></a></li>
 							<li><a href="#"><i class="icon-facebook"></i></a></li>

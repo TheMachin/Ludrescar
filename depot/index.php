@@ -105,7 +105,7 @@ $requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 a
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
-						<li><a href="vehicules.php">Véhicule</a></li>
+						<li><a href="vehicules.php">Véhicules</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<li class="btn-cta"><a href="Inscription.php"><span>Inscription</span></a></li>
 					</ul>	
