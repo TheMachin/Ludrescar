@@ -63,25 +63,32 @@ include('../../bdd/bdd.php');
 if (isset($_POST['submit']))
 {
 	#htmlentities est la pour une securite et trim est la pour eviter les espaces dans le usrename
-	$email =htmlentities(trim($_POST['email']));
+	$login =htmlentities(trim($_POST['login']));
 	$password =htmlentities(trim($_POST['password']));
 	
 //echo "test";
 /*pour tester */
 
 //si ce que l'on rentre existe
-	if($email&&$password){
-	$password=md5($password);
-$requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 and cu.mdp=$2 and cu.id=u.compteutilisateur_id;";
-					$req= pg_prepare($bdd,'connexion',$requete);
-                                        $req= pg_execute($bdd,'connexion',array($email,$password));
+	if($login&&$password){
+// requete pour tout le monde 
+$requete_tous="select * from Employe e, compteEmploye ce where e.nom=$1 and ce.mdp=$2 and ce.id=e.id;";
+					$req= pg_prepare($bdd,'connexion',$requete_tous);
+                                        $req= pg_execute($bdd,'connexion',array($login,$password));
 					$count= pg_num_rows($req);
+// est-ce un technicien
+$requete_technicien="select * from Technicien t where t.nom=$1";
+$req_t= pg_prepare($bdd,'connexion',$requete_tous);
+                                        $req_t= pg_execute($bdd,'connexion',array($login,$password));
+					$count_t= pg_num_rows($req_t);
+
 					if($count==1){
 							//creation de session
 						$_SESSION['co']=1;
-						$_SESSION['email']=$email;
-
-						header('Location:indexco.php');
+						$_SESSION['login']=$login;
+					if($count_t ==1){
+						header('Location:index_t.php');
+					}else header('Location:index_r.php');
 					}else echo"identifiant ou mot de passe incorect";
 
 
@@ -136,8 +143,8 @@ $requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 a
 											<form action="index.php"method="post">
 												<div class="row form-group">
 													<div class="col-md-12">
-														<label for="#">Email</label>
-														<input type="text" name="email" placeholder="" class="form-control">
+														<label for="#">Login</label>
+														<input type="text" name="Login" placeholder="" class="form-control">
 													</div>
 												</div>
 												<div class="row form-group">
