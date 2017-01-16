@@ -62,6 +62,15 @@ if(isset($_POST['valid'])){
     
     if(!empty($_POST['niv'])){
         $niv=$_POST['niv'];
+        if($niv=="p"){
+            $niv="Plein";
+        }else if($niv=="e"){
+            $niv="Elevé";
+        }else if($niv=="m"){
+            $niv="Moitié";
+        }else if($niv=="f"){
+            $niv="Faible";
+        }
     }else{
         sendError("Erreur traitement formulaire : Le niveau de carburant du véhicule n'a pas été spécifié");
     }
@@ -139,7 +148,9 @@ if(isset($_POST['valid'])){
                                                                                         <label for="date-start">Niveau du carburant</label>
                                                                                         <select name="niv" id="activities" class="form-control">
                                                                                             <option value="p">Plein</option>
-                                                                                            <option value="v">Vide</option>
+                                                                                            <option value="e">Elevé</option>
+                                                                                            <option value="m">Moitié</option>
+                                                                                            <option value="f">Faible</option>
                                                                                         </select>
                                                                                 </div>
                                                                         </div>

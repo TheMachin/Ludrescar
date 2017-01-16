@@ -72,7 +72,9 @@ and open the template in the editor.
                                                                                         <label for="date-start">Niveau du carburant</label>
                                                                                         <select name="niv" id="activities" class="form-control">
                                                                                             <option value="p">Plein</option>
-                                                                                            <option value="v">Vide</option>
+                                                                                            <option value="e">Elevé</option>
+                                                                                            <option value="m">Moitié</option>
+                                                                                            <option value="f">Faible</option>
                                                                                         </select>
                                                                                 </div>
                                                                         </div>

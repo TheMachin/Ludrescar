@@ -47,6 +47,12 @@ class Penalite {
         $this->montant = $montant;
     }
 
-
+    function getBdDByNom($bdd){
+        $requete="SELECT id,montant FROM penalites Where nom=$1";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->nom));
+        $this->id=$row[0];
+        $this->montant=$row[1];
+    }
 }
 ?>

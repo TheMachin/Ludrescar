@@ -11,6 +11,7 @@ include('../../classe/Utilisateur.php');
 include('../../classe/CompteUtilisateur.php');
 include('../../classe/Societe.php');
 include('../../classe/Penalite.php');
+include('../../bdd/bdd.php');
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -27,14 +28,10 @@ $vehicule=new Vehicule("", "", "", 0, "", "", 0, "", "", 1, "", $station, $type)
 $compteU=new CompteUtilisateur(0, "");
 $user=new Utilisateur(0, "", "", "", "", "", "", "", 0, $compteU);
 $societe=new Societe(0, "");
-$penalite=New Penalite(0, "retard", 0);
+$penalite=New Penalite(0, "", 0);
 $arrPenalite=new ArrayObject($penalite);
 $location=new Location(0, "", "2017-01-10", "", "", "", "", "","", "", $vehicule, $user, $station, $station, $form, $retour, $societe, $arrPenalite);
 
-$date=date("d/m/Y");
-$form->setDate($date);
-$heure=date('H:i:s');
-$form->setHeure($heure);
 
 if(isset($_POST['valid'])){
     if(!empty($_POST['etat'])){
@@ -42,6 +39,8 @@ if(isset($_POST['valid'])){
     }else{
         sendError("Erreur traitement formulaire : L'état du véhicule n'a pas été spécifié");
     }
+    
+    
     
     if(!empty($_POST['km'])){
         $km=$_POST['km'];
@@ -63,6 +62,15 @@ if(isset($_POST['valid'])){
     
     if(!empty($_POST['niv'])){
         $niv=$_POST['niv'];
+        if($niv=="p"){
+            $niv="Plein";
+        }else if($niv=="e"){
+            $niv="Elevé";
+        }else if($niv=="m"){
+            $niv="Moitié";
+        }else if($niv=="f"){
+            $niv="Faible";
+        }
     }else{
         sendError("Erreur traitement formulaire : Le niveau de carburant du véhicule n'a pas été spécifié");
     }
