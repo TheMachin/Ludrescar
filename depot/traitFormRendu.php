@@ -11,7 +11,7 @@ include('../classe/Utilisateur.php');
 include('../classe/CompteUtilisateur.php');
 include('../classe/Societe.php');
 include('../classe/Penalite.php');
-include('../bdd/bdd.php');
+include('../../bdd/bdd.php');
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

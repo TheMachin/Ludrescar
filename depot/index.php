@@ -1,6 +1,8 @@
 <?php
 session_start();
 include('../../bdd/bdd.php');
+include('../classe/Utilisateur.php');
+include('../classe/CompteUtilisateur.php');
 
 ?>
 
@@ -80,7 +82,9 @@ $requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 a
 							//creation de session
 						$_SESSION['co']=1;
 						$_SESSION['email']=$email;
-
+                                                $utilisateur=new Utilisateur(0, NULL, NULL, NULL, NULL, NULL, $email, NULL, NULL, new CompteUtilisateur(0, NULL));
+                                                $utilisateur->getUserByEmail($bdd);
+                                                $_SESSION['utilisateur']= serialize($utilisateur);
 						header('Location:indexco.php');
 					}else echo"identifiant ou mot de passe incorect";
 

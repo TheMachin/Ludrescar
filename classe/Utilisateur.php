@@ -118,7 +118,20 @@ class Utilisateur {
         $this->compteU = $compteU;
     }
 
-
+    function getUserByEmail($bdd){
+        $requete="SELECT * FROM utilisateurs WHERE ";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->etatVehicule,$this->km,$this->niv_carbu,$this->type,$this->heure,$this->date));
+        $row = pg_fetch_row($result);
+        $this->id=$row[0];
+        $this->nom=$row[1];
+        $this->prenom=$row[2];
+        $this->date_nais=$row[3];
+        $this->date_ins=$row[4];
+        $this->tel_port=$row[5];
+        $this->adresse=$row[7];
+        $this->banni=$row[8];
+    }
     
 }
 ?>

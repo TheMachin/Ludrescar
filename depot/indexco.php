@@ -1,6 +1,8 @@
 <?php
 session_start();
-//include('../../bdd/bdd.php');
+include('../../bdd/bdd.php');
+include('../classe/Utilisateur.php');
+include('../classe/CompteUtilisateur.php');
 ?>
 
   <!DOCTYPE HTML>
@@ -79,7 +81,10 @@ if (isset($_POST['submit']))
             //creation de session
             $_SESSION['co']=1;
             $_SESSION['email']=$email;
-            
+            $utilisateur=new Utilisateur(0, NULL, NULL, NULL, NULL, NULL, $email, NULL, NULL, new CompteUtilisateur(0, NULL));
+            $utilisateur->getUserByEmail($bdd);
+            $_SESSION['utilisateur']= serialize($utilisateur);
+
             header('Location:index.php');
         }else echo"identifiant ou mot de passe incorect";
         
