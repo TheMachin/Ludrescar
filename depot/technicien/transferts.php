@@ -5,7 +5,6 @@ include('../../classe/Vehicule.php');
 include('../../classe/Type.php');
 include('../../classe/Statistique.php');
 include('../../classe/HistStationVehicule.php');
-session_start();
 ?>
 
   <!DOCTYPE HTML>
