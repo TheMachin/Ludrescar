@@ -289,6 +289,10 @@ function listStation($bdd){
 }
 
 function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant){
+  $vehiculeExiste = verifVehiculeExiste($bdd, $noImmat);
+  if($vehiculeExiste != false){
+    return 'Le véhicule existe déjà dans la base !';
+  }
   $verifStation = verifStation($bdd, $station);
   if($verifStation == 0){
     return "Le véhicule ne peut pas être ajouté car la station est rempli !";
@@ -300,7 +304,7 @@ function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPla
     VALUES ($1, $2, $3, $4, $5, $6, 'Bon état',
             $7, $8, $9, $10, $11, $12);";
     $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant, $noType[0], $verifStation, $modele));
+    $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant, $noType[0], $verifStation, $marque));
     return "Le véhicule a bien été ajouté dans la station !";
   }
 }
@@ -345,5 +349,15 @@ function noType($bdd, $type){
     $row = pg_fetch_row($result);
 
     return $row;
+}
+
+function verifVehiculeExiste($bdd, $noImmat){
+  $request = "SELECT no_immat
+  FROM vehicules
+  WHERE no_immat=$1";
+  $result = pg_prepare($bdd,'',$request);
+  $result = pg_execute($bdd, "",array($noImmat));
+  $row = pg_fetch_row($result);
+  return $row;
 }
 ?>
