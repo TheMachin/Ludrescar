@@ -7,7 +7,8 @@ include('../../classe/Statistique.php');
 include('../../classe/HistStationVehicule.php');
 session_start();
 ?>
- <!DOCTYPE HTML>
+
+  <!DOCTYPE HTML>
   <html>
 
   <head>
@@ -59,13 +60,72 @@ session_start();
 <![endif]-->
 
   </head>
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+
+  <body>
+      <div class="gtco-loader"></div>
+
+      <div id="page">
+
+
+        <!-- <div class="page-inner"> -->
+        <nav class="gtco-nav" role="navigation">
+          <div class="gtco-container">
+
+            <div class="row">
+              <div class="col-sm-4 col-xs-12">
+                <p style="color: white;">
+                  <?php if(isset($_SESSION['co']))
+{
+    echo($_SESSION['login']);
+}
+?>
+                </p>
+                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+              </div>
+              <div class="col-xs-8 text-right menu-1">
+                <ul>
+                  <li><a href="#">Statistiques</a></li>
+                  <li class="has-dropdown">
+                     <a href="#">Services</a>
+                     <ul class="dropdown">
+                <li><a href="#">Ajouter un véhicule</a></li>
+                <li><a href="#">Supprimer un véhicule</a></li>
+                <li><a href="#">amener un véhicule à une autre station</a></li>
+                <li><a href="#">mettre un véhicule en entretien</a></li>
+              </ul>
+            </li>
+                  <li><a href="../deco.php">Se déconnecter</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+          <div class="overlay"></div>
+          <div class="gtco-container">
+            <div class="row">
+              <div class="col-md-12 col-md-offset-0 text-left">
+
+
+                <div class="row row-mt-15em">
+                  <div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
+                    <span class="intro-text-small">ludresCar</span>
+                    <h1 class="cursive-font">Quand la voiture rencontre la location.</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="gtco-counter" class="gtco-section">
+          <div class="gtco-container">
+
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+                <h2 class="cursive-font primary-color">Les chiffres</h2>
+                <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
@@ -127,7 +187,7 @@ and open the template in the editor.
                 <div class="row row-mt-15em">
                     <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                         <span class="intro-text-small">ludresCar</span>
-                        <h1 class="cursive-font">Transfert du véhicule.</h1>	
+                        <h1 class="cursive-font">Transfert du véhicule.</h1>  
                     </div>
                     <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
                         <div class="form-wrap">
@@ -208,7 +268,7 @@ and open the template in the editor.
                                             <?php
                                                 }
                                             ?>
-                                        </form>	
+                                        </form> 
                                     </div>
                                 </div>
                             </div>
@@ -288,73 +348,6 @@ and open the template in the editor.
     }
     
 ?>
-
-
- <body>
-      <div class="gtco-loader"></div>
-
-      <div id="page">
-
-
-        <!-- <div class="page-inner"> -->
-        <nav class="gtco-nav" role="navigation">
-          <div class="gtco-container">
-
-            <div class="row">
-              <div class="col-sm-4 col-xs-12">
-                <p style="color: white;">
-                  <?php if(isset($_SESSION['co']))
-{
-    echo($_SESSION['login']);
-}
-?>
-                </p>
-                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
-              </div>
-              <div class="col-xs-8 text-right menu-1">
-                <ul>
-                  <li><a href="#">Statistiques</a></li>
-                  <li class="has-dropdown">
-                     <a href="#">Services</a>
-                     <ul class="dropdown">
-                <li><a href="#">Ajouter un véhicule</a></li>
-                <li><a href="#">Supprimer un véhicule</a></li>
-                <li><a href="#">amener un véhicule à une autre station</a></li>
-                <li><a href="#">mettre un véhicule en entretien</a></li>
-              </ul>
-            </li>
-                  <li><a href="../deco.php">Se déconnecter</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
-          <div class="overlay"></div>
-          <div class="gtco-container">
-            <div class="row">
-              <div class="col-md-12 col-md-offset-0 text-left">
-
-
-                <div class="row row-mt-15em">
-                  <div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
-                    <span class="intro-text-small">ludresCar</span>
-                    <h1 class="cursive-font">Quand la voiture rencontre la location.</h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <div id="gtco-counter" class="gtco-section">
-          <div class="gtco-container">
-
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                <h2 class="cursive-font primary-color">Les chiffres</h2>
-                <p>Ludrescar en quelques chiffres.</p>
               </div>
             </div>
 
@@ -478,3 +471,5 @@ and open the template in the editor.
       <script src="../js/main.js"></script>
 
   </body>
+
+  </html>
