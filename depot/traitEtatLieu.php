@@ -75,9 +75,9 @@ if(isset($_POST['valid'])){
         sendError("Erreur traitement formulaire : Le niveau de carburant du véhicule n'a pas été spécifié");
     }
     
-    $vehicule= getVehicules($immat, $bdd);
-    $location= getLocations($idLoc, $bdd);
     
+    $location= getLocations($idLoc, $bdd);
+    $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
     if($vehicule->getNb_km()>$km){
         //probleme
         sendError("Erreur : Le kilométrage spécifié ne doit pas être inférieure à celui du véhicule");
@@ -117,6 +117,8 @@ if(isset($_POST['valid'])){
     //affectation location voiture, formulaire...
     $location->setFormulaire($form);
     $location->updateForm($bdd);
+    $location->setEtatLocation("En cours");
+    $location->updateEtat($bdd);
     //maj pour la voiture
     $vehicule->updateEtat($bdd);
     $vehicule->updateNiv($bdd);
@@ -153,7 +155,7 @@ if(isset($_POST['valid'])){
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($id));
         $row = pg_fetch_row($result);
-        $location=new Location(row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), $form, new Retour(0, NULL, $form), $societe, $arrPenalite);
+        $location=new Location($row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), $form, new Retour(0, NULL, $form), $societe, $arrPenalite);
         return $location;
     }
     

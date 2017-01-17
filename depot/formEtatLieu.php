@@ -58,7 +58,7 @@ and open the template in the editor.
                                                                                 <div class="col-md-12">
                                                                                         <label for="date-start">Kilométrage du véhicule</label>
                                                                                         <input type="text" id="km" name="km" class="form-control">
-                                                                                        <input type="hidden" id="km" name="idLoc" class="form-control" value="0">
+                                                                                        <input type="hidden" id="km" name="idLoc" class="form-control" value="<?php echo $_GET['id']; ?>">
                                                                                 </div>
                                                                         </div>
                                                                         <div class="row form-group">

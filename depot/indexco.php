@@ -115,7 +115,7 @@ if (isset($_POST['submit']))
               <div class="col-xs-8 text-right menu-1">
                 <ul>
                   <li><a href="vehicules.php">Véhicules</a></li>
-                  <li><a href="">Mes locations</a></li>
+                  <li><a href="location.php">Mes locations</a></li>
                   <li><a href="contact.php">Contact</a></li>
                   <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
                   <li><a href="deco.php">Se déconnecter</a></li>

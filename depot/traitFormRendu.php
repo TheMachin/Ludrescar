@@ -90,9 +90,10 @@ if(isset($_POST['valid'])){
     //formulaire de rendu
     $formR=new Formulaire(0, $etat, $km, $comm, $niv, "Rendu", NULL, NULL);
     
-    $vehicule= getVehicules($immat, $bdd);
-    $vehicule->setNiv_carbu($niv);
+    
     $location= getLocations($idLoc, $bdd);
+    $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
+    $vehicule->setNiv_carbu($niv);
     //formulaire de l'état du lieu
     $formE=$location->getFormulaire();
     $arrPenalite=new ArrayObject();
@@ -216,7 +217,7 @@ if(isset($_POST['valid'])){
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($id));
         $row = pg_fetch_row($result);
-        $location=new Location(row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), getForms($row[13], $bdd), new Retour(0, NULL, $form), $societe, $arrPenalite);
+        $location=new Location($row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), getForms($row[13], $bdd), new Retour(0, NULL, $form), $societe, $arrPenalite);
         return $location;
     }
     
