@@ -18,7 +18,12 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Liste des locations</h1>
-        
+        <?php
+                                    if(!empty($_SESSION['location'])){
+                                        echo "<h3>".$_SESSION['location']."</h3>";
+                                        unset($_SESSION['location']);
+                                    }
+                                ?>
         <?php
         // put your code here
             $result = pg_prepare($bdd,"", "SELECT sa.nom, sa.adresse, sd.nom, sd.adresse,v.no_immat,v.modele,v.marque,v.puissance,v.nb_km,v.carburant,t.prix_km,t.prix_jour,l.date_deb,l.heure_deb,l.date_fin_prev,l.heure_fin,l.etatlocation,l.id,l.prix_tot,l.montant_penalite FROM locations l, stations sd, stations sa, vehicules v, types t WHERE utilisateur_id=$1 AND sa.id=l.station_arrivee_id AND sd.id=station_depart_id AND l.vehicule_immat=v.no_immat AND v.type_id=t.id");
@@ -82,10 +87,9 @@ and open the template in the editor.
                                 <td><?php echo $row[15]; ?></td>
                                 <td><?php echo $row[16]; ?></td>
                                 <?php
-                                echo $row[16];
                                 if($row[16]==="Réservé"){
                                     ?> <td><a href="<?php echo dirname($_SERVER["PHP_SELF"]).'/formEtatLieu.php?id='.$row[17]; ?>">Débuter la location</a></td>
-                                    <td>Annuler</td><?php
+                                    <td><a href="<?php echo dirname($_SERVER["PHP_SELF"]).'/annulerLocation.php?idLoc='.$row[17]; ?>">Annuler la location</a></td><?php
                                 }else if($row[16]==="En cours"){
                                     ?> <th><a href="<?php echo dirname($_SERVER["PHP_SELF"]).'/formRendu.php?id='.$row[17]; ?>">Finir la location</a></th>
                                     <td>Annulation impossible</td><?php
