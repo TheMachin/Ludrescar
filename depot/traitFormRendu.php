@@ -173,6 +173,7 @@ if(isset($_POST['valid'])){
     $location->setRetour($retour);
     $location= calculMontant($location, $formR);
     $location->setMontant_penalite(calculMontantPenalite($arrPenalite, $location->getPrix_tot()));
+    $location->setPrix_tot($location->getMontant_penalite()+$location->getPrix_tot());
     $location->setEtatLocation("Terminé");
     $location->updateFinLocation($bdd);
     //on met à jour la voiture
