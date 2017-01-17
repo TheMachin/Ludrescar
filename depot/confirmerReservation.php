@@ -145,22 +145,6 @@ if(isset($_POST['prixJour']))      $prixJour=$_POST['prixJour'];
 
 if(isset($_POST['hRet']))      $hRet=$_POST['hRet'];
 
-if(isset($_POST['immat']))      $immat=$_POST['immat'];
-
-//si on confirme la reservation
-if(empty($_POST['reserver'])){
-    $prixKM=14;// a modif
-    $prixTOT=100;// a modif
-    $etatLoc="Réservé";
-    $userID="mail"; // a modif
-    $request = "INSERT INTO locations(
-    date_deb, date_fin_prev, prix_duree, prix_km, prix_tot, etatlocation, heure_deb, heure_fin, vehicule_immat, station_depart_id, station_arrivee_id,
-    utilisateur_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);";
-    $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array($dateDeb, $dateRet, $prixJour, $prixKM, $prixTOT, $etatLoc, $hDeb, $hRet, $immat, $station, $station, $userID));
-}
-
 $result = pg_query($bdd, "SELECT v.no_immat, v.marque, v.modele, t.prix_jour, t.prix_km
 FROM vehicules v, types t, stations s
 WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert' AND v.marque='$marque'
@@ -230,7 +214,7 @@ while ($row = pg_fetch_row($result)){
                                     <input type="hidden" name="marque" value="<?php echo $_POST['marque']?>">
                                     <input type="hidden" name="modele" value="<?php echo $_POST['modele']?>">
                                     <input type="hidden" name="prixJour" value="<?php echo $_POST['prixJour']?>">
-                                    <input type="hidden" name="immat" value="<?php echo $row[0]?>">
+                                    <input type="hidden" name="immat" value="<?php echo $row[0];?>">
                                     <input type="submit" name="reserver" class="btn btn-primary btn-block" value="Je reserve">
                                   </div>
                                 </div>
@@ -245,6 +229,26 @@ while ($row = pg_fetch_row($result)){
                   </div>
 
                   <?php
+                  var_dump($row, $station, $marque, $modele);
+}
+//si on confirme la reservation
+if(!empty($_POST['reserver'])){
+  var_dump($_POST);
+if(!empty($_POST['immat'])) {     $immat=$_POST['immat'];}else {echo "fuck";}
+    var_dump($immat);
+    var_dump($row);
+
+    $prixKM=16;// a modif
+    $prixTOT=150;// a modif
+    $etatLoc="Réservé";
+    $userID=23; // a modif
+    $station=15;
+    $request = "INSERT INTO locations(
+    date_deb, date_fin_prev, prix_duree, prix_km, prix_tot, etatlocation, heure_deb, heure_fin, vehicule_immat, station_depart_id, station_arrivee_id,
+    utilisateur_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);";
+    $result = pg_prepare($bdd,'',$request);
+    $result = pg_execute($bdd, "",array($dateDeb, $dateRet, $prixJour, $prixKM, $prixTOT, $etatLoc, $hDeb, $hRet, $immat, $station, $station, $userID));
 }
 ?>
               </div>
