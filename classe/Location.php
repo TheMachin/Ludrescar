@@ -202,6 +202,30 @@ class Location {
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($this->Formulaire->getId(),$this->id));
     }
+    
+    function updateEtat($bdd){
+        $requete="UPDATE locations SET etatlocation=$1 WHERE id=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->etatLocation,$this->id));
+    }
+    
+    function updatePrix($bdd){
+        $requete="UPDATE locations SET prix_km=$1, prix_duree=$2, montant_penalite=$3, prix_tot=$4 WHERE id=$5";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->prix_km,$this->prix_duree,$this->montant_penalite,$this->prix_tot,$this->id));
+    }
+    
+    function updateRetour($bdd){
+        $requete="UPDATE locations SET retour_id=$1 WHERE id=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->retour->getId(),$this->id));
+    }
+    
+    function updateFinLocation($bdd){
+        $requete="UPDATE locations SET prix_km=$1, prix_duree=$2, montant_penalite=$3, prix_tot=$4,retour_id=$5,etatlocation=$6 WHERE id=$7";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->prix_km,$this->prix_duree,$this->montant_penalite,$this->prix_tot,$this->retour->getId(),$this->etatLocation,$this->id));
+    }
 
     
 }

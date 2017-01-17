@@ -18,7 +18,7 @@ include('../../bdd/bdd.php');
  * and open the template in the editor.
  */
 
-
+//poubelle
 $form=new Formulaire(0, "", "", "", "", "Début", "", "");
 $retour=new Retour(0, "", $form);
 $stats=new Statistique(0, 0, 0, 0, 0, 0, 0);
@@ -120,6 +120,7 @@ if(isset($_POST['valid'])){
     //maj pour la voiture
     $vehicule->updateEtat($bdd);
     $vehicule->updateNiv($bdd);
+    $vehicule->updateKm($bdd);
     
 }else{
     sendError("Erreur : Le formulaire n'a pas été validé");

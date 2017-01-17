@@ -18,6 +18,7 @@ include('../../bdd/bdd.php');
  * and open the template in the editor.
  */
 
+//poubelle
 $form=new Formulaire("", "", "", "", "", "Fin", "", "");
 $retour=new Retour(0, "", $form);
 $stats=new Statistique(0, 0, 0, 0, 0, 0, 0);
@@ -89,6 +90,7 @@ if(isset($_POST['valid'])){
     $formR=new Formulaire(0, $etat, $km, $comm, $niv, "Rendu", NULL, NULL);
     
     $vehicule= getVehicules($immat, $bdd);
+    $vehicule->setNiv_carbu($niv);
     $location= getLocations($idLoc, $bdd);
     //formulaire de l'état du lieu
     $formE=$location->getFormulaire();
@@ -145,13 +147,30 @@ if(isset($_POST['valid'])){
     
     $date=new DateTime();
     $formR->setDate($date->format('d/m/Y'));
-    $retour->setDate_rendu($date);
+    
     $heure=date('H:i:s');
     $formR->setHeure($heure);
-    $vehicule->setCarburant($niv);
+    //on insère le formulaire de retour dans la bdd et on récupère son id
+    $idFormR=$formR->insert($bdd);
+    $formR->setId($idFormR);
+    //on insère le retour dans la bdd
+    $retour->setDate_rendu($date);
     $retour->setFormulaire($formR);
+    $retour->insert($bdd);
+    //on met à jour la location dans l abdd
+    $location->setRetour($retour);
+    $vehicule->setCarburant($niv);
     $location->setVehicule($vehicule);
     $location->setRetour($retour);
+    $location= calculMontant($location, $formR);
+    $location->setMontant_penalite(calculMontantPenalite($arrPenalite, $location->getPrix_tot()));
+    $location->setEtatLocation("Terminé");
+    $location->updateFinLocation($bdd);
+    //on met à jour la voiture
+    $vehicule->updateEtat($bdd);
+    $vehicule->updateNiv($bdd);
+    $vehicule->updateKm($bdd);
+    
     
 }else{
     sendError("Erreur : Le formulaire n'a pas été validé");
@@ -222,7 +241,20 @@ if(isset($_POST['valid'])){
     function calculMontant(Location $location,Formulaire $Rendu){
         //nb km
         $kmParcouru=$Rendu->getKm()-$location->getFormulaire()->$Elieu->getKm();
-        
+        //montant voiture km
+        $voiture=$location->getVehicule();
+        $type=$voiture->getType();
+        $montantKmTotal=$type->getPrix_km()*$kmParcouru;
+        //montant durée
+        $dateDeb=new DateTime($location->getDate_deb());
+        $dateFin=new DateTime($Rendu->getDate());
+        $nbJour=$dateFin->diff($dateDeb);
+        $montantJourTotal=$nbJour*$type->getPrix_jour();
+        //ajout prix dans location
+        $location->setPrix_duree($montantJourTotal);
+        $location->setPrix_km($montantKmTotal);
+        $location->setPrix_tot($montantJourTotal+$montantKmTotal);
+        return $location;
     }
     
     function calculMontantPenalite(ArrayObject $arrPenalite,$montant){
