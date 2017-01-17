@@ -51,6 +51,7 @@ class Penalite {
         $requete="SELECT id,montant FROM penalites Where nom=$1";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($this->nom));
+        $row = pg_fetch_row($result);
         $this->id=$row[0];
         $this->montant=$row[1];
     }

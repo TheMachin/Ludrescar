@@ -52,11 +52,11 @@ class Retour {
     function insert($bdd){
         $requete="INSERT INTO retours(date_rendu,formulaire_id) VALUES($1,$2)";
         $result= pg_prepare($bdd,'',$requete);
-        $result = pg_execute($bdd, "", array($this->date_rendu, $this->formulaire->getId()));
+        $result = pg_execute($bdd, "", array($this->date_rendu->format('d/m/Y'), $this->formulaire->getId()));
         
         $result = pg_query($bdd, "SELECT MAX(id) FROM retours");
         $row = pg_fetch_row($result);
-        $this->id=row[0];
+        $this->id=$row[0];
     }
 
 }

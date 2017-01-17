@@ -128,13 +128,14 @@ if(isset($_POST['valid'])){
     
     //on vérifie s'il est en retard, on augmente la pénalité par jour de retard
     $datePrevu=new DateTime($location->getDate_fin_prev());
+    $date=new DateTime();
     if($date>$datePrevu){
         //retard
         $nbRetard=$date->diff($datePrevu);
         $penalite=new Penalite(0, "Retard", 0);
         $penalite->getBdDByNom($bdd);
         $nbJourRetard=$nbRetard->format('%a');
-        for($i=0;$i<int($nbJourRetard);$i++){
+        for($i=0;$i<intVal($nbJourRetard);$i++){
             $arrPenalite->append($penalite);
         }
     }
@@ -217,7 +218,7 @@ if(isset($_POST['valid'])){
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($id));
         $row = pg_fetch_row($result);
-        $location=new Location($row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), getForms($row[13], $bdd), new Retour(0, NULL, $form), $societe, $arrPenalite);
+        $location=new Location($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), getForms($row[13], $bdd), new Retour(0, NULL, $form), $societe, $arrPenalite);
         return $location;
     }
     
@@ -254,13 +255,14 @@ if(isset($_POST['valid'])){
         
     function calculMontant(Location $location,Formulaire $Rendu){
         //nb km
-        $kmParcouru=$Rendu->getKm()-$location->getFormulaire()->$Elieu->getKm();
+        $kmParcouru=$Rendu->getKm()-$location->getFormulaire()->getKm();
         //montant voiture km
         $voiture=$location->getVehicule();
         $type=$voiture->getType();
         $montantKmTotal=$type->getPrix_km()*$kmParcouru;
         //montant durée
         $dateDeb=new DateTime($location->getDate_deb());
+        var_dump($Rendu->getDate());
         $dateFin=new DateTime($Rendu->getDate());
         $nbJour=$dateFin->diff($dateDeb);
         $montantJourTotal=$nbJour*$type->getPrix_jour();
