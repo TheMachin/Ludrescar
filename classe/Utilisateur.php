@@ -119,9 +119,9 @@ class Utilisateur {
     }
 
     function getUserByEmail($bdd){
-        $requete="SELECT * FROM utilisateurs WHERE ";
+        $requete="SELECT * FROM utilisateurs WHERE email=$1";
         $result= pg_prepare($bdd,'',$requete);
-        $result = pg_execute($bdd, "", array($this->etatVehicule,$this->km,$this->niv_carbu,$this->type,$this->heure,$this->date));
+        $result = pg_execute($bdd, "", array($this->email));
         $row = pg_fetch_row($result);
         $this->id=$row[0];
         $this->nom=$row[1];

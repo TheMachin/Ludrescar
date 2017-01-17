@@ -9,6 +9,7 @@ include('../classe/Station.php');
 include('../classe/Statistique.php');
 include('../classe/Utilisateur.php');
 include('../classe/CompteUtilisateur.php');
+include('../classe/HistStationVehicule.php');
 include('../classe/Societe.php');
 include('../classe/Penalite.php');
 include('../../bdd/bdd.php');
@@ -144,6 +145,12 @@ if(isset($_POST['valid'])){
         $arrPenalite->append($penalite);
     }
     
+    $boolChangementStation=FALSE;
+    if($location->getStationDep()->getId()!==$location->getStationArr()->getId()){
+        $boolChangementStation=TRUE;
+        $vehicule->setStation($location->getStationArr());
+        $hist=new HistStationVehicule(0, $date, "Changement de station par le client", $location->getStationDep(), $vehicule);
+    }
     
     $date=new DateTime();
     $formR->setDate($date->format('d/m/Y'));
@@ -170,6 +177,12 @@ if(isset($_POST['valid'])){
     $vehicule->updateEtat($bdd);
     $vehicule->updateNiv($bdd);
     $vehicule->updateKm($bdd);
+    if($boolChangementStation){
+        $vehicule->updateStation($bdd);
+        $hist->insert($bdd);
+    }
+    
+    
     
     
 }else{
