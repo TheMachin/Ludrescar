@@ -262,10 +262,9 @@ if(isset($_POST['valid'])){
         $montantKmTotal=$type->getPrix_km()*$kmParcouru;
         //montant durée
         $dateDeb=new DateTime($location->getDate_deb());
-        var_dump($Rendu->getDate());
-        $dateFin=new DateTime($Rendu->getDate());
+        $dateFin=DateTime::createFromFormat("d/m/Y", $Rendu->getDate());
         $nbJour=$dateFin->diff($dateDeb);
-        $montantJourTotal=$nbJour*$type->getPrix_jour();
+        $montantJourTotal=($nbJour->format('%a'))*$type->getPrix_jour();
         //ajout prix dans location
         $location->setPrix_duree($montantJourTotal);
         $location->setPrix_km($montantKmTotal);
