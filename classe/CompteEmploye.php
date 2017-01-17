@@ -14,27 +14,27 @@
 class CompteEmploye {
     //put your code here
     private $id;
-    private $mdp;
+    private $login;
     
-    function __construct($id, $mdp) {
+    function __construct($id, $login) {
         $this->id = $id;
-        $this->mdp = $mdp;
+        $this->login = $login;
     }
     
     function getId() {
         return $this->id;
     }
 
-    function getMdp() {
-        return $this->mdp;
+    function getLogin() {
+        return $this->login;
     }
 
     function setId($id) {
         $this->id = $id;
     }
 
-    function setMdp($mdp) {
-        $this->mdp = $mdp;
+    function setLogin($login) {
+        $this->login = $login;
     }
 
 

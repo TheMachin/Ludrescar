@@ -1,8 +1,8 @@
 <?php
-session_start();
-include('../../bdd/bdd.php');
-include('../classe/Utilisateur.php');
-include('../classe/CompteUtilisateur.php');
+    session_start();
+    include('../../bdd/bdd.php');
+    include('../classe/Utilisateur.php');
+    include('../classe/CompteUtilisateur.php');
 ?>
 
   <!DOCTYPE HTML>
@@ -105,8 +105,9 @@ if (isset($_POST['submit']))
               <div class="col-sm-4 col-xs-12">
                 <p style="color: white;">
                   <?php if(isset($_SESSION['co']))
-{
-    echo($_SESSION['email']);
+                        {
+                            echo($_SESSION['email']);
+                        }
 ?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>

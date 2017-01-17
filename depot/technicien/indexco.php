@@ -70,9 +70,9 @@ session_start();
               <div class="col-sm-4 col-xs-12">
                 <p style="color: white;">
                   <?php if(isset($_SESSION['co']))
-{
-    echo($_SESSION['login']);
-}
+                        {
+                            echo($_SESSION['login']);
+                        }
 ?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
@@ -85,6 +85,7 @@ session_start();
                 <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                 <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
                 <li><a href="transferts.php">amener un véhicule à une autre station</a></li>
+                <li><a href="transfert.php">Finaliser un transfert</a></li>
                 <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
               </ul>
             </li>

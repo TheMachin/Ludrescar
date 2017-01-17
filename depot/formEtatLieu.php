@@ -1,4 +1,17 @@
 <?php
+include('../classe/Formulaire.php');
+include('../classe/Retour.php');
+include('../classe/Location.php');
+include('../classe/Vehicule.php');
+include('../classe/Type.php');
+include('../classe/Station.php');
+include('../classe/Statistique.php');
+include('../classe/Utilisateur.php');
+include('../classe/CompteUtilisateur.php');
+include('../classe/HistStationVehicule.php');
+include('../classe/Societe.php');
+include('../classe/Penalite.php');
+include('../../bdd/bdd.php');
     session_start();
     if(!empty($_SESSION['vehiculeDebutError'])){
         echo $_SESSION['vehiculeDebutError'];
@@ -27,14 +40,28 @@ and open the template in the editor.
                         <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
                                 <div class="form-wrap">
                                         <div class="tab">
+                                                <?php      
+                                                    if(!empty($_GET['id'])){
+                                                        $location= getLocations($_GET['id'], $bdd);
+                                                        $vehicule=$location->getVehicule();
+                                                        $date=new DateTime();
+                                                        $date=$date->format('d/m/Y');
+                                                    }else{
+                                                        goPagePred("");
+                                                    }
 
+                                                    function goPagePred($msgError){
+                                                        header("location:".  $_SERVER['HTTP_REFERER']); 
+                                                        exit(0);
+                                                    }
+                                                ?>
                                                 <div class="tab-content">
                                                         <div class="tab-content-inner active" data-content="signup">
                                                                 
-                                                                <h3 class="cursive-font">Véhicule : Lada Niva</h3>
-                                                                <h3 class="cursive-font">Date et heure du début de location prévu le 05/01/2017 à 15h30</h3>
-                                                                <h3 class="cursive-font">Date et heure du fin de location prévu le 06/01/2017 à 15h30</h3>
-                                                                <h3 class="cursive-font">Date du jour : 05/01/2017</h3>
+                                                                <h3 class="cursive-font">Véhicule : <?php echo $vehicule->getMarque()." ".$vehicule->getModele(); ?></h3>
+                                                                <h3 class="cursive-font">Date et heure du début de location prévu le <?php echo $location->getDate_deb()." ".$location->getHeure_deb(); ?></h3>
+                                                                <h3 class="cursive-font">Date et heure du fin de location prévu le <?php echo $location->getDate_fin_prev()." ".$location->getHeure_fin(); ?></h3>
+                                                                <h3 class="cursive-font">Date du jour : <?php echo $date; ?></h3>
                                                                 <form action="traitEtatLieu.php" method="POST">
                                                                         <div class="row form-group">
                                                                                 <div class="col-md-12">
@@ -99,3 +126,51 @@ and open the template in the editor.
         ?>
     </body>
 </html>
+
+<?php
+    function getVehicules($id,$bdd){
+        $requete="SELECT * FROM vehicules where no_immat=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            $row = pg_fetch_row($result);
+            $vehicule=new Vehicule($row[0], $row[12], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getStations($row[11], $bdd), getTypes($row[10], $bdd));
+            return $vehicule;
+    }
+    
+    function getLocations($id,$bdd){
+        $compteU=new CompteUtilisateur(0, "");
+        $user=new Utilisateur(0, "", "", "", "", "", "", "", 0, $compteU);
+        $form=new Formulaire(0, "", "", "", "", "Début", "", "");
+        $retour=new Retour(0, "", $form);
+        $societe=new Societe(0, "");
+        $penalite=New Penalite(0, "retard", 0);
+        $arrPenalite=new ArrayObject($penalite);
+        $requete="SELECT * FROM locations where id=$1";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($id));
+        $row = pg_fetch_row($result);
+        $location=new Location($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), $form, new Retour(0, NULL, $form), $societe, $arrPenalite);
+        return $location;
+    }
+    
+    function getStations($id,$bdd){
+            $requete="SELECT * FROM stations where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            while ($row = pg_fetch_row($result)) {
+                $station=new Station($row[0], $row[1], $row[2], $row[3], new Statistique($row[4], 0, 0, 0, 0, 0, 0));
+            }
+            return $station;
+    }
+    
+    function getTypes($id,$bdd){
+            $requete="SELECT * FROM types where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            $type=NULL;
+            while ($row = pg_fetch_row($result)) {
+                $type=new Type($row[0], $row[1], $row[2], $row[3]);
+            }
+            return $type;
+        }
+?>

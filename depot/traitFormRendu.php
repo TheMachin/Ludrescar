@@ -151,7 +151,7 @@ if(isset($_POST['valid'])){
     if($location->getStationDep()->getId()!==$location->getStationArr()->getId()){
         $boolChangementStation=TRUE;
         $vehicule->setStation($location->getStationArr());
-        $hist=new HistStationVehicule(0, $date, "Changement de station par le client", $location->getStationDep(), $vehicule);
+        $hist=new HistStationVehicule(0, $date->format('d/m/Y'), "Changement de station par le client", $location->getStationDep(), $vehicule);
     }
     
     $date=new DateTime();
@@ -181,6 +181,7 @@ if(isset($_POST['valid'])){
     $vehicule->updateNiv($bdd);
     $vehicule->updateKm($bdd);
     if($boolChangementStation){
+        $vehicule->setStation($location->getStationArr());
         $vehicule->updateStation($bdd);
         $hist->insert($bdd);
     }

@@ -82,9 +82,9 @@ include('../../classe/HistStationVehicule.php');
               <div class="col-sm-4 col-xs-12">
                 <p style="color: white;">
                   <?php if(isset($_SESSION['co']))
-{
-    echo($_SESSION['login']);
-}
+                        {
+                            echo($_SESSION['login']);
+                        }
 ?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>

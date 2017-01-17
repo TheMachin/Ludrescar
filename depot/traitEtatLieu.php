@@ -77,6 +77,15 @@ if(isset($_POST['valid'])){
     
     
     $location= getLocations($idLoc, $bdd);
+    
+    $dateDeb=new DateTime($location->getDate_deb());
+
+    $dateNow=new DateTime('now');
+    
+    if($dateNow<$dateDeb){
+        sendError("La location ne peut pas commencer avant la date prévue");
+    }
+    
     $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
     if($vehicule->getNb_km()>$km){
         //probleme
@@ -155,20 +164,8 @@ if(isset($_POST['valid'])){
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($id));
         $row = pg_fetch_row($result);
-        $location=new Location($row[0], $row[0], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), $form, new Retour(0, NULL, $form), $societe, $arrPenalite);
+        $location=new Location($row[0], $row[1], $row[2], $row[3], $row[4], $row[5], $row[6], $row[7], $row[8], $row[9], getVehicules($row[10], $bdd), $user, getStations($row[14], $bdd), getStations($row[15], $bdd), $form, new Retour(0, NULL, $form), $societe, $arrPenalite);
         return $location;
-    }
-    
-    function insertFormulaire($form){
-        
-    }
-    
-    function updateLocation($loc){
-        
-    }
-    
-    function updateVehicule($vehicule){
-        
     }
     
     function getStations($id,$bdd){

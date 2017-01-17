@@ -26,7 +26,7 @@ and open the template in the editor.
                                 ?>
         <?php
         // put your code here
-            $result = pg_prepare($bdd,"", "SELECT sa.nom, sa.adresse, sd.nom, sd.adresse,v.no_immat,v.modele,v.marque,v.puissance,v.nb_km,v.carburant,t.prix_km,t.prix_jour,l.date_deb,l.heure_deb,l.date_fin_prev,l.heure_fin,l.etatlocation,l.id,l.prix_tot,l.montant_penalite FROM locations l, stations sd, stations sa, vehicules v, types t WHERE utilisateur_id=$1 AND sa.id=l.station_arrivee_id AND sd.id=station_depart_id AND l.vehicule_immat=v.no_immat AND v.type_id=t.id");
+            $result = pg_prepare($bdd,"", "SELECT sa.nom, sa.adresse, sd.nom, sd.adresse,v.no_immat,v.modele,v.marque,v.puissance,v.nb_km,v.carburant,t.prix_km,t.prix_jour,l.date_deb,l.heure_deb,l.date_fin_prev,l.heure_fin,l.etatlocation,l.id,l.prix_tot,l.montant_penalite FROM locations l, stations sd, stations sa, vehicules v, types t WHERE utilisateur_id=$1 AND sa.id=l.station_arrivee_id AND sd.id=station_depart_id AND l.vehicule_immat=v.no_immat AND v.type_id=t.id ORDER BY l.date_deb DESC");
             $result = pg_execute($bdd,'',array($utilisateur->getId()));
             if (!$result) {
               echo "Une erreur est survenue.\n";
@@ -67,10 +67,10 @@ and open the template in the editor.
                         while ($row = pg_fetch_row($result)){
                             ?>
                             <tr>
-                                <td><?php echo $row[0]; ?></td>
-                                <td><?php echo $row[1]; ?></td>
                                 <td><?php echo $row[2]; ?></td>
                                 <td><?php echo $row[3]; ?></td>
+                                <td><?php echo $row[0]; ?></td>
+                                <td><?php echo $row[1]; ?></td>
                                 <td><?php echo $row[18]; ?></td>
                                 <td><?php echo $row[19]; ?></td>
                                 <td><?php echo $row[4]; ?></td>

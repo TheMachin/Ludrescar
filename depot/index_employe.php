@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../bdd/bdd.php');
+//include('../../bdd/bdd.php');
 
 ?>
 
@@ -59,41 +59,67 @@ include('../../bdd/bdd.php');
 	</head>
 	<body>
 	<?php
-//si on appuie sur le bouton submit
-if (isset($_POST['submit']))
-{
+    //si on appuie sur le bouton submit
+    if (isset($_POST['submit']))
+    {
 	#htmlentities est la pour une securite et trim est la pour eviter les espaces dans le usrename
 	$login =htmlentities(trim($_POST['login']));
 	$password =htmlentities(trim($_POST['password']));
 	
-//echo "test";
-/*pour tester */
+        //echo "test";
+        /*pour tester */
 
-//si ce que l'on rentre existe
+        //si ce que l'on rentre existe
 	if($login&&$password){
-// requete pour tout le monde 
-$requete_tous="select * from Employe e, compteEmploye ce where e.nom=$1 and ce.mdp=$2 and ce.id=e.id;";
-					$req= pg_prepare($bdd,'connexion',$requete_tous);
-                                        $req= pg_execute($bdd,'connexion',array($login,$password));
-					$count= pg_num_rows($req);
-// est-ce un technicien
-$requete_technicien="select * from Technicien t where t.nom=$1";
-$req_t= pg_prepare($bdd,'connexion',$requete_tous);
-                                        $req_t= pg_execute($bdd,'connexion',array($login,$password));
-					$count_t= pg_num_rows($req_t);
+            $succes=TRUE;
+            $bddE=NULL;
 
-					if($count==1){
-							//creation de session
-						$_SESSION['co']=1;
-						$_SESSION['login']=$login;
-					if($count_t ==1){
-						header('Location:technicien/indexco.php');
-					}else header('Location:responsable/indexco.php');
-					}else echo"identifiant ou mot de passe incorect";
+            $bddE= @pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$password);
+            $stat = pg_connection_status($bddE);
+            if ($stat !== PGSQL_CONNECTION_OK) {
+                $succes=FALSE;
+            }
+            
+            if($succes){
+                // requete pour tout le monde 
+                $requete_tous="select id from compteEmployes where login=$1;";
+                $req= pg_prepare($bddE,'',$requete_tous);
+                $req= pg_execute($bddE,'',array($login));
+                $row = pg_fetch_row($req);
+                // est-ce un technicien
+                $requete_technicien="select * from Techniciens where id=$1";
+                $req_t= pg_prepare($bddE,'',$requete_technicien);
+                $req_t= pg_execute($bddE,'',array($row[0]));
+                $count= pg_num_rows($req_t);
+                
+                if($count==1){
+                                //creation de session
+                    $_SESSION['co']=1;
+                    $_SESSION['login']=$login; 
+                    $_SESSION['idT']=$row[0]; 
+                    $_SESSION['bdd']= serialize($bddE); 
+                    header('Location:technicien/indexco.php');
+                }
+                $requete_responsable="select * from responsables where id=$1";
+                $req_t= pg_prepare($bddE,'',$requete_responsable);
+                $req_t= pg_execute($bddE,'',array($row[0]));
+                $count= pg_num_rows($req_t);
+                if($count==1){
+                    $_SESSION['co']=1;
+                    $_SESSION['login']=$login; 
+                    $_SESSION['idR']=$row[0]; 
+                    $_SESSION['bdd']= serialize($bddE); 
+                    header('Location:responsable/indexco.php');
+                }else{
+                    echo "Pas technicien et pas responsable";
+                }
+            }else{
+                echo "identifiant ou mot de passe incorect";
+            }
 
 
 	}else echo "Veuillez saisir tout les champs s'il vous plait !";
-}
+    }
 ?>	
 	<div class="gtco-loader"></div>
 	
@@ -143,7 +169,7 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 												<div class="row form-group">
 													<div class="col-md-12">
 														<label for="#">Login</label>
-														<input type="text" name="Login" placeholder="" class="form-control">
+														<input type="text" name="login" placeholder="" class="form-control">
 													</div>
 												</div>
 												<div class="row form-group">
