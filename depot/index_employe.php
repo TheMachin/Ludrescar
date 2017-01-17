@@ -87,8 +87,8 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 						$_SESSION['co']=1;
 						$_SESSION['login']=$login;
 					if($count_t ==1){
-						header('Location:employe/index_t.php');
-					}else header('Location:index_r.php');
+						header('Location:technicien/indexco.php');
+					}else header('Location:responsable/indexco.php');
 					}else echo"identifiant ou mot de passe incorect";
 
 
@@ -139,7 +139,7 @@ $req_t= pg_prepare($bdd,'connexion',$requete_tous);
 										<div class="tab-content-inner active" data-content="signup">
 											<h3 class="cursive-font">Connectez-vous !!</h3>
 											<!--action est le registre ou on est et apres la methode -->
-											<form action="index_employee.php"method="post">
+											<form action="index_employe.php"method="post">
 												<div class="row form-group">
 													<div class="col-md-12">
 														<label for="#">Login</label>
