@@ -107,7 +107,6 @@ if (isset($_POST['submit']))
                   <?php if(isset($_SESSION['co']))
 {
     echo($_SESSION['email']);
-}
 ?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>

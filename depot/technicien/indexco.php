@@ -84,7 +84,7 @@ session_start();
                      <ul class="dropdown">
                 <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                 <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
-                <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
+                <li><a href="transferts.php">amener un véhicule à une autre station</a></li>
                 <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
               </ul>
             </li>
@@ -118,40 +118,13 @@ session_start();
 
             <div class="row">
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                <h2 class="cursive-font primary-color">Les chiffres</h2>
-                <p>Ludrescar en quelques chiffres.</p>
+                <h2 class="cursive-font primary-color">Les transfert en cours</h2>
+                <p>Ludrescar transfert en quelques chiffres.</p>
               </div>
             </div>
 
             <div class="row">
-
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="50" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">milles utilisateurs</span>
-
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="325" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">Voitures</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="32000" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">nombres locations</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="2016" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">années de départ</span>
-
-                </div>
-              </div>
-
+              <?php include('transfertVehicule:php');?>
             </div>
           </div>
         </div>
