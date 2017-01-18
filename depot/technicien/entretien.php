@@ -81,12 +81,9 @@ and open the template in the editor.
   </head>
 
   <body>
-    <div class="gtco-loader"></div>
-
     <div id="page">
       <nav class="gtco-nav" role="navigation">
         <div class="gtco-container">
-
           <div class="row">
             <div class="col-sm-4 col-xs-12">
               <p style="color: white;">
@@ -115,7 +112,7 @@ and open the template in the editor.
         </div>
       </nav>
 
-      <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:1700px; background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
+      <header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="gtco-container">
           <div class="row">
@@ -158,13 +155,13 @@ while ($row = pg_fetch_row($result)) {
                             <div class="row form-group">
                               <div class="col-md-12">
                                 <label for="date-start">Date début entretien</label>
-                                <input type="text" id="deb" name="deb" class="form-control">
+                                <input type="text" id="date" name="deb" class="form-control">
                               </div>
                             </div>
                             <div class="row form-group">
                               <div class="col-md-12">
                                 <label for="date-end">Date fin entretien</label>
-                                <input type="text" id="end" name="end" class="form-control">
+                                <input type="text" id="date" name="end" class="form-control">
                               </div>
                             </div>
                             <div class="row form-group">
@@ -191,94 +188,25 @@ while ($row = pg_fetch_row($result)) {
       </header>
     </div>
 
-
-
-    <div class="row">
-      <div class="col-md-12 col-md-offset-0 text-left">
-        <div class="row row-mt-15em">
-          <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-            <?php
-if(!empty($_SESSION['entretienMise'])){
-    echo "<h3>".$_SESSION['entretienMise']."</h3>";
-    unset($_SESSION['entretienMise']);
-}
-?>
-              <span class="intro-text-small">ludresCar</span>
-              <h1 class="cursive-font">Mise en entretien d'un véhicule.</h1>
-
+    <div class="gtco-section">
+      <div class="gtco-container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+            <h2 class="cursive-font primary-color">Fin d'entretien d'un véhicule</h2>
           </div>
-          <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-            <div class="form-wrap">
-              <div class="tab">
+        </div>
+        <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+          <div class="form-wrap">
+            <div class="tab">
 
-                <div class="tab-content">
-                  <div class="tab-content-inner active" data-content="signup">
-                    <form action="traitMiseEntretien.php" method="POST">
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <label for="activities">Immatriculation : </label>
-                          <select name="immat" id="activities" class="form-control">
-                            <?php
-$result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat!='Transfert' AND v.etat!='En réparation' AND s.id=$1");
-$result= pg_execute($bdd,'',array($station->getId()));
-if (!$result) {
-    echo "Une erreur est survenue.\n";
-    exit;
-}
-while ($row = pg_fetch_row($result)) {
-    echo "<option value='".$row[0]."'> Immatriculation : ".$row[0]." Véhicule : ".$row[1]." ".$row[2]." état : ".$row[3]." Station : ".$row[4]."</option>";
-}
-?>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <label for="date-start">Date début entretien</label>
-                          <input type="text" id="deb" name="deb" class="form-control">
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <label for="date-end">Date fin entretien</label>
-                          <input type="text" id="end" name="end" class="form-control">
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <label for="date-start">Type d'entretien</label>
-                          <input type="text" id="type" name="type" class="form-control">
-                        </div>
-                      </div>
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <input type="submit" name="valid" class="btn btn-primary btn-block" value="Valider entretien">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-            <span class="intro-text-small">ludresCar</span>
-            <h1 class="cursive-font">Fin d'entretien d'un véhicule.</h1>
-          </div>
-          <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
-            <div class="form-wrap">
-              <div class="tab">
-
-                <div class="tab-content">
-                  <div class="tab-content-inner active" data-content="signup">
-                    <form action="traitMiseEntretien.php" method="POST">
-                      <div class="row form-group">
-                        <div class="col-md-12">
-                          <label for="activities">Immatriculation : </label>
-                          <select name="immat" id="activities" class="form-control">
-                            <?php
+              <div class="tab-content">
+                <div class="tab-content-inner active" data-content="signup">
+                  <form action="traitMiseEntretien.php" method="POST">
+                    <div class="row form-group">
+                      <div class="col-md-12">
+                        <label for="activities">Immatriculation : </label>
+                        <select name="immat" id="activities" class="form-control" style="width:800px;">
+                          <?php
 $result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat='En réparation' AND s.id=$1");
 $result= pg_execute($bdd,'',array($station->getId()));
 if (!$result) {
@@ -289,27 +217,58 @@ while ($row = pg_fetch_row($result)) {
     echo "<option value='".$row[0]."'> Immatriculation : ".$row[0]." Véhicule : ".$row[1]." ".$row[2]." état : ".$row[3]." Station : ".$row[4]."</option>";
 }
 ?>
-                          </select>
+                        </select>
+                      </div>
+                      
+                      <div class="row form-group">
+                        <div class="col-md-12">
+                          <br/>
+                          <input type="submit" name="validFin" class="btn btn-primary btn-block" value="Valider fin entretien">
                         </div>
-                        <div class="row form-group">
-                          <div class="col-md-12">
-                            <input type="submit" name="validFin" class="btn btn-primary btn-block" value="Valider fin entretien">
-                          </div>
-                        </div>
-                    </form>
-                    </div>
-
-
+                      </div>
+                  </form>
                   </div>
+
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <?php
-// put your code here
-?>
+    </div>
+    </div>
   </body>
+
+  <div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+  </div>
+
+  <!-- jQuery -->
+  <script src="../js/jquery.min.js"></script>
+  <!-- jQuery Easing -->
+  <script src="../js/jquery.easing.1.3.js"></script>
+  <!-- Bootstrap -->
+  <script src="../js/bootstrap.min.js"></script>
+  <!-- Waypoints -->
+  <script src="../js/jquery.waypoints.min.js"></script>
+  <!-- Carousel -->
+  <script src="../js/owl.carousel.min.js"></script>
+  <!-- countTo -->
+  <script src="../js/jquery.countTo.js"></script>
+
+  <!-- Stellar Parallax -->
+  <script src="../js/jquery.stellar.min.js"></script>
+
+  <!-- Magnific Popup -->
+  <script src="../js/jquery.magnific-popup.min.js"></script>
+  <script src="../js/magnific-popup-options.js"></script>
+
+  <script src="../js/moment.min.js"></script>
+  <script src="../js/bootstrap-datetimepicker.min.js"></script>
+
+
+  <!-- Main -->
+  <script src="../js/main.js"></script>
 
   </html>
