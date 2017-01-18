@@ -1,6 +1,17 @@
 <?php
 session_start();
-//include('../../bdd/bdd.php');
+$bdd=NULL;
+if(isset($_SESSION['co'])){
+    if(!empty($_SESSION['login']) && !empty($_SESSION['mdp'])){
+        $login=$_SESSION['login'];
+        $mdp=$_SESSION['mdp'];
+        $bdd= pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$mdp,PGSQL_CONNECT_FORCE_NEW);
+    }else{
+        header('Location:../index_employe.php');
+    }
+}else{
+    header('Location:../index_employe.php');
+}
 include('../../classe/Formulaire.php');
 include('../../classe/Retour.php');
 include('../../classe/Location.php');
@@ -423,7 +434,7 @@ function verifStation(Station $station,$bdd){
     
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (date_deb<=NOW() AND NOW()>=date_fin_prev) OR (NOW()>=date_deb)";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND etatlocation!='Annulé' AND etatlocation!='Terminé'";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);

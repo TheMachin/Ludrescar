@@ -1,14 +1,25 @@
 <?php
 include('../../classe/Vehicule.php');
 include('../../classe/Entretien.php');
-include('../../bdd/bdd.php');
+
 include('../../classe/Technicien.php');
 include('../../classe/CompteEmploye.php');
 include('../../classe/Statistique.php');
 include('../../classe/Station.php');
 include('../../classe/Type.php');
 session_start();
-
+$bdd=NULL;
+if(isset($_SESSION['co'])){
+    if(!empty($_SESSION['login']) && !empty($_SESSION['mdp'])){
+        $login=$_SESSION['login'];
+        $mdp=$_SESSION['mdp'];
+        $bdd= pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$mdp,PGSQL_CONNECT_FORCE_NEW);
+    }else{
+        header('Location:../index_employe.php');
+    }
+}else{
+    header('Location:../index_employe.php');
+}
 $technicien=new Technicien(33, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
 $station=$technicien->getStation();
 /* 
@@ -92,7 +103,7 @@ if(isset($_POST['valid'])){
 
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (etatlocation='Annulé' OR etatlocation='Terminé')";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND etatlocation!='Annulé' AND etatlocation!='Terminé'";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);

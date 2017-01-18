@@ -11,7 +11,18 @@ include('../../classe/Utilisateur.php');
 include('../../classe/CompteUtilisateur.php');
 include('../../classe/Societe.php');
 include('../../classe/Penalite.php');
-include('../../bdd/bdd.php');
+$bdd=NULL;
+if(isset($_SESSION['co'])){
+    if(!empty($_SESSION['login']) && !empty($_SESSION['mdp'])){
+        $login=$_SESSION['login'];
+        $mdp=$_SESSION['mdp'];
+        $bdd= pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$mdp,PGSQL_CONNECT_FORCE_NEW);
+    }else{
+        header('Location:../index_employe.php');
+    }
+}else{
+    header('Location:../index_employe.php');
+}
 ?>
 <!DOCTYPE html>
 <!--

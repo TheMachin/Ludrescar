@@ -1,11 +1,12 @@
 <?php
-include('../../bdd/bdd.php');
+
 include('../../classe/Station.php');
 include('../../classe/Vehicule.php');
 include('../../classe/Type.php');
 include('../../classe/Statistique.php');
 include('../../classe/HistStationVehicule.php');
 //session_start();
+
 ?>
  <!DOCTYPE HTML>
   <html>
@@ -143,7 +144,8 @@ and open the template in the editor.
                                                     <label for="activities">Immatriculation : </label>
                                                     <select name="immat" id="activities" class="form-control">
                                                         <?php 
-                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
+                                                        $requete="SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id";
+                                                        $result = pg_query($bdd,$requete);
                                                         if (!$result) {
                                                           echo "Une erreur est survenue.\n";
                                                           exit;
@@ -251,7 +253,7 @@ and open the template in the editor.
     
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (etatlocation='Annulé' OR etatlocation='Terminé')";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND etatlocation!='Annulé' AND etatlocation!='Terminé'";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);

@@ -1,10 +1,22 @@
 <?php
-include('../../bdd/bdd.php');
+
 include('../../classe/Technicien.php');
 include('../../classe/CompteEmploye.php');
 include('../../classe/Statistique.php');
 include('../../classe/Station.php');
 session_start();
+$bdd=NULL;
+if(isset($_SESSION['co'])){
+    if(!empty($_SESSION['login']) && !empty($_SESSION['mdp'])){
+        $login=$_SESSION['login'];
+        $mdp=$_SESSION['mdp'];
+        $bdd= pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$mdp,PGSQL_CONNECT_FORCE_NEW);
+    }else{
+        header('Location:../index_employe.php');
+    }
+}else{
+    header('Location:../index_employe.php');
+}
 
 $technicien=new Technicien(33, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
 $station=$technicien->getStation();

@@ -96,8 +96,8 @@ session_start();
                                 //creation de session
                     $_SESSION['co']=1;
                     $_SESSION['login']=$login; 
+                    $_SESSION['mdp']=$password; 
                     $_SESSION['idT']=$row[0]; 
-                    $_SESSION['bdd']= serialize($bddE); 
                     header('Location:technicien/indexco.php');
                 }
                 $requete_responsable="select * from responsables where id=$1";
@@ -107,6 +107,7 @@ session_start();
                 if($count==1){
                     $_SESSION['co']=1;
                     $_SESSION['login']=$login; 
+                    $_SESSION['mdp']=$password; 
                     $_SESSION['idR']=$row[0]; 
                     $_SESSION['bdd']= serialize($bddE); 
                     header('Location:responsable/indexco.php');
