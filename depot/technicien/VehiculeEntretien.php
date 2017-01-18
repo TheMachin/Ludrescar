@@ -11,6 +11,12 @@ if(isset($_SESSION['co'])){
         $login=$_SESSION['login'];
         $mdp=$_SESSION['mdp'];
         $bdd= pg_connect("host=localhost port=5432 dbname=ludrescar user=".$login." password=".$mdp,PGSQL_CONNECT_FORCE_NEW);
+        if(!empty($_SESSION['idT'])){
+            $idT=$_SESSION['idT'];
+        }else{
+            echo "Nop";
+            exit(0);
+        }
     }else{
         header('Location:../index_employe.php');
     }
@@ -18,7 +24,8 @@ if(isset($_SESSION['co'])){
     header('Location:../index_employe.php');
 }
 
-$technicien=new Technicien(33, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
+$technicien=new Technicien($idT, "Siesta", "Pedro", new Station(15, "La station", "ché pas", 15, new Statistique(0, 0, 0, 0, 0, 0, 0)), new CompteEmploye(33, ""));
+$technicien->getById($idT, $bdd);
 $station=$technicien->getStation();
 ?>
 <!DOCTYPE html>

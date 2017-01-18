@@ -81,6 +81,16 @@ class Station {
             }
             return $station;
         }
+        
+        static function getStationByIdStatic($id,$bdd){
+            $requete="SELECT * FROM stations where id=$1";
+            $result= pg_prepare($bdd,'',$requete);
+            $result = pg_execute($bdd, "", array($id));
+            while ($row = pg_fetch_row($result)) {
+                $station=new Station($row[0], $row[1], $row[2], $row[3], new Statistique($row[4], 0, 0, 0, 0, 0, 0));
+            }
+            return $station;
+        }
 
 }
 ?>
