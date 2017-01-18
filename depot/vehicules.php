@@ -119,7 +119,7 @@ include('../bdd/bdd.php');
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
 					<h2 class="cursive-font primary-color">La liste des véhicules</h2>
-					<p>Voici la liste des véhicules que l'on peut vous proposé.</p>
+					<p>Voici la liste des véhicules que l'on peut vous proposer.</p>
 				</div>
 			</div>
 			<div class="row">

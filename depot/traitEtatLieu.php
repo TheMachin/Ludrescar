@@ -77,6 +77,8 @@ if(isset($_POST['valid'])){
     
     
     $location= getLocations($idLoc, $bdd);
+    $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
+    
     
     $dateDeb=new DateTime($location->getDate_deb());
 
@@ -84,6 +86,28 @@ if(isset($_POST['valid'])){
     
     if($dateNow<$dateDeb){
         sendError("La location ne peut pas commencer avant la date prévue");
+    }
+    
+    if($etat==="hs"){
+        $vehicule->setEtat("Hors service");
+        $form->setEtatVehicule("Hors service");
+        $location->setEtatLocation("Annulé");
+        $location->updateEtat($bdd);
+        //fin de location car véhicule impraticable
+        $vehicule->updateEtat($bdd);
+        //pas oublier changer page
+        
+        $_SESSION['location']= serialize($location);
+        header('Location:recapForm.php');
+        exit(0);
+    }else{
+        if($etat==="c"){
+            $vehicule->setEtat("Correct");
+            $form->setEtatVehicule("Correct");
+        }else if($etat==="be"){
+            $vehicule->setEtat("Bon état");
+            $form->setEtatVehicule("Bon état");
+        }
     }
     
     $dateFinPrev=new DateTime($location->getDate_fin_prev());
@@ -94,7 +118,7 @@ if(isset($_POST['valid'])){
         sendError("La location ne peut pas commencer car vous avez dépassé la date limite de la location.");
     }
     
-    $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
+    
     if($vehicule->getNb_km()>$km){
         //probleme
         sendError("Erreur : Le kilométrage spécifié ne doit pas être inférieure à celui du véhicule");
@@ -103,22 +127,7 @@ if(isset($_POST['valid'])){
         $form->setKm($km);
     }
     
-    if($etat==="hs"){
-        $vehicule->setEtat("Hors service");
-        $form->setEtatVehicule("Hors service");
-        $location->setEtatLocation("Annulé");
-        //fin de location car véhicule impraticable
-        $vehicule->updateEtat($bdd);
-        
-    }else{
-        if($etat==="c"){
-            $vehicule->setEtat("Correct");
-            $form->setEtatVehicule("Correct");
-        }else if($etat==="be"){
-            $vehicule->setEtat("Bon état");
-            $form->setEtatVehicule("Bon état");
-        }
-    }
+    
     
     $form->setNiv_carbu($niv);
     $form->setCommentaire($comm);
@@ -135,12 +144,14 @@ if(isset($_POST['valid'])){
     $location->setFormulaire($form);
     $location->updateForm($bdd);
     $location->setEtatLocation("En cours");
+    $location->setVehicule($vehicule);
     $location->updateEtat($bdd);
+    $_SESSION['location']= serialize($location);
     //maj pour la voiture
     $vehicule->updateEtat($bdd);
     $vehicule->updateNiv($bdd);
     $vehicule->updateKm($bdd);
-    
+    header('Location:recapForm.php');
 }else{
     sendError("Erreur : Le formulaire n'a pas été validé");
 }

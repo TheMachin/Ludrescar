@@ -55,5 +55,14 @@ class Penalite {
         $this->id=$row[0];
         $this->montant=$row[1];
     }
+    
+    function insert($idLoc,$bdd){
+        $requete="INSERT into a_pour_penalites (penalite_id,location_id) VALUES ($1,$2)";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->id,$idLoc));
+        $row = pg_fetch_row($result);
+        $this->id=$row[0];
+        $this->montant=$row[1];
+    }
 }
 ?>

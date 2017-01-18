@@ -2,8 +2,11 @@
     session_start();
     include('../../bdd/bdd.php');
     include('../classe/Utilisateur.php');
-    
-    $utilisateur= unserialize($_SESSION['utilisateur']);
+    if(!empty($_SESSION['utilisateur']))
+        $utilisateur= unserialize($_SESSION['utilisateur']);
+    else{
+        header('Location:index.php');
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -20,7 +23,7 @@ and open the template in the editor.
         <h1>Liste des locations</h1>
         <?php
                                     if(!empty($_SESSION['location'])){
-                                        echo "<h3>".$_SESSION['location']."</h3>";
+                                        //echo "<h3>".$_SESSION['location']."</h3>";
                                         unset($_SESSION['location']);
                                     }
                                 ?>

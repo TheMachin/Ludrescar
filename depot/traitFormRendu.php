@@ -176,6 +176,11 @@ if(isset($_POST['valid'])){
     $location->setPrix_tot($location->getMontant_penalite()+$location->getPrix_tot());
     $location->setEtatLocation("Terminé");
     $location->updateFinLocation($bdd);
+    
+    foreach($arrPenalite as $penalite){
+        $penalite->insert($location->getId(), $bdd);
+    }
+    
     //on met à jour la voiture
     $vehicule->updateEtat($bdd);
     $vehicule->updateNiv($bdd);
@@ -186,7 +191,8 @@ if(isset($_POST['valid'])){
         $hist->insert($bdd);
     }
     
-    
+    $_SESSION['location']= serialize($location);
+    header('Location:recapForm.php');
     
     
 }else{
