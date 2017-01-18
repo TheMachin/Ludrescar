@@ -225,7 +225,7 @@ include('../../classe/HistStationVehicule.php');
           <div class="gtco-container">
             <div class="row animate-box">
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                <h2 class="cursive-font">Vos commentaires</h2>
+                <h2 class="cursive-font">Transférer</h2>
                
                     <div class="gtco-widget">
                     <div class="col-md-6 col-sm-6"> <form method="POST">
@@ -302,8 +302,8 @@ include('../../classe/HistStationVehicule.php');
                                                 }
                                             ?>
                                         </form> 
-                     
-            
+                     </div>
+                     </div>           
               </div>
             </div>
           </div>
