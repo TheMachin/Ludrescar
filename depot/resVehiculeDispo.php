@@ -189,7 +189,7 @@ else
         }
         while ($rowImmat = pg_fetch_row($result)){
             ?>
-                      <input type="hidden" name="immat" value="<?php echo $row[0];?>">
+                      <input type="hidden" name="immat" value="<?php echo $rowImmat[0];?>">
                       <?php
         }
         ?>

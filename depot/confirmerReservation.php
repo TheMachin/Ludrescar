@@ -81,7 +81,7 @@ if (isset($_POST['submit']))
             $_SESSION['email']=$email;
             
             header('Location:index.php');
-        }else echo"identifiant ou mot de passe incorect";
+        }else echo"identifiant ou mot de passe incorrect";
         
         
     }else echo "Veuillez saisir tout les champs s'il vous plait !";
@@ -98,14 +98,11 @@ if (isset($_POST['submit']))
 
             <div class="row">
               <div class="col-sm-4 col-xs-12">
-                <p style="color: white;">
-                  <?php if(isset($_SESSION['co']))
+                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php if(isset($_SESSION['co']))
 {
     echo($_SESSION['email']);
 }
-?>
-                </p>
-                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+?></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
@@ -145,21 +142,23 @@ if(isset($_POST['prixJour']))      $prixJour=$_POST['prixJour'];
 
 if(isset($_POST['hRet']))      $hRet=$_POST['hRet'];
 
-$result = pg_query($bdd, "SELECT v.no_immat, v.marque, v.modele, t.prix_jour, t.prix_km
-FROM vehicules v, types t, stations s
-WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert' AND v.marque='$marque'
-AND v.modele='$modele' LIMIT 1");
-if (!$result) {
-    echo "Une erreur est survenue.\n";
-    exit;
-}
-while ($row = pg_fetch_row($result)){
-    ?>
+if(!empty($_POST['reserver'])){
+    $result = pg_query($bdd, "SELECT v.no_immat, v.marque, v.modele, t.prix_jour, t.prix_km, v.carburant, v.nb_place, s.id
+    FROM vehicules v, types t, stations s
+    WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert' AND v.marque='$marque'
+    AND v.modele='$modele' LIMIT 1");
+    if (!$result) {
+        echo "Une erreur est survenue.\n";
+        exit;
+    }
+    while ($row = pg_fetch_row($result)){
+        ?>
                   <div class="row row-mt-15em">
                     <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                       <span class="intro-text-small">Véhicule : <?php echo $marque;?> <?php echo $modele;?></span>
                       <span class="intro-text-small">Prix : <?php echo $prixJour;?>€ prix/jour</span>
-
+                      <span class="intro-text-small">Carburant : <?php echo $row[5];?></span>
+                      <span class="intro-text-small">Places : <?php echo $row[6];?></span>
                     </div>
                     <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
                       <div class="form-wrap">
@@ -171,51 +170,52 @@ while ($row = pg_fetch_row($result)){
                               <form action="confirmerReservation.php" method="post">
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <label for="activities">Station</label>
-                                    <select id="activities" name="station" class="form-control">
-                                      <option value="Ludres-Centre">Ludres Centre</option>
-                                      <option value="Ludres-Gare">Ludres Gare</option>
-                                      <option value="Ludres-Sud">Ludres Sud</option>
-                                    </select>
+                                    <label for="date-start">Station :
+                                      <?php echo $station?>
+                                    </label>
                                   </div>
                                 </div>
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <label for="date-start">Date de début</label>
-                                    <input type="text" id="date" name="dateDeb" class="form-control">
+                                    <label for="date-start">Date départ :
+                                      <?php echo $dateDeb?>
+                                    </label>
                                   </div>
                                 </div>
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <label for="date-end">Heure de début</label>
-                                    <input type="text" id="time" name="hDeb" class="form-control">
+                                    <label for="date-start">Heure départ :
+                                      <?php echo $hDeb?>
+                                    </label>
                                   </div>
                                 </div>
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <label for="date-start">Date de retour</label>
-                                    <input type="text" id="date" name="dateRet" class="form-control">
+                                    <label for="date-start">Date retour :
+                                      <?php echo $dateRet?>
+                                    </label>
                                   </div>
                                 </div>
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <label for="date-end">Heure de retour</label>
-                                    <input type="text" id="time" name="hRet" class="form-control">
+                                    <label for="date-start">Heure retour :
+                                      <?php echo $hRet?>
+                                    </label>
                                   </div>
                                 </div>
                                 <div class="row form-group">
                                   <div class="col-md-12">
-                                    <input type="hidden" name="station" value="<?php echo $_POST['station']?>">
-                                    <input type="hidden" name="dateDeb" value="<?php echo $_POST['dateDeb']?>">
-                                    <input type="hidden" name="hDeb" value="<?php echo $_POST['hDeb']?>">
-                                    <input type="hidden" name="dateRet" value="<?php echo $_POST['dateRet']?>">
-                                    <input type="hidden" name="hRet" value="<?php echo $_POST['hRet']?>">
-                                    <input type="hidden" name="hDeb" value="<?php echo $_POST['hDeb']?>">
-                                    <input type="hidden" name="marque" value="<?php echo $_POST['marque']?>">
-                                    <input type="hidden" name="modele" value="<?php echo $_POST['modele']?>">
-                                    <input type="hidden" name="prixJour" value="<?php echo $_POST['prixJour']?>">
+                                    <input type="hidden" name="station" value="<?php echo $row[7]?>">
+                                    <input type="hidden" name="dateDeb" value="<?php echo $dateDeb?>">
+                                    <input type="hidden" name="hDeb" value="<?php echo $hDeb?>">
+                                    <input type="hidden" name="dateRet" value="<?php echo $dateRet?>">
+                                    <input type="hidden" name="hRet" value="<?php echo $hRet?>">
+                                    <input type="hidden" name="marque" value="<?php echo $marque?>">
+                                    <input type="hidden" name="modele" value="<?php echo $modele?>">
+                                    <input type="hidden" name="prixJour" value="<?php echo $prixJour?>">
+                                    <input type="hidden" name="prixKM" value="<?php echo $row[4]?>">
                                     <input type="hidden" name="immat" value="<?php echo $row[0];?>">
-                                    <input type="submit" name="reserver" class="btn btn-primary btn-block" value="Je reserve">
+                                    <input type="submit" name="confirm" class="btn btn-primary btn-block" value="Je reserve">
                                   </div>
                                 </div>
                               </form>
@@ -229,28 +229,44 @@ while ($row = pg_fetch_row($result)){
                   </div>
 
                   <?php
-                  var_dump($row, $station, $marque, $modele);
+    }
 }
 //si on confirme la reservation
-if(!empty($_POST['reserver'])){
-  var_dump($_POST);
-if(!empty($_POST['immat'])) {     $immat=$_POST['immat'];}else {echo "fuck";}
-    var_dump($immat);
-    var_dump($row);
-
-    $prixKM=16;// a modif
-    $prixTOT=150;// a modif
+if(!empty($_POST['confirm'])){
     $etatLoc="Réservé";
+
+    if(!empty($_POST['immat'])) {     $immat=$_POST['immat'];}
+
     $userID=23; // a modif
-    $station=15;
+    
+    if(isset($_POST['station']))      $station=$_POST['station'];
+    
+    if(isset($_POST['dateDeb']))      $dateDeb=$_POST['dateDeb'];
+    
+    if(isset($_POST['hDeb']))      $hDeb=$_POST['hDeb'];
+    
+    if(isset($_POST['dateRet']))      $dateRet=$_POST['dateRet'];
+
+    if(isset($_POST['hRet']))      $hRet=$_POST['hRet'];
+    
+    if(isset($_POST['marque']))      $marque=$_POST['marque'];
+    
+    if(isset($_POST['modele']))      $modele=$_POST['modele'];
+
+    if(isset($_POST['station']))      $station=$_POST['station'];
+    
     $request = "INSERT INTO locations(
-    date_deb, date_fin_prev, prix_duree, prix_km, prix_tot, etatlocation, heure_deb, heure_fin, vehicule_immat, station_depart_id, station_arrivee_id,
+    date_deb, date_fin_prev, etatlocation, heure_deb, heure_fin, vehicule_immat, station_depart_id, station_arrivee_id,
     utilisateur_id)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);";
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
     $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array($dateDeb, $dateRet, $prixJour, $prixKM, $prixTOT, $etatLoc, $hDeb, $hRet, $immat, $station, $station, $userID));
+    $result = pg_execute($bdd, "",array($dateDeb, $dateRet, $etatLoc, $hDeb, $hRet, $immat, $station, $station, $userID));
 }
 ?>
+                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                      <span class="intro-text-small">ludresCar</span>
+                      <h1 class="cursive-font">Merci pour votre réservation!</h1>
+                    </div>
               </div>
             </div>
           </div>
