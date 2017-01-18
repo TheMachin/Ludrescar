@@ -86,6 +86,14 @@ if(isset($_POST['valid'])){
         sendError("La location ne peut pas commencer avant la date prévue");
     }
     
+    $dateFinPrev=new DateTime($location->getDate_fin_prev());
+    
+    if($dateNow>$dateFinPrev){
+        $location->setEtatLocation("Annulé");
+        $location->updateEtat($bdd);
+        sendError("La location ne peut pas commencer car vous avez dépassé la date limite de la location.");
+    }
+    
     $vehicule= getVehicules($location->getVehicule()->getNo_immat(), $bdd);
     if($vehicule->getNb_km()>$km){
         //probleme
