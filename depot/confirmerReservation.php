@@ -1,6 +1,8 @@
 <?php
 session_start();
 include('../../bdd/bdd.php');
+include('../classe/CompteUtilisateur.php');
+include('../classe/Utilisateur.php');
 ?>
 
   <!DOCTYPE HTML>
@@ -237,7 +239,13 @@ if(!empty($_POST['confirm'])){
 
     if(!empty($_POST['immat'])) {     $immat=$_POST['immat'];}
 
-    $userID=23; // a modif
+    
+    
+    if(!empty($_SESSION['utilisateur'])){
+        $utilisateur= unserialize($_SESSION['utilisateur']);
+    }
+    
+    $userID=$utilisateur->getId(); // a modif
     
     if(isset($_POST['station']))      $station=$_POST['station'];
     
