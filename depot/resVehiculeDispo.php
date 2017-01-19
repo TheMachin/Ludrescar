@@ -110,8 +110,8 @@ if (isset($_POST['submit']))
                   <li><a href="vehicules.php">Véhicules</a></li>
                   <li><a href="location.php">Mes locations</a></li>
                   <li><a href="contact.php">Contact</a></li>
-                  <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
-                  <li><a href="">Se déconnecter</a></li>
+                  <li class="btn-cta"><a href="reservation.php"><span>Reservation</span></a></li>
+                  <li><a href="deco.php">Se déconnecter</a></li>
                 </ul>
               </div>
             </div>

@@ -136,7 +136,7 @@ if (isset($_POST['submit']))
 				</div>
 				<div class="col-xs-8 text-right menu-1">
 					<ul>
-						<li><a href="menu.html">Véhicule</a></li>
+						<li><a href="vehicules.html">Véhicules</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<li class="btn-cta"><a href="Inscription.php"><span>Inscription</span></a></li>
 					</ul>	

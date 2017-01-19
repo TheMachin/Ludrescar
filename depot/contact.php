@@ -71,7 +71,7 @@
 					<ul>
 						<li><a href="vehicule.php">Véhicules</a></li>
 						<li class="active"><a href="contact.php">Contact</a></li>
-						<li class="btn-cta"><a href="index.php"><span>Inscription</span></a></li>
+						<li class="btn-cta"><a href="Inscription.php"><span>Inscription</span></a></li>
 					</ul>	
 				</div>
 			</div>

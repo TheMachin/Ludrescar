@@ -111,7 +111,7 @@ if (isset($_POST['submit']))
                   <li><a href="vehicules.php">Véhicules</a></li>
                   <li><a href="location.php">Mes locations</a></li>
                   <li><a href="contact.php">Contact</a></li>
-                  <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
+                  <li class="btn-cta"><a href="reservation.php"><span>Reservation</span></a></li>
                   <li><a href="deco.php">Se déconnecter</a></li>
                 </ul>
               </div>
@@ -158,9 +158,9 @@ if(!empty($_POST['reserver'])){
                   <div class="row row-mt-15em">
                     <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                       <span class="intro-text-small">Véhicule : <?php echo $marque;?> <?php echo $modele;?></span>
-                      <span class="intro-text-small">Prix : <?php echo $prixJour;?>€ prix/jour</span>
                       <span class="intro-text-small">Carburant : <?php echo $row[5];?></span>
                       <span class="intro-text-small">Places : <?php echo $row[6];?></span>
+                      <span class="intro-text-small">Prix : <?php echo $prixJour;?>€ prix/jour</span>
                     </div>
                     <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
                       <div class="form-wrap">
@@ -236,9 +236,9 @@ if(!empty($_POST['reserver'])){
 //si on confirme la reservation
 if(!empty($_POST['confirm'])){
     $etatLoc="Réservé";
-
+    
     if(!empty($_POST['immat'])) {     $immat=$_POST['immat'];}
-
+    
     
     
     if(!empty($_SESSION['utilisateur'])){
@@ -254,13 +254,13 @@ if(!empty($_POST['confirm'])){
     if(isset($_POST['hDeb']))      $hDeb=$_POST['hDeb'];
     
     if(isset($_POST['dateRet']))      $dateRet=$_POST['dateRet'];
-
+    
     if(isset($_POST['hRet']))      $hRet=$_POST['hRet'];
     
     if(isset($_POST['marque']))      $marque=$_POST['marque'];
     
     if(isset($_POST['modele']))      $modele=$_POST['modele'];
-
+    
     if(isset($_POST['station']))      $station=$_POST['station'];
     
     $request = "INSERT INTO locations(
@@ -269,12 +269,14 @@ if(!empty($_POST['confirm'])){
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);";
     $result = pg_prepare($bdd,'',$request);
     $result = pg_execute($bdd, "",array($dateDeb, $dateRet, $etatLoc, $hDeb, $hRet, $immat, $station, $station, $userID));
-}
-?>
+    ?>
                     <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                       <span class="intro-text-small">ludresCar</span>
                       <h1 class="cursive-font">Merci pour votre réservation!</h1>
                     </div>
+                    <?php
+}
+?>
               </div>
             </div>
           </div>
