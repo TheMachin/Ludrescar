@@ -121,7 +121,7 @@ and open the template in the editor.
                 <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                   <?php
 if(!empty($_SESSION['entretienMise'])){
-    echo "<h3>".$_SESSION['entretienMise']."</h3>";
+    echo "<h3 style=\"color: white\">".$_SESSION['entretienMise']."</h3>";
     unset($_SESSION['entretienMise']);
 }
 ?>
