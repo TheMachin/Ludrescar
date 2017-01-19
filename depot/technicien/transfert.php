@@ -236,7 +236,7 @@ include('../../classe/HistStationVehicule.php');
                                                 <div class="col-md-12">
                                                     <select name="immat" id="activities" placholder="Immatriculation" class="form-control" style="width:800px;">
                                                         <?php 
-                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
+                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat!='Supprimé' AND v.etat!='Fin de service'");
                                                         if (!$result) {
                                                           echo "Une erreur est survenue.\n";
                                                           exit;

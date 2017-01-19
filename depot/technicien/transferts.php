@@ -218,7 +218,7 @@ if(isset($_SESSION['co'])){
                                                     <label for="activities">Immatriculation : </label>
                                                     <select name="immat" id="activities" class="form-control">
                                                         <?php 
-                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
+                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat!='Supprimé' AND v.etat!='Fin de service'");
                                                         if (!$result) {
                                                           echo "Une erreur est survenue.\n";
                                                           exit;

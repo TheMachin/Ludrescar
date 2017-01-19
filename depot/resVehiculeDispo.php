@@ -159,7 +159,7 @@ else
 {
     $result = pg_query($bdd, "SELECT v.marque, v.modele, t.prix_jour
     FROM vehicules v, types t, stations s
-    WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert'
+    WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert' AND v.etat!='Supprimé' AND v.etat!='Fin de service'
     GROUP BY t.prix_jour, v.modele, v.marque");
     if (!$result) {
         echo "Une erreur est survenue.\n";

@@ -24,8 +24,12 @@ if(!empty($_POST))
         if($vehicule == false){
             $location = verifLocation($_POST['noImmat'], $bdd);
             if($location == false){
-                supprVehicule($_POST['noImmat'], $bdd);
-                echo 'Le véhicule a été supprimé avec succès !';
+                if(supprVehicule($_POST['noImmat'], $bdd)){
+                    echo 'Le véhicule a été supprimé avec succès !';
+                }else{
+                    echo "La suppression du véhicule n'a pas abouti (problème de SGBD)";
+                }
+                
             }else{
                 echo 'Le véhicule est en location.';
             }
@@ -232,11 +236,20 @@ function verifEtatVehicule($immat, $bdd){
 }
 
 function supprVehicule($immat, $bdd){
-    $request = "DELETE FROM vehicules
-    WHERE no_immat=$1";
+    pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
+    $request = "UPDATE vehicules SET etat=$1, station_id=$2 WHERE no_immat=$3";
     $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array($immat));
+    $result = pg_execute($bdd, "",array('Supprimé',null,$immat));
+    if($result){
+        pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+        return TRUE;
+    }else{
+        pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+        return FALSE;
+    }
 }
+
+
 
 function verifLocation($immat, $bdd)
 {

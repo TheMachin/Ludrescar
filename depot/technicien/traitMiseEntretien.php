@@ -143,6 +143,10 @@ if(isset($_POST['valid'])){
                 return "Le véhicule ne peut pas être transféré car il est en entretien";
             }else if($row[0]==="Transfert"){
                 return "Le véhicule ne peut pas être transféré car il est en cours de transfert";
+            }else if($row[0]==="Supprimé"){
+                return "Le véhicule ne peut pas être transféré car il est supprimé";
+            }else if($row[0]==="Fin de service"){
+                return "Le véhicule ne peut pas être transféré car il est en fin de servicet";
             }else{
                 return NULL;
             }
@@ -150,3 +154,4 @@ if(isset($_POST['valid'])){
             return "Le véhicule ne peut pas être transféré car une location est en cours ou une location a été réservée";
         }
     }
+    

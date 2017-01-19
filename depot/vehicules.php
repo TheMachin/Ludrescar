@@ -158,7 +158,7 @@ function getStation($id,$bdd){
     return $station;
 }
 // put your code here
-$result = pg_query($bdd, "SELECT * FROM vehicules");
+$result = pg_query($bdd, "SELECT * FROM vehicules WHERE etat!='Supprimé' AND etat!='Fin de service'");
 if (!$result) {
     echo "Une erreur est survenue.\n";
     exit;

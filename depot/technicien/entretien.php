@@ -207,7 +207,7 @@ while ($row = pg_fetch_row($result)) {
                         <label for="activities">Immatriculation : </label>
                         <select name="immat" id="activities" class="form-control" style="width:800px;">
                           <?php
-$result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat='En réparation' AND s.id=$1");
+$result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat='En réparation' AND v.etat!='Supprimé' AND v.etat!='Fin de service' AND s.id=$1");
 $result= pg_execute($bdd,'',array($station->getId()));
 if (!$result) {
     echo "Une erreur est survenue.\n";

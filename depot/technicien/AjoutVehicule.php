@@ -309,6 +309,7 @@ function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPla
     return "Le véhicule ne peut pas être ajouté car la station est rempli !";
   }else{
     $noType = noType($bdd, $type);
+    pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
     $request = "INSERT INTO vehicules(
             no_immat, modele, nb_place, carburant, puissance, nb_km, etat, 
             date_mise_serv, duree_serv, niv_carbu, type_id, station_id, marque)
@@ -316,9 +317,17 @@ function ajoutVehicule($bdd, $noImmat, $station, $marque, $modele, $type, $nbPla
             $7, $8, $9, $10, $11, $12);";
     $result = pg_prepare($bdd,'',$request);
     $result = pg_execute($bdd, "",array($noImmat, $modele, $nbPlace, $carburant, $puissance, $nbKm, $dateMS, $dureeMS, $nivCarburant, $noType[0], $verifStation, $marque));
-    return "Le véhicule a bien été ajouté dans la station !";
+    if($result){
+        pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+        return "Le véhicule a bien été ajouté dans la station";
+    }else{
+        pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+        return "Le véhicule n'a pas pu ajouter dans la station ";
+    }
   }
 }
+
+
 
 function verifStation($bdd, $station){
   $nbPlaceStation = nbPlaceStation($bdd, $station);
