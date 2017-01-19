@@ -325,7 +325,7 @@ and open the template in the editor.
                 <li><a href="#">mettre un véhicule en entretien</a></li>
               </ul>
             </li>
-                  <li><a href="../deco.php">Se déconnecter</a></li>
+                  <li><a href="../decoEmploye.php">Se déconnecter</a></li>
                 </ul>
               </div>
             </div>

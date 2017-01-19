@@ -125,7 +125,7 @@ if(!empty($_POST))
                     <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
                   </ul>
                 </li>
-                <li><a href="../deco.php">Se déconnecter</a></li>
+                <li><a href="../decoEmploye.php">Se déconnecter</a></li>
               </ul>
             </div>
           </div>
