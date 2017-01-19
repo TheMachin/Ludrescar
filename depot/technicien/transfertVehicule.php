@@ -104,15 +104,22 @@ and open the template in the editor.
                         
                         $date=new DateTime('now');
                         $hist=new HistStationVehicule(0, $date->format('Y-m-d') , $description, $stationInitiale, $vehicule);
-                        $hist->insert($bdd);
+                        pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
+                        $req1=$hist->insertTrans($bdd);
                         $vehicule->setStation($stationDestination);
                         $vehicule->setEtat("Transfert");
-                        $vehicule->updateEtat($bdd);
-                        $vehicule->updateStation($bdd);
+                        $req2=$vehicule->updateEtatTrans($bdd);
+                        $req3=$vehicule->updateStationTrans($bdd);
+                        if($req1 and $req2 and $req3){
+                            echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
+                            pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+                        }else{
+                            echo "<h3>Echec : Le véhicule n'a pas été mis en transfert</h3>";
+                            pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+                        }
                         
                         /*supprVehiculeStation($immat, $bdd);
                         updateEtatVehicule($immat, $bdd, 'Transfert');*/
-                        echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
                     }else{
                         //pas de transfert et affichage notification 
                         echo '<h3>'.$checkEtatV.'</h3>';

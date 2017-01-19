@@ -98,8 +98,10 @@ and open the template in the editor.
                                                                                 <div class="col-md-12">
                                                                                         <label for="date-start">Niveau du carburant</label>
                                                                                         <select name="niv" id="activities" class="form-control">
-                                                                                            <option value="c">Plein</option>
-                                                                                            <option value="be">Vide</option>
+                                                                                            <option value="p">Plein</option>
+                                                                                            <option value="e">Elevé</option>
+                                                                                            <option value="m">Moitié</option>
+                                                                                            <option value="f">Faible</option>
                                                                                         </select>
                                                                                 </div>
                                                                         </div>

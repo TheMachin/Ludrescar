@@ -78,9 +78,16 @@ if(isset($_POST['valid'])){
     if($etat==NULL){
         $vehicule->setEtat("En réparation");
         $entretien->setVehicule($vehicule);
-        $entretien->insert($bdd);
-        $vehicule->updateEtat($bdd);
-        
+        pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
+        $req1=$entretien->insertTrans($bdd);
+        $req2=$vehicule->updateEtatTrans($bdd);
+        if($req1 and $req2){
+            pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+            sendError("Le véhicule a bien été mis en entretien");
+        }else{
+            pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+            sendError("Le véhicule a bien été mis en entretien");
+        }
         sendError("Le véhicule a bien été mis en entretien");
         
     }else{
@@ -98,9 +105,15 @@ if(isset($_POST['valid'])){
     }
     
     $vehicule=new Vehicule($immat, NULL, NULL, 0, NULL, 0, 0, "Bon état",NULL, 0, NULL, $station, new Type(0, NULL, 0, 0));
-    $vehicule->updateEtat($bdd);
-    
-    sendError("Le véhicule est disponible et son état est : Bon état");
+    pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
+    $req1=$vehicule->updateEtatTrans($bdd);
+    if($req1){
+        pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+        sendError("Le véhicule est disponible et son état est : Bon état");
+    }else{
+        pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+        sendError("Le véhicule n'a pas pu sortir de l'entretien (vérifier vos droits ou contacter votre responsable");
+    }
     
 }else{
     sendError("Erreur du formulaire : Veuillez recommencer");

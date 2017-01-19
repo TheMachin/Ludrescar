@@ -153,10 +153,24 @@ class Vehicule {
         $result = pg_execute($bdd, "", array($this->etat,$this->no_immat));
     }
     
+    function updateEtatTrans($bdd){
+        $requete="UPDATE vehicules SET etat=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->etat,$this->no_immat));
+        return $result;
+    }
+    
     function updateNiv($bdd){
         $requete="UPDATE vehicules SET niv_carbu=$1 WHERE no_immat=$2";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($this->niv_carbu,$this->no_immat));
+    }
+    
+    function updateNivTrans($bdd){
+        $requete="UPDATE vehicules SET niv_carbu=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->niv_carbu,$this->no_immat));
+        return $result;
     }
     
     function updateKm($bdd){
@@ -165,10 +179,24 @@ class Vehicule {
         $result = pg_execute($bdd, "", array($this->nb_km,$this->no_immat));
     }
     
+    function updateKmTrans($bdd){
+        $requete="UPDATE vehicules SET nb_km=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->nb_km,$this->no_immat));
+        return $result;
+    }
+    
     function updateStation($bdd){
         $requete="UPDATE vehicules SET station_id=$1 WHERE no_immat=$2";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($this->station->getId(),$this->no_immat));
+    }
+    
+    function updateStationTrans($bdd){
+        $requete="UPDATE vehicules SET station_id=$1 WHERE no_immat=$2";
+        $result= pg_prepare($bdd,'',$requete);
+        $result = pg_execute($bdd, "", array($this->station->getId(),$this->no_immat));
+        return $result;
     }
 }
 ?>

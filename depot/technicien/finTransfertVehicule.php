@@ -72,14 +72,13 @@ if(isset($_POST['valid'])){
     }
     
     if(!empty($_POST['niv'])){
-        $niv=$_POST['niv'];
-        if($niv=="p"){
+        if($niv==="p"){
             $niv="Plein";
-        }else if($niv=="e"){
+        }else if($niv==="e"){
             $niv="Elevé";
-        }else if($niv=="m"){
+        }else if($niv==="m"){
             $niv="Moitié";
-        }else if($niv=="f"){
+        }else if($niv==="f"){
             $niv="Faible";
         }
     }else{
