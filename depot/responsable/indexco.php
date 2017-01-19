@@ -91,7 +91,7 @@ if(isset($_SESSION['co'])){
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
-                  <li><a href="#">Statistiques</a></li>
+                  <li><a href="statistiques.php">Statistiques</a></li>
                   <li class="has-dropdown">
                      <a href="#">Services</a>
                      <ul class="dropdown">

@@ -343,82 +343,17 @@ if (isset($_POST['submit']))
             <div class="display-t">
               <div class="display-tc">
                 <h1>&ldquo; Ludrescar une agence compréhensive, compétente aux tarifs concurentiels !&rdquo;</h1>
-                <p>&mdash; John Doe</p>
+                <p>&mdash; Kevin Araba</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div id="gtco-counter" class="gtco-section">
-          <div class="gtco-container">
-
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                <h2 class="cursive-font primary-color">Les chiffres</h2>
-                <p>Ludrescar en quelques chiffres.</p>
-              </div>
-            </div>
-
-            <div class="row">
-
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="50" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">milles utilisateurs</span>
-
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="325" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">Voitures</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="32000" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">nombres locations</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="2016" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">années de départ</span>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
+        
 
 
 
-        <div id="gtco-subscribe">
-          <div class="gtco-container">
-            <div class="row animate-box">
-              <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                <h2 class="cursive-font">Vos commentaires</h2>
-                <p>N'hésitez pas à nous exprimer vos commentaires.</p>
-              </div>
-            </div>
-            <div class="row animate-box">
-              <div class="col-md-8 col-md-offset-2">
-                <form class="form-inline">
-                  <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                      <label for="email" class="sr-only">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Votre Email">
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-6">
-                    <button type="submit" class="btn btn-default btn-block">Envoyer</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         <footer id="gtco-footer" role="contentinfo" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
           <div class="overlay"></div>

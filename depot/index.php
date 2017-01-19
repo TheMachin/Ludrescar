@@ -310,7 +310,7 @@ $requete="select * from utilisateurs u, compteutilisateurs cu where u.email=$1 a
 			<div class="display-t">
 				<div class="display-tc">
 					<h1>&ldquo; Ludrescar une agence compréhensive, compétente aux tarifs concurentiels !&rdquo;</h1>
-					<p>&mdash; John Doe</p>
+					<p>&mdash; Kevin Araba</p>
 				</div>	
 			</div>
 		</div>
