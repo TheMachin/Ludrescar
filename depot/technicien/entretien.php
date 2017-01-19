@@ -100,9 +100,9 @@ and open the template in the editor.
                 <li class="has-dropdown">
                   <a href="#">Services</a>
                   <ul class="dropdown">
+                    <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                     <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
-                    <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
-                    <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
+                    <li><a href="transfert.php">Transférer un véhicule</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -219,7 +219,7 @@ while ($row = pg_fetch_row($result)) {
 ?>
                         </select>
                       </div>
-                      
+
                       <div class="row form-group">
                         <div class="col-md-12">
                           <br/>
