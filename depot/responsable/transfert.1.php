@@ -1,5 +1,6 @@
 <?php
 session_start();
+//include('../../bdd/bdd.php');
 $bdd=NULL;
 if(isset($_SESSION['co'])){
     if(!empty($_SESSION['login']) && !empty($_SESSION['mdp'])){
@@ -93,9 +94,9 @@ include('../../classe/HistStationVehicule.php');
               <div class="col-sm-4 col-xs-12">
                 <p style="color: white;">
                   <?php if(isset($_SESSION['co']))
-                        {
-                            echo($_SESSION['login']);
-                        }
+{
+    echo($_SESSION['login']);
+}
 ?>
                 </p>
                 <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
@@ -107,7 +108,7 @@ include('../../classe/HistStationVehicule.php');
                      <ul class="dropdown">
                 <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                 <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
-                <li><a href="entretien.php">Mettre un véhicule en entretien</a></li>
+                <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
               </ul>
             </li>
                   <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -225,18 +226,88 @@ include('../../classe/HistStationVehicule.php');
           <div class="gtco-container">
             <div class="row animate-box">
               <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                <h2 class="cursive-font">Transférer</h2>
+                <h2 class="cursive-font">Vos commentaires</h2>
                
-                    <div class="gtco-widget">
-                    <div class="col-md-6 col-sm-6"> <form method="POST">
+              </div>
+            </div>
+            <div class="row animate-box">
+              <div class="col-md-8 col-md-offset-2">
+                <form class="form-inline">
+                  <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <?php
+        // put your code here
+            if(isset($_POST['validS'])){
+                
+                if(!empty($_POST['description'])){
+                    $description=$_POST['description'];
+                }else{
+                    $description='';
+                }
+                
+                //on récupère son numero
+                $immat=$_SESSION['immat'];
+                //la liste des véhicules
+                $tabVehicule= unserialize($_SESSION['tabVehicule']);
+                //on récupère le véhicule concerné
+                $vehicule=$tabVehicule[$immat];
+                //on récupère la station dans laquelle le véhicule se trouve
+                $stationInitiale= getStations($vehicule->getStation()->getId(), $bdd);
+                //id station de destination
+                $id=$_POST['station'];
+                $stationDestination=getStations($id,$bdd);
+                //on vérifie si la station de destination peut accueillir le véhicule
+                $bool= verifStation($stationDestination, $bdd);
+                if($bool){
+                    //on vérifie si le véhicule peut etre transféré
+                    $checkEtatV= verifEtatVehicule($immat, $bdd);
+                    if($checkEtatV==NULL){
+                        
+                        //transfert du véhicule
+                        
+                        $date=new DateTime('now');
+                        $hist=new HistStationVehicule(0, $date->format('Y-m-d') , $description, $stationInitiale, $vehicule);
+                        $hist->insert($bdd);
+                        $vehicule->setStation($stationDestination);
+                        $vehicule->setEtat("Transfert");
+                        $vehicule->updateEtat($bdd);
+                        $vehicule->updateStation($bdd);
+                        
+                        /*supprVehiculeStation($immat, $bdd);
+                        updateEtatVehicule($immat, $bdd, 'Transfert');*/
+                        echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
+                    }else{
+                        //pas de transfert et affichage notification 
+                        echo '<h3>'.$checkEtatV.'</h3>';
+                    }
+                }else{
+                    echo '<h3>La station est rempli (complet)</h3>';
+                }
+                
+            }
+        ?>
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-left">
+                <div class="row row-mt-15em">
+                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                        <span class="intro-text-small">ludresCar</span>
+                        <h1 class="cursive-font">Transfert du véhicule.</h1>  
+                    </div>
+                    <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+                        <div class="form-wrap">
+                            <div class="tab">
+                                <div class="tab-content">
+                                    <div class="tab-content-inner active" data-content="signup">
+                                        <form method="POST">
                                             <?php
                                                 if(!isset($_POST['valid'])){
                                             ?>
                                             <div class="row form-group">                                                                                
                                                 <div class="col-md-12">
-                                                    <select name="immat" id="activities" placholder="Immatriculation" class="form-control" style="width:800px;">
+                                                    <label for="activities">Immatriculation : </label>
+                                                    <select name="immat" id="activities" class="form-control">
                                                         <?php 
-                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat!='Supprimé' AND v.etat!='Fin de service'");
+                                                        $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
                                                         if (!$result) {
                                                           echo "Une erreur est survenue.\n";
                                                           exit;
@@ -254,61 +325,10 @@ include('../../classe/HistStationVehicule.php');
                                             </div>
                                             <div class="row form-group">
                                                     <div class="col-md-12">
-                                                            <input type="submit" name="valid" class="btn btn-primary btn-block" value="Enregistrer">
+                                                            <input type="submit" name="valid" class="btn btn-primary btn-block" value="Choisir véhicule">
                                                     </div>
                                             </div>
                                             <?php
-                                                }
-                                                if(isset($_POST['validS'])){
-                
-                                                    if(!empty($_POST['description'])){
-                                                        $description=$_POST['description'];
-                                                    }else{
-                                                        $description='';
-                                                    }
-
-                                                    //on récupère son numero
-                                                    $immat=$_SESSION['immat'];
-                                                    //la liste des véhicules
-                                                    $tabVehicule= unserialize($_SESSION['tabVehicule']);
-                                                    //on récupère le véhicule concerné
-                                                    $vehicule=$tabVehicule[$immat];
-                                                    //on récupère la station dans laquelle le véhicule se trouve
-                                                    $stationInitiale= getStations($vehicule->getStation()->getId(), $bdd);
-                                                    //id station de destination
-                                                    $id=$_POST['station'];
-                                                    $stationDestination=getStations($id,$bdd);
-                                                    //on vérifie si la station de destination peut accueillir le véhicule
-                                                    $bool= verifStation($stationDestination, $bdd);
-                                                    if($bool){                    //on vérifie si le véhicule peut etre transféré
-                                                        $checkEtatV= verifEtatVehicule($immat, $bdd);
-                                                        if($checkEtatV==NULL){
-
-                                                            //transfert du véhicule
-                                                            pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
-                                                            $date=new DateTime('now');
-                                                            $hist=new HistStationVehicule(0, $date->format('Y-m-d') , $description, $stationInitiale, $vehicule);
-                                                            $req1=$hist->insertTrans($bdd);
-                                                            $vehicule->setStation($stationDestination);
-                                                            $vehicule->setEtat("Transfert");
-                                                            $req2=$vehicule->updateEtatTrans($bdd);
-                                                            $req3=$vehicule->updateStationTrans($bdd);
-                                                            if($req1 and $req2 and $req3){
-                                                                echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
-                                                                pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
-                                                            }else{
-                                                                echo "<h3>Echec : Le véhicule n'a pas été mis en transfert</h3>";
-                                                                pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
-                                                            }
-
-                                                        }else{
-                                                            //pas de transfert et affichage notification 
-                                                            echo '<h3>'.$checkEtatV.'</h3>';
-                                                        }
-                                                    }else{
-                                                        echo '<h3>La station est rempli (complet)</h3>';
-                                                    }
-
                                                 }
                                                 if(isset($_POST['valid'])){
                                                     $immat=$_POST['immat'];
@@ -320,7 +340,8 @@ include('../../classe/HistStationVehicule.php');
                                             ?>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-                                                    <select name="station" id="activities" placeholder="Station" class="form-control">
+                                                    <label for="activities">Station</label>
+                                                    <select name="station" id="activities" class="form-control">
                                                         <?php 
 
                                                         $result = pg_prepare($bdd,"" ,"SELECT s.id,s.nom, s.adresse FROM stations s, vehicules v where v.no_immat=$1 and v.station_id!=s.id");
@@ -338,23 +359,36 @@ include('../../classe/HistStationVehicule.php');
                                                     </select>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <input type="text" id="description" name="description" placeholder="Description du transfert (pas obligatoire)" class="form-control">
-                                                  </br>
-                                                </br>
+                                                    <label for="date-start">Description du transfert (pas obligatoire)</label>
+                                                    <input type="text" id="description" name="description" class="form-control">
                                                 </div>
                                             </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-                                                        <input type="submit" name="validS" class="btn btn-primary btn-block" value="Enregistrer">
+                                                        <input type="submit" name="validS" class="btn btn-primary btn-block" value="Choisir station">
                                                 </div>
                                             </div>
                                             <?php
                                                 }
                                             ?>
                                         </form> 
-                     </div>
-                     </div>           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        </div>
+                      <label for="email" class="sr-only">Email</label>
+                      <input type="email" class="form-control" id="email" placeholder="Votre Email">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-sm-6">
+                    <button type="submit" class="btn btn-default btn-block">Envoyer</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -485,7 +519,7 @@ function verifStation(Station $station,$bdd){
     
     function verifEtatVehicule($immat,$bdd){
         
-        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND etatlocation!='Annulé' AND etatlocation!='Terminé'";
+        $requete="SELECT * FROM locations WHERE vehicule_immat=$1 AND (date_deb<=NOW() AND NOW()>=date_fin_prev) OR (NOW()>=date_deb)";
         $result= pg_prepare($bdd,'',$requete);
         $result = pg_execute($bdd, "", array($immat));
         $count= pg_num_rows($result);

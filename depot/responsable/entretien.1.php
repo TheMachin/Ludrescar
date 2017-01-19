@@ -100,9 +100,9 @@ and open the template in the editor.
                 <li class="has-dropdown">
                   <a href="#">Services</a>
                   <ul class="dropdown">
-                    <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                     <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
-                    <li><a href="transfert.php">Transférer un véhicule</a></li>
+                    <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
+                    <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -207,7 +207,7 @@ while ($row = pg_fetch_row($result)) {
                         <label for="activities">Immatriculation : </label>
                         <select name="immat" id="activities" class="form-control" style="width:800px;">
                           <?php
-$result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat='En réparation' AND v.etat!='Supprimé' AND v.etat!='Fin de service' AND s.id=$1");
+$result = pg_prepare($bdd,"", "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id AND v.etat='En réparation' AND s.id=$1");
 $result= pg_execute($bdd,'',array($station->getId()));
 if (!$result) {
     echo "Une erreur est survenue.\n";
@@ -219,7 +219,7 @@ while ($row = pg_fetch_row($result)) {
 ?>
                         </select>
                       </div>
-
+                      
                       <div class="row form-group">
                         <div class="col-md-12">
                           <br/>
