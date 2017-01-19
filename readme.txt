@@ -8,7 +8,7 @@ David,Kevin,Julian,Thibault
 ## Objectifs
 L'objectif est de réaliser la gestion d'un parc de location de voiture
 
-## Motivation
+## Langages
 Utilisation de postgresql et php et html5 et css3
 
 ## Fonctionnalité
