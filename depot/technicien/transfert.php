@@ -234,7 +234,7 @@ include('../../classe/HistStationVehicule.php');
                                             ?>
                                             <div class="row form-group">                                                                                
                                                 <div class="col-md-12">
-                                                    <select name="immat" id="activities" placholder="Immatriculation" class="form-control">
+                                                    <select name="immat" id="activities" placholder="Immatriculation" class="form-control" style="width:800px;">
                                                         <?php 
                                                         $result = pg_query($bdd, "SELECT v.no_immat,v.marque,v.modele,v.etat,s.nom,s.id FROM vehicules v, stations s WHERE s.id=v.station_id");
                                                         if (!$result) {
