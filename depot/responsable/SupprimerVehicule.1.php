@@ -15,7 +15,6 @@ if(isset($_SESSION['co'])){
 }else{
     header('Location:../index_employe.php');
 }
-
 if(!empty($_POST))
 {
     $vehicule = verifVehiculeExiste($_POST['noImmat'], $bdd);
@@ -24,12 +23,8 @@ if(!empty($_POST))
         if($vehicule == false){
             $location = verifLocation($_POST['noImmat'], $bdd);
             if($location == false){
-                if(supprVehicule($_POST['noImmat'], $bdd)){
-                    echo 'Le véhicule a été supprimé avec succès !';
-                }else{
-                    echo "La suppression du véhicule n'a pas abouti (problème de SGBD)";
-                }
-                
+                supprVehicule($_POST['noImmat'], $bdd);
+                echo 'Le véhicule a été supprimé avec succès !';
             }else{
                 echo 'Le véhicule est en location.';
             }
@@ -125,8 +120,8 @@ if(!empty($_POST))
                   <a href="#">Services</a>
                   <ul class="dropdown">
                     <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
-                    <li><a href="transfert.php">Transférer un véhicule</a></li>
-                    <li><a href="entretien.php">Mettre un véhicule en entretien</a></li>
+                    <li><a href="transfert.php">amener un véhicule à une autre station</a></li>
+                    <li><a href="entretien.php">mettre un véhicule en entretien</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -236,20 +231,11 @@ function verifEtatVehicule($immat, $bdd){
 }
 
 function supprVehicule($immat, $bdd){
-    pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
-    $request = "UPDATE vehicules SET etat=$1, station_id=$2 WHERE no_immat=$3";
+    $request = "DELETE FROM vehicules
+    WHERE no_immat=$1";
     $result = pg_prepare($bdd,'',$request);
-    $result = pg_execute($bdd, "",array('Supprimé',null,$immat));
-    if($result){
-        pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
-        return TRUE;
-    }else{
-        pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
-        return FALSE;
-    }
+    $result = pg_execute($bdd, "",array($immat));
 }
-
-
 
 function verifLocation($immat, $bdd)
 {
