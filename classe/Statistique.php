@@ -20,6 +20,7 @@ class Statistique {
     private $montant_penalite;
     private $montant_total;
     private $nb_annulation;
+    private $nb_incident;
     
     function __construct($id, $nb_location, $nb_penalite, $nb_entretien, $montant_penalite, $montant_total, $nb_annulation) {
         $this->id = $id;
@@ -87,7 +88,15 @@ class Statistique {
         $this->nb_annulation = $nb_annulation;
     }
 
-    
+    function getNb_incident() {
+        return $this->nb_incident;
+    }
+
+    function setNb_incident($nb_incident) {
+        $this->nb_incident = $nb_incident;
+    }
+
+
     
 }
 ?>
