@@ -259,6 +259,57 @@ include('../../classe/HistStationVehicule.php');
                                             </div>
                                             <?php
                                                 }
+                                                if(isset($_POST['validS'])){
+                
+                                                    if(!empty($_POST['description'])){
+                                                        $description=$_POST['description'];
+                                                    }else{
+                                                        $description='';
+                                                    }
+
+                                                    //on récupère son numero
+                                                    $immat=$_SESSION['immat'];
+                                                    //la liste des véhicules
+                                                    $tabVehicule= unserialize($_SESSION['tabVehicule']);
+                                                    //on récupère le véhicule concerné
+                                                    $vehicule=$tabVehicule[$immat];
+                                                    //on récupère la station dans laquelle le véhicule se trouve
+                                                    $stationInitiale= getStations($vehicule->getStation()->getId(), $bdd);
+                                                    //id station de destination
+                                                    $id=$_POST['station'];
+                                                    $stationDestination=getStations($id,$bdd);
+                                                    //on vérifie si la station de destination peut accueillir le véhicule
+                                                    $bool= verifStation($stationDestination, $bdd);
+                                                    if($bool){                    //on vérifie si le véhicule peut etre transféré
+                                                        $checkEtatV= verifEtatVehicule($immat, $bdd);
+                                                        if($checkEtatV==NULL){
+
+                                                            //transfert du véhicule
+                                                            pg_query($bdd,"BEGIN") or die('Could not start transaction\n');
+                                                            $date=new DateTime('now');
+                                                            $hist=new HistStationVehicule(0, $date->format('Y-m-d') , $description, $stationInitiale, $vehicule);
+                                                            $req1=$hist->insertTrans($bdd);
+                                                            $vehicule->setStation($stationDestination);
+                                                            $vehicule->setEtat("Transfert");
+                                                            $req2=$vehicule->updateEtatTrans($bdd);
+                                                            $req3=$vehicule->updateStationTrans($bdd);
+                                                            if($req1 and $req2 and $req3){
+                                                                echo "<h3>Succès : Le véhicule est maintenant en cours de transfert</h3>";
+                                                                pg_query($bdd,'COMMIT') or die('Transaction commit failed\n');
+                                                            }else{
+                                                                echo "<h3>Echec : Le véhicule n'a pas été mis en transfert</h3>";
+                                                                pg_query($bdd,"ROLLBACK") or die('Transaction rollback failed\n ');
+                                                            }
+
+                                                        }else{
+                                                            //pas de transfert et affichage notification 
+                                                            echo '<h3>'.$checkEtatV.'</h3>';
+                                                        }
+                                                    }else{
+                                                        echo '<h3>La station est rempli (complet)</h3>';
+                                                    }
+
+                                                }
                                                 if(isset($_POST['valid'])){
                                                     $immat=$_POST['immat'];
                                                     $tabVehicule= unserialize($_SESSION['tabVehicule']);

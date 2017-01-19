@@ -72,6 +72,7 @@ if(isset($_POST['valid'])){
     }
     
     if(!empty($_POST['niv'])){
+        $niv=$_POST['niv'];
         if($niv==="p"){
             $niv="Plein";
         }else if($niv==="e"){
