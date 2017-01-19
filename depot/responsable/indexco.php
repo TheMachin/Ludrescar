@@ -87,7 +87,7 @@ if(isset($_SESSION['co'])){
 }
 ?>
                 </p>
-                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+                <div id="gtco-logo"><a href="indexco.php">LudresCar <em>.</em></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
@@ -95,10 +95,12 @@ if(isset($_SESSION['co'])){
                   <li class="has-dropdown">
                      <a href="#">Services</a>
                      <ul class="dropdown">
-                <li><a href="#">Ajouter un véhicule</a></li>
-                <li><a href="#">Supprimer un véhicule</a></li>
-                <li><a href="#">amener un véhicule à une autre station</a></li>
-                <li><a href="#">mettre un véhicule en entretien</a></li>
+                <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
+                <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
+                <li><a href="transfert.php">Transférer un véhicule</a></li>
+                <li><a href="entretien.php">Mettre un véhicule en entretien</a></li>
+                <li><a href="ajoutType.php">Ajouter un type de véhicule</a></li>
+                <li><a href="statistiques.php">Statistiques</a></li>
               </ul>
             </li>
                   <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -125,101 +127,6 @@ if(isset($_SESSION['co'])){
             </div>
           </div>
         </header>
-
-        <div id="gtco-counter" class="gtco-section">
-          <div class="gtco-container">
-
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                <h2 class="cursive-font primary-color">Les chiffres</h2>
-                <p>Ludrescar en quelques chiffres.</p>
-              </div>
-            </div>
-
-            <div class="row">
-
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="50" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">milles utilisateurs</span>
-
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="325" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">Voitures</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="32000" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">nombres locations</span>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="feature-center">
-                  <span class="counter js-counter" data-from="0" data-to="2016" data-speed="5000" data-refresh-interval="50">1</span>
-                  <span class="counter-label">années de départ</span>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-
-
-        <div id="gtco-subscribe">
-          <div class="gtco-container">
-            <div class="row animate-box">
-              <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-                <h2 class="cursive-font">Vos commentaires</h2>
-                <p>N'hésitez pas à nous exprimer vos commentaires.</p>
-              </div>
-            </div>
-            <div class="row animate-box">
-              <div class="col-md-8 col-md-offset-2">
-                <form class="form-inline">
-                  <div class="col-md-6 col-sm-6">
-                    <div class="form-group">
-                      <label for="email" class="sr-only">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Votre Email">
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-sm-6">
-                    <button type="submit" class="btn btn-default btn-block">Envoyer</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <footer id="gtco-footer" role="contentinfo" style="background-image: url(images/img_bg_1.jpg)" data-stellar-background-ratio="0.5">
-          <div class="overlay"></div>
-          <div class="gtco-container">
-            <div class="row row-pb-md">
-
-
-
-
-              <div class="col-md-12 text-center">
-                <div class="gtco-widget">
-                  <h3>Nous contacter</h3>
-                  <ul class="gtco-quick-contact">
-                    <li><a href="#"> +1 234 567 890</a></li>
-                    <li><a href="#"> info@ludrescar.fr</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-
-
-          </div>
-        </footer>
         <!-- </div> -->
 
       </div>

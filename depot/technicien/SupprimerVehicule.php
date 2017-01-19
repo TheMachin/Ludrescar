@@ -117,7 +117,7 @@ if(!empty($_POST))
 }
 ?>
               </p>
-              <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+              <div id="gtco-logo"><a href="indexco.php">LudresCar <em>.</em></a></div>
             </div>
             <div class="col-xs-8 text-right menu-1">
               <ul>

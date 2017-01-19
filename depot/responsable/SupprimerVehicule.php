@@ -117,7 +117,7 @@ if(!empty($_POST))
 }
 ?>
               </p>
-              <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+              <div id="gtco-logo"><a href="indexco.php">LudresCar <em>.</em></a></div>
             </div>
             <div class="col-xs-8 text-right menu-1">
               <ul>
@@ -127,6 +127,8 @@ if(!empty($_POST))
                     <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                     <li><a href="transfert.php">Transférer un véhicule</a></li>
                     <li><a href="entretien.php">Mettre un véhicule en entretien</a></li>
+                    <li><a href="ajoutType.php">Ajouter un type de véhicule</a></li>
+                    <li><a href="statistiques.php">Statistiques</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>
@@ -216,7 +218,7 @@ if(!empty($_POST))
 
     <!-- Main -->
     <script src="../js/main.js"></script>
-    
+
   </body>
 
   </html>

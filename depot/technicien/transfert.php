@@ -98,7 +98,7 @@ include('../../classe/HistStationVehicule.php');
                         }
 ?>
                 </p>
-                <div id="gtco-logo"><a href="index.php">LudresCar <em>.</em></a></div>
+                <div id="gtco-logo"><a href="indexco.php">LudresCar <em>.</em></a></div>
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
@@ -127,7 +127,7 @@ include('../../classe/HistStationVehicule.php');
                 <div class="row row-mt-15em">
                   <div class="col-md-12 mt-text animate-box" data-animate-effect="fadeInUp">
                     <span class="intro-text-small">ludresCar</span>
-                    <h1 class="cursive-font">Quand la voiture rencontre la location.</h1>
+                    <h1 class="cursive-font">Transfert</h1>
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@ include('../../classe/HistStationVehicule.php');
                 $tab=getAllVehicule($tab,$bdd);
                 ?>
                 <div class='container-fluid'>
-                        <label>Nombre de lignes : <?php echo count($tab); ?></label>
+                        <label>Nombre de véhicule(s) : <?php echo count($tab); ?></label>
                         <table id='tableID' class="table table-bordered table-striped" border='1'>
                             <thead>
                                 <tr>

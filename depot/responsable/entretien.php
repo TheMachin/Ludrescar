@@ -103,6 +103,8 @@ and open the template in the editor.
                     <li><a href="AjoutVehicule.php">Ajouter un véhicule</a></li>
                     <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
                     <li><a href="transfert.php">Transférer un véhicule</a></li>
+                    <li><a href="ajoutType.php">Ajouter un type de véhicule</a></li>
+                    <li><a href="statistiques.php">Statistiques</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>

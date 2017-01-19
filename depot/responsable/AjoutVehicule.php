@@ -107,6 +107,8 @@ if(!empty($_POST)){
                     <li><a href="SupprimerVehicule.php">Supprimer un véhicule</a></li>
                     <li><a href="transfert.php">Transférer un véhicule</a></li>
                     <li><a href="entretien.php">Mettre un véhicule en entretien</a></li>
+                    <li><a href="ajoutType.php">Ajouter un type de véhicule</a></li>
+                    <li><a href="statistiques.php">Statistiques</a></li>
                   </ul>
                 </li>
                 <li><a href="../decoEmploye.php">Se déconnecter</a></li>
