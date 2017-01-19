@@ -107,9 +107,9 @@ if (isset($_POST['submit']))
               </div>
               <div class="col-xs-8 text-right menu-1">
                 <ul>
-                  <li><a href="">Véhicules</a></li>
-                  <li><a href="">Mes locations</a></li>
-                  <li><a href="">Contact</a></li>
+                  <li><a href="vehicules.php">Véhicules</a></li>
+                  <li><a href="location.php">Mes locations</a></li>
+                  <li><a href="contact.php">Contact</a></li>
                   <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
                   <li><a href="">Se déconnecter</a></li>
                 </ul>
@@ -178,36 +178,46 @@ else
                     <input type="hidden" name="marque" value="<?php echo $row[0]?>">
                     <input type="hidden" name="modele" value="<?php echo $row[1]?>">
                     <input type="hidden" name="prixJour" value="<?php echo $row[2]?>">
-                    <?php
-        $resultImmat = pg_query($bdd, "SELECT v.no_immat
-        FROM vehicules v, types t, stations s
-        WHERE v.station_id=s.id AND s.nom='$station' AND v.type_id=t.id AND v.etat!='En réparation' AND v.etat!='Hors service' AND v.etat!='Transfert' AND v.marque='$row[0]'
-        AND v.modele='$row[1]' LIMIT 1");
-        if (!$result) {
-            echo "Une erreur est survenue.\n";
-            exit;
-        }
-        while ($rowImmat = pg_fetch_row($result)){
-            ?>
-                      <input type="hidden" name="immat" value="<?php echo $rowImmat[0];?>">
-                      <?php
-        }
-        ?>
-                        <input type="submit" name="reserver" class="btn btn-primary btn-block" value="Réserver">
-                        <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
-                          <figure>
-                            <div class="overlay"><i class="ti-plus"></i></div>
-                            <img src="images/img_1.jpg" alt="Image" class="img-responsive">
-                          </figure>
-                          <div class="fh5co-text">
-                            <h2><?php echo $row[0];?> : <?php echo $row[1]; ?></h2>
-                            <p><span class="price cursive-font"><?php echo $row[2]; ?>€ prix/jour</span></p>
-                          </div>
-                        </a>
+                    <input type="submit" name="reserver" class="btn btn-primary btn-block" value="Réserver">
+                    <a href="images/img_1.jpg" class="fh5co-card-item image-popup">
+                      <figure>
+                        <div class="overlay"><i class="ti-plus"></i></div>
+                        <img src="
+                        <?php
+        switch ($row[1]) {
+            case "Niva":
+                echo "images/ladaniva.jpg";
+                break;
+            case "C2":
+                echo "images/c2.jpg";
+                break;
+            case "P1":
+                echo "images/p1.jpg";
+                break;
+            case "Duster":
+                echo "images/duster.jpg";
+                break;
+            case "Talisman":
+                echo "images/img_4.jpg";
+                break;
+            case "FTypeR":
+                echo "images/img_2.jpg";
+                break;
+            default:
+                echo "images/voiture.jpg";
+    }
+    ?>
+                          " alt="Image" class="img-responsive">
+                      </figure>
+                      <div class="fh5co-text">
+                        <h2><?php echo $row[0];?> : <?php echo $row[1]; ?></h2>
+                        <p><span class="price cursive-font"><?php echo $row[2]; ?>€ prix/jour</span></p>
+                      </div>
+                    </a>
                   </form>
                 </div>
                 <?php
-    }
+}
 }
 ?>
             </div>

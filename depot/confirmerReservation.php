@@ -109,7 +109,7 @@ if (isset($_POST['submit']))
               <div class="col-xs-8 text-right menu-1">
                 <ul>
                   <li><a href="vehicules.php">Véhicules</a></li>
-                  <li><a href="">Mes locations</a></li>
+                  <li><a href="location.php">Mes locations</a></li>
                   <li><a href="contact.php">Contact</a></li>
                   <li class="btn-cta"><a href="#"><span>Reservation</span></a></li>
                   <li><a href="deco.php">Se déconnecter</a></li>
@@ -245,7 +245,7 @@ if(!empty($_POST['confirm'])){
         $utilisateur= unserialize($_SESSION['utilisateur']);
     }
     
-    $userID=$utilisateur->getId(); // a modif
+    $userID=$utilisateur->getId();
     
     if(isset($_POST['station']))      $station=$_POST['station'];
     
